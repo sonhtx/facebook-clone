@@ -1,9 +1,12 @@
+
+import 'package:anti_fb/ui/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:anti_fb/ui/login_screen.dart';
 
 // Define your named routes
 final Map<String, WidgetBuilder> routes = {
-  '/login': (context) => LoginScreen(),
+  '/login': (context) => const LoginScreen(),
+  '/signup': (context) => const SignupScreen()
 
   // '/home': (context) => HomeScreen(),
   // '/profile': (context) => ProfileScreen(),
@@ -12,4 +15,4 @@ final Map<String, WidgetBuilder> routes = {
 };
 
 // Optionally, you can define a default route to handle unknown routes
-final String initialRoute = '/login';
+const String initialRoute = '/login';
