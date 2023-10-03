@@ -1,9 +1,10 @@
-import 'package:anti_fb/routes.dart';
+import 'package:anti_fb/data/SignupData.dart';
 import 'package:anti_fb/ui/signup/signup1.dart';
 import 'package:anti_fb/ui/signup/signup2.dart';
 import 'package:anti_fb/ui/signup/signup3.dart';
 import 'package:anti_fb/ui/signup/signup4.dart';
 import 'package:anti_fb/ui/signup/signup5.dart';
+import 'package:anti_fb/ui/signup/signup6.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget{
@@ -15,28 +16,46 @@ class SignupScreen extends StatefulWidget{
 }
 
 class SignupState extends State<SignupScreen>{
-  int currentFormIndex = 0;
-  Widget screen = const SignupForm1();
-  List<Widget> forms = [
-    const SignupForm1(),
-    const SignupForm2(),
-    const SignupForm3(),
-    const SignupForm4(),
-    const SignupForm5(),
-  ];
 
+  late SignupData signupData;
+  late int currentFormIndex;
+  late Widget screen ;
+
+  void moveToScreen1(){ setState(() {screen = const SignupForm1();});}
+  void moveToScreen2(){ setState(() {screen = SignupForm2(signupData.firstName, signupData.lastName);});}
+  void moveToScreen3(){ setState(() {screen = SignupForm3(signupData.birthday);});}
+  void moveToScreen4(){ setState(() {screen = SignupForm4(signupData.email);});}
+  void moveToScreen5(){ setState(() {screen = const SignupForm5();}); }
+  void moveToScreen6(){ setState(() {screen = const SignupForm6();});}
+
+  List<void Function()> moveScreen = [];
+  @override
+  void initState() {
+    super.initState();
+
+    signupData = SignupData("", "", "",DateTime(2010, 10, 26), "");
+
+    currentFormIndex = 0;
+    screen = const SignupForm1();
+
+    moveScreen = [
+      moveToScreen1,
+      moveToScreen2,
+      moveToScreen3,
+      moveToScreen4,
+      moveToScreen5,
+      moveToScreen6,
+    ];
+  }
   void moveFoward() {
     currentFormIndex++;
-    setState(() {
-      screen = forms[currentFormIndex];
-    });
+    moveScreen[currentFormIndex]();
   }
   void navigateBack(){
     currentFormIndex--;
-    setState(() {
-      screen = forms[currentFormIndex];
-    });
+    moveScreen[currentFormIndex]();
   }
+
 
   @override
   Widget build(BuildContext context) {

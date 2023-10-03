@@ -9,10 +9,17 @@ import '../../widgets/TextWidget.dart';
 
 
 class SignupForm3 extends StatelessWidget{
-  const SignupForm3({super.key});
+  DateTime birthday;
+
+  SignupForm3(this.birthday, {super.key });
+
+  void onBirthdayChanged(DateTime newDate) {
+    birthday = newDate;
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -22,33 +29,46 @@ class SignupForm3 extends StatelessWidget{
 
         Container(
           padding: const EdgeInsets.only(top: 50.0),
-          child: const DatePicker()
+          child: DatePicker(
+              birthday: birthday,
+              onBirthdayChanged: onBirthdayChanged,
+            )
         ),
 
         ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
             backgroundColor: Colors.cyan,
             onPressed: (){
               final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+
+              signupState?.signupData.birthday = birthday;
               signupState?.moveFoward();
               // TODO: Signup new user
             }),
-
-
       ],
     );
   }
 
+
 }
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({super.key});
+  const DatePicker({Key? key, required this.birthday, required this.onBirthdayChanged}) : super(key: key);
+
+  final DateTime birthday;
+  final Function(DateTime) onBirthdayChanged;
 
   @override
   State<DatePicker> createState() => _DatePickerState();
 }
 
 class _DatePickerState extends State<DatePicker> {
-    DateTime birthday = DateTime(2016, 10, 26);
+  late DateTime bday ;
+
+  @override
+  void initState() {
+    super.initState();
+    bday = widget.birthday;
+  }
 
   // This function displays a CupertinoModalPopup with a reasonable fixed height
   // which hosts CupertinoDatePicker.
@@ -89,14 +109,15 @@ class _DatePickerState extends State<DatePicker> {
                   // Display a CupertinoDatePicker in date picker mode.
                   onPressed: () => _showDialog(
                     CupertinoDatePicker(
-                      initialDateTime: birthday,
+                      initialDateTime: bday,
                       mode: CupertinoDatePickerMode.date,
                       use24hFormat: true,
                       // This shows day of week alongside day of month
                       showDayOfWeek: true,
                       // This is called when the user changes the date.
                       onDateTimeChanged: (DateTime newDate) {
-                        setState(() =>birthday = newDate);
+                        setState(() => bday = newDate);
+                        widget.onBirthdayChanged(bday);
                       },
                     ),
                   ),
@@ -104,9 +125,9 @@ class _DatePickerState extends State<DatePicker> {
                   // use the intl package to format the value based on the
                   // user's locale settings.
                   child: Text(
-                    '${birthday.month}-${birthday.day}-${birthday.year}',
+                    '${bday.month}-${bday.day}-${bday.year}',
                     style: const TextStyle(
-                      fontSize: 22.0,
+                      fontSize: 16.0,
                     ),
                   ),
                 ),

@@ -21,12 +21,15 @@ class SignupForm5 extends StatelessWidget{
 
         Container(
           padding: const EdgeInsets.only(top: 20),
-          child: const TextField(
+          child: TextField(
             keyboardType: TextInputType.number,
             maxLength: 6, // Set the maximum length to 6
             decoration: InputDecoration(
               labelText: 'Enter 6-Digit Code',
               hintText: '123456',
+              hintStyle: TextStyle(
+                color: Colors.grey.shade400, // Adjust the color to make it more bland
+              ),
             ),
           ),
 

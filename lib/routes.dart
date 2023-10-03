@@ -14,11 +14,6 @@ final Map<String, WidgetBuilder> routes = {
   '/login': (context) => const LoginScreen(),
 
   '/signup': (context) => const SignupScreen(),
-  '/signup1': (context) => const SignupForm1(),
-  '/signup2': (context) => const SignupForm2(),
-  '/signup3': (context) => const SignupForm3(),
-  '/signup4': (context) => const SignupForm4(),
-  '/signup5': (context) => const SignupForm5(),
 
 
   // '/home': (context) => HomeScreen(),

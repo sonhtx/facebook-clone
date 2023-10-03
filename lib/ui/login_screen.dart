@@ -33,6 +33,10 @@ class LoginForm extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    TextEditingController textEditingController1 = TextEditingController();
+    TextEditingController textEditingController2 = TextEditingController();
+
     return SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,8 +56,8 @@ class LoginForm extends StatelessWidget{
             //     ),
             // ),
 
-            const TextFieldWidget(labelText: 'Email',  paddingTop: 50.0),
-            const TextFieldWidget(labelText: 'Email',  paddingTop: 7.0),
+            TextFieldWidget(labelText: 'Email',  paddingTop: 50.0, controller: textEditingController1),
+            TextFieldWidget(labelText: 'Password',  paddingTop: 7.0, controller: textEditingController2),
 
             ButtonWidget(buttonText: 'Login', paddingTop: 7.0, textColor: Colors.white,
                 backgroundColor: Colors.cyan,
