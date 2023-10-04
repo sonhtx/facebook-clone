@@ -57,7 +57,7 @@ class LoginForm extends StatelessWidget{
             ),
 
             TextFieldWidget(labelText: 'Email',  paddingTop: 50.0, controller: textEditingController1),
-            TextFieldWidget(labelText: 'Password',  paddingTop: 7.0, controller: textEditingController2),
+            TextFieldWidget(labelText: 'Password',  paddingTop: 7.0, controller: textEditingController2, obscureText: true),
 
             ButtonWidget(buttonText: 'Login', paddingTop: 7.0, textColor: Colors.white,
                 backgroundColor: Colors.cyan,
