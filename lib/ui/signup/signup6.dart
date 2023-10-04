@@ -1,6 +1,5 @@
 
 
-import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,15 +8,41 @@ import '../../widgets/TextFieldWidget.dart';
 import '../../widgets/TextWidget.dart';
 
 
-class SignupForm6 extends StatelessWidget{
+class SignupForm6 extends StatefulWidget {
 
   const SignupForm6({super.key});
+
+  @override
+  State<SignupForm6> createState() => _PasswordState();
+
+}
+class _PasswordState extends State<SignupForm6>{
+
+  late bool visible ;
+
+  @override
+  void initState() {
+    super.initState();
+    visible = false;
+  }
+
+  void setPasswordNotMatchState(){
+    setState(() {
+      visible = true;
+    });
+  }
+
+  bool isPasswordMatch(String pw, String repw){
+    if(pw == repw){
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     TextEditingController pw = TextEditingController();
     TextEditingController repw = TextEditingController();
-
 
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,13 +71,28 @@ class SignupForm6 extends StatelessWidget{
 
         ),
 
+        Visibility(
+          visible: visible,
+          child: const TextWidget(text: "Password not match", fontSize: 12, textColor: Colors.red,
+              paddingTop: 10),
+        ),
+
         ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
             backgroundColor: Colors.cyan,
             onPressed: (){
-              final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+              if(!isPasswordMatch(pw.text, repw.text)){
+                setPasswordNotMatchState();
+              } else {
+                final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+                signupState?.signupData.password = pw.text;
 
-              signupState?.moveFoward();
-              // TODO: Signup new user
+                // send signup information to backend
+                // redirect to signup7 if receive OK response
+                // use await async for waiting response
+
+                Navigator.pushNamed(context, '/signup7');
+
+              }
             }),
       ],
     );

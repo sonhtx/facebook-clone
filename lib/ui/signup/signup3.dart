@@ -17,6 +17,15 @@ class SignupForm3 extends StatelessWidget{
     birthday = newDate;
   }
 
+  bool calculateAge(DateTime birthday) {
+    final now = DateTime.now();
+    final age = now.year - birthday.year ;
+    if(age<18){
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -38,16 +47,39 @@ class SignupForm3 extends StatelessWidget{
         ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
             backgroundColor: Colors.cyan,
             onPressed: (){
-              final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+              if(!calculateAge(birthday)){
+                showAgeRestrictionNotification(context);
+              } else {
+                final SignupState? signupState = context
+                    .findAncestorStateOfType<SignupState>();
 
-              signupState?.signupData.birthday = birthday;
-              signupState?.moveFoward();
-              // TODO: Signup new user
+                signupState?.signupData.birthday = birthday;
+                signupState?.moveFoward();
+              }
             }),
       ],
     );
   }
 
+  void showAgeRestrictionNotification(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Age Restriction"),
+          content: const Text("You must be at least 18 years old to continue."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 }
 

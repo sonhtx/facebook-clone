@@ -41,20 +41,20 @@ class LoginForm extends StatelessWidget{
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Padding(
-            //     padding: const EdgeInsets.only(top: 100.0), //
-            //     child: Container(
-            //       width: 100, // Adjust the width as needed
-            //       height: 100, // Adjust the height as needed
-            //       decoration: const BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         image: DecorationImage(
-            //           fit: BoxFit.cover,
-            //           image: AssetImage('assets/images/messi-world-cup.png'), // Specify the asset path
-            //         ),
-            //       ),
-            //     ),
-            // ),
+            Padding(
+                padding: const EdgeInsets.only(top: 100.0), //
+                child: Container(
+                  width: 100, // Adjust the width as needed
+                  height: 100, // Adjust the height as needed
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/messi-world-cup.png'), // Specify the asset path
+                    ),
+                  ),
+                ),
+            ),
 
             TextFieldWidget(labelText: 'Email',  paddingTop: 50.0, controller: textEditingController1),
             TextFieldWidget(labelText: 'Password',  paddingTop: 7.0, controller: textEditingController2),

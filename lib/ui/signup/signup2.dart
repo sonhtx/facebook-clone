@@ -9,11 +9,32 @@ import '../../widgets/ButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
 
 
-class SignupForm2 extends StatelessWidget{
+class SignupForm2 extends StatefulWidget {
   const SignupForm2(this.firstName, this.lastName, {super.key});
 
   final String firstName;
   final String lastName;
+
+  @override
+  State<SignupForm2> createState() => _NameState();
+}
+
+class _NameState extends State<SignupForm2>{
+
+  late String firstName;
+  late String lastName;
+  late bool visible ;
+
+
+  @override
+  void initState() {
+    super.initState();
+    visible = false;
+    firstName = widget.firstName;
+    lastName = widget.lastName;
+  }
+
+  void errorEmptyName(){ setState(() { visible = true; }); }
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +64,27 @@ class SignupForm2 extends StatelessWidget{
             ),
           ),
 
+          Visibility(
+            visible: visible,
+            child: const TextWidget(text: "Provide your name", fontSize: 12, textColor: Colors.red,
+                paddingTop: 10),
+
+          ),
+
           ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
               backgroundColor: Colors.cyan,
               onPressed: (){
 
-                final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
-                signupState?.signupData.firstName = firstnameController.text;
-                signupState?.signupData.lastName = lastnameController.text;
+                if(firstnameController.text == '' || lastnameController.text == ''){
+                  errorEmptyName();
+                } else {
+                  final SignupState? signupState = context
+                      .findAncestorStateOfType<SignupState>();
+                  signupState?.signupData.firstName = firstnameController.text;
+                  signupState?.signupData.lastName = lastnameController.text;
 
-                signupState?.moveFoward();
-
-                // TODO: Signup new user
+                  signupState?.moveFoward();
+                }
               }),
 
         ],

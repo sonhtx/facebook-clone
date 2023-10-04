@@ -3,6 +3,7 @@
 import 'package:anti_fb/ui/signup/signup3.dart';
 import 'package:anti_fb/ui/signup/signup4.dart';
 import 'package:anti_fb/ui/signup/signup5.dart';
+import 'package:anti_fb/ui/signup/signup7.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:anti_fb/ui/signup/signup1.dart';
 import 'package:anti_fb/ui/signup/signup2.dart';
@@ -14,6 +15,7 @@ final Map<String, WidgetBuilder> routes = {
   '/login': (context) => const LoginScreen(),
 
   '/signup': (context) => const SignupScreen(),
+  '/signup7': (context) => const SignupForm7(),
 
 
   // '/home': (context) => HomeScreen(),

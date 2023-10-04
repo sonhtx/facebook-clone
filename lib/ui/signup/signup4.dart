@@ -17,6 +17,7 @@ class SignupForm4 extends StatefulWidget{
   @override
   State<SignupForm4> createState() => _EmailState();
 }
+
 class _EmailState extends State<SignupForm4>{
   late String email;
   late bool visible ;
@@ -72,7 +73,6 @@ class _EmailState extends State<SignupForm4>{
                 signupState?.signupData.email = emailController.text;
 
                 signupState?.moveFoward();
-                // TODO: Signup new user
               }
             }),
 
