@@ -1,6 +1,7 @@
 
 
 import 'package:anti_fb/ui/signup/signup_screen.dart';
+import 'package:anti_fb/widgets/AlertDialogWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -65,18 +66,8 @@ class SignupForm3 extends StatelessWidget{
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Age Restriction"),
-          content: const Text("You must be at least 18 years old to continue."),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text("OK"),
-            ),
-          ],
-        );
+        return const AlertDialogWidget(title: 'Age restriction',
+            text: 'You must be more than 18 years old to sign up');
       },
     );
   }

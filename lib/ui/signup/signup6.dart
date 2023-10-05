@@ -3,6 +3,8 @@
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../repository/signupRepo/signup_repo.dart';
+import '../../widgets/AlertDialogWidget.dart';
 import '../../widgets/ButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
 import '../../widgets/TextWidget.dart';
@@ -79,7 +81,8 @@ class _PasswordState extends State<SignupForm6>{
 
         ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
             backgroundColor: Colors.cyan,
-            onPressed: (){
+            onPressed: () async {
+
               if(!isPasswordMatch(pw.text, repw.text)){
                 setPasswordNotMatchState();
               } else {
@@ -90,13 +93,28 @@ class _PasswordState extends State<SignupForm6>{
                 // redirect to signup7 if receive OK response
                 // use await async for waiting response
 
-                Navigator.pushNamed(context, '/signup7');
 
+                final bool isSignupSuccessful = await SignupRepository.signupUser(signupState!.signupData);
+
+                if (isSignupSuccessful) {
+                  if (context.mounted) Navigator.pushNamed(context, '/signup7');
+                } else {
+                  if (context.mounted) showSignupErrorNotification(context);
+                }
               }
             }),
       ],
     );
   }
 
+  void showSignupErrorNotification(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialogWidget(title: 'Error',
+            text: 'There was an error when trying to sign up');
+      },
+    );
+  }
 
 }
