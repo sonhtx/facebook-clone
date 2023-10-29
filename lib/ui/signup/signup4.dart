@@ -1,10 +1,12 @@
 
 
-import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/ButtonWidget.dart';
+import '../../constants.dart';
+import '../../data/auth/checkemail_api.dart';
+import '../../widgets/AlertDialogWidget.dart';
+import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
 import '../../widgets/TextWidget.dart';
 
@@ -50,33 +52,49 @@ class _EmailState extends State<SignupForm4>{
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "Enter your email", fontSize: 20, textColor: Colors.cyan),
+        const TextWidget(text: "Enter your email", fontSize: 20, textColor: CYAN),
         const TextWidget(text: "Enter the email where you can be contacted. "
-            "No one will see this on your profile.", fontSize: 12, textColor: Colors.grey,
+            "No one will see this on your profile.", fontSize: 12, textColor: GREY,
         paddingTop: 10),
         TextFieldWidget(labelText: 'Email',hintText: 'abc@anonymous.com',  paddingTop: 50.0, controller: emailController,),
 
         Visibility(
           visible: visible,
-          child: const TextWidget(text: "Enter a valid email address", fontSize: 12, textColor: Colors.red,
+          child: const TextWidget(text: "Enter a valid email address", fontSize: 12, textColor: RED,
                 paddingTop: 10),
 
         ),
 
-        ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Colors.cyan,
-            onPressed: (){
-              if(!isValidEmail(emailController.text)){
+        ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
+            backgroundColor: CYAN,
+            onPressed: () async{
+              if (!isValidEmail(emailController.text)) {
                 errorInvalidEmail();
-              } else {
-                final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
-                signupState?.signupData.email = emailController.text;
-
-                signupState?.moveFoward();
+                return;
               }
-            }),
 
+              final emailExists = await CheckEmailApi.checkEmailExist(emailController.text);
+              if(context.mounted){
+                if (emailExists) {
+                  showExistEmailNotification(context);
+                } else {
+                  final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+                  signupState?.signupData.email = emailController.text;
+                  signupState?.moveFoward();
+                }
+              }
+
+            }),
       ],
+    );
+  }
+
+  void showExistEmailNotification(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialogWidget(title: 'Error', text: 'Email already exist');
+      },
     );
   }
 }

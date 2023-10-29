@@ -5,7 +5,8 @@ import 'package:anti_fb/widgets/AlertDialogWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../widgets/ButtonWidget.dart';
+import '../../constants.dart';
+import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextWidget.dart';
 
 
@@ -21,9 +22,7 @@ class SignupForm3 extends StatelessWidget{
   bool calculateAge(DateTime birthday) {
     final now = DateTime.now();
     final age = now.year - birthday.year ;
-    if(age<18){
-      return false;
-    }
+    if(age<18){ return false;}
     return true;
   }
 
@@ -33,9 +32,9 @@ class SignupForm3 extends StatelessWidget{
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "What's your birthday?", fontSize: 20, textColor: Colors.cyan),
+        const TextWidget(text: "What's your birthday?", fontSize: 20, textColor: CYAN),
         const TextWidget(text: "Choose your date of birth. You can always make it private later.",
-            fontSize: 10, textColor: Colors.grey, paddingTop: 5.0),
+            fontSize: 10, textColor: GREY, paddingTop: 5.0),
 
         Container(
           padding: const EdgeInsets.only(top: 50.0),
@@ -45,8 +44,8 @@ class SignupForm3 extends StatelessWidget{
             )
         ),
 
-        ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Colors.cyan,
+        ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
+            backgroundColor: CYAN,
             onPressed: (){
               if(!calculateAge(birthday)){
                 showAgeRestrictionNotification(context);
@@ -150,6 +149,7 @@ class _DatePickerState extends State<DatePicker> {
                   child: Text(
                     '${bday.month}-${bday.day}-${bday.year}',
                     style: const TextStyle(
+                      color : CYAN,
                       fontSize: 16.0,
                     ),
                   ),

@@ -1,11 +1,11 @@
 
 
-import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:anti_fb/widgets/TextWidget.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/ButtonWidget.dart';
+import '../../constants.dart';
+import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
 
 
@@ -45,8 +45,8 @@ class _NameState extends State<SignupForm2>{
     return Column(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const TextWidget(text: "What's your name?", fontSize: 20, textColor: Colors.cyan),
-          const TextWidget(text: "Enter the name you use in real life", fontSize: 10, textColor: Colors.grey, paddingTop: 5.0,),
+          const TextWidget(text: "What's your name?", fontSize: 20, textColor: CYAN),
+          const TextWidget(text: "Enter the name you use in real life", fontSize: 10, textColor: GREY, paddingTop: 5.0,),
 
           Container(
             width: double.infinity,
@@ -66,13 +66,13 @@ class _NameState extends State<SignupForm2>{
 
           Visibility(
             visible: visible,
-            child: const TextWidget(text: "Provide your name", fontSize: 12, textColor: Colors.red,
+            child: const TextWidget(text: "Provide your name", fontSize: 12, textColor: RED,
                 paddingTop: 10),
 
           ),
 
-          ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-              backgroundColor: Colors.cyan,
+          ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
+              backgroundColor: CYAN,
               onPressed: (){
 
                 if(firstnameController.text == '' || lastnameController.text == ''){

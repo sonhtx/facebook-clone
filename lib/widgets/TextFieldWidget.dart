@@ -1,5 +1,6 @@
 
 
+import 'package:anti_fb/constants.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget{
@@ -33,7 +34,7 @@ class TextFieldWidget extends StatelessWidget{
             labelText: labelText,
             hintText : hintText,
             hintStyle: TextStyle(
-              color: Colors.grey.shade400, // Adjust the color to make it more bland
+              color: GREY.shade400, // Adjust the color to make it more bland
             ),
             labelStyle: const TextStyle(fontSize: 14.0),
 
@@ -43,7 +44,7 @@ class TextFieldWidget extends StatelessWidget{
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: const BorderSide(
-                color: Colors.cyan,
+                color: CYAN,
                 width: 2.0, // Adjust the width as needed for the desired thickness
               ),
             ),

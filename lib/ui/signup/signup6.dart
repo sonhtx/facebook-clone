@@ -3,9 +3,10 @@
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../repository/signupRepo/signup_repo.dart';
+import '../../constants.dart';
+import '../../repository/signup_repo.dart';
 import '../../widgets/AlertDialogWidget.dart';
-import '../../widgets/ButtonWidget.dart';
+import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
 import '../../widgets/TextWidget.dart';
 
@@ -49,13 +50,13 @@ class _PasswordState extends State<SignupForm6>{
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "Setup your password", fontSize: 20, textColor: Colors.cyan),
+        const TextWidget(text: "Setup your password", fontSize: 20, textColor: CYAN),
         Container(
           width: double.infinity,
           padding: const EdgeInsets.only(top: 15.0),
           child: Row(
             children: [
-              const TextWidget(text: "Enter your password", width : 145, fontSize: 12, textColor: Colors.grey),
+              const TextWidget(text: "Enter your password", width : 145, fontSize: 12, textColor: GREY),
               TextFieldWidget(width : 145, controller: pw, obscureText: true,)
             ],
           )
@@ -66,7 +67,7 @@ class _PasswordState extends State<SignupForm6>{
             padding: const EdgeInsets.only(top: 15.0),
             child: Row(
               children: [
-                const TextWidget(text: "Re-Enter your password", width : 145, fontSize: 12, textColor: Colors.grey),
+                const TextWidget(text: "Re-Enter your password", width : 145, fontSize: 12, textColor: GREY),
                 TextFieldWidget(width : 145, controller: repw, obscureText: true,)
               ],
             )
@@ -75,13 +76,22 @@ class _PasswordState extends State<SignupForm6>{
 
         Visibility(
           visible: visible,
-          child: const TextWidget(text: "Password not match", fontSize: 12, textColor: Colors.red,
+          child: const TextWidget(text: "Password not match", fontSize: 12, textColor: RED,
               paddingTop: 10),
         ),
 
-        ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Colors.cyan,
+        ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
+            backgroundColor: CYAN,
             onPressed: () async {
+              if(pw.text == ''){
+                showNeedProvidePasswordNotification(context);
+                return;
+              }
+              if(repw.text == ''){
+                showNeedProvideRePasswordNotification(context);
+                return;
+              }
+
 
               if(!isPasswordMatch(pw.text, repw.text)){
                 setPasswordNotMatchState();
@@ -96,11 +106,10 @@ class _PasswordState extends State<SignupForm6>{
 
                 final bool isSignupSuccessful = await SignupRepository.signupUser(signupState!.signupData);
 
-                if (isSignupSuccessful) {
-                  if (context.mounted) Navigator.pushNamed(context, '/signup7');
-                } else {
-                  if (context.mounted) showSignupErrorNotification(context);
+                if(context.mounted){
+                  isSignupSuccessful ? signupState.moveFoward() : showSignupErrorNotification(context);
                 }
+
               }
             }),
       ],
@@ -111,8 +120,23 @@ class _PasswordState extends State<SignupForm6>{
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error',
-            text: 'There was an error when trying to sign up');
+        return const AlertDialogWidget(title: 'Error', text: 'There was an error when trying to sign up');
+      },
+    );
+  }
+  void showNeedProvidePasswordNotification(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialogWidget(title: 'Error', text: 'Need to provide password');
+      },
+    );
+  }
+  void showNeedProvideRePasswordNotification(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialogWidget(title: 'Error', text: 'Need re enter password');
       },
     );
   }

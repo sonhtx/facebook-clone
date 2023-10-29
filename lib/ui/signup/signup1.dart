@@ -3,7 +3,8 @@
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/ButtonWidget.dart';
+import '../../constants.dart';
+import '../../widgets/ElevatedButtonWidget.dart';
 
 class SignupForm1 extends StatelessWidget{
   const SignupForm1({super.key});
@@ -14,16 +15,16 @@ class SignupForm1 extends StatelessWidget{
 
         children: [
 
-          ButtonWidget(buttonText: 'Get started', paddingTop: 100.0, textColor: Colors.white,
-              backgroundColor: Colors.cyan,
+          ElevatedButtonWidget(buttonText: 'Get started', paddingTop: 100.0, textColor: WHITE,
+              backgroundColor: CYAN,
               onPressed: (){
                 final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
                 signupState?.moveFoward();
                 // TODO: Signup new user
               }),
 
-          ButtonWidget(buttonText: 'I already have an account', paddingTop: 0.0, textColor: Colors.cyan,
-              backgroundColor: Colors.white,
+          ElevatedButtonWidget(buttonText: 'I already have an account', paddingTop: 0.0, textColor: CYAN,
+              backgroundColor: WHITE,
               onPressed: (){
                 Navigator.pushNamed(context, '/login');
                 // TODO: Signup new user
