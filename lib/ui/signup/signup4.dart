@@ -1,5 +1,6 @@
 
 
+import 'package:anti_fb/constants/constants.dart';
 import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -50,9 +51,9 @@ class _EmailState extends State<SignupForm4>{
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "Enter your email", fontSize: 20, textColor: Colors.cyan),
+        const TextWidget(text: "Enter your email", fontSize: 25, textColor: Colors.black),
         const TextWidget(text: "Enter the email where you can be contacted. "
-            "No one will see this on your profile.", fontSize: 12, textColor: Colors.grey,
+            "No one will see this on your profile.", fontSize: 14, textColor: Colors.grey,
         paddingTop: 10),
         TextFieldWidget(labelText: 'Email',hintText: 'abc@anonymous.com',  paddingTop: 50.0, controller: emailController,),
 
@@ -64,7 +65,7 @@ class _EmailState extends State<SignupForm4>{
         ),
 
         ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Colors.cyan,
+            backgroundColor: Constants.DARK_BLUE,
             onPressed: (){
               if(!isValidEmail(emailController.text)){
                 errorInvalidEmail();

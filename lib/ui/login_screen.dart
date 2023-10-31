@@ -1,5 +1,3 @@
-
-
 import 'package:anti_fb/constants/constants.dart';
 import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/widgets/ButtonWidget.dart';
@@ -17,6 +15,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late bool visible;
+  String error = " ";
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -24,9 +25,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    super.initState();
+    visible = false;
+  }
+
+  void account_error(message) {
+    setState(() {
+      visible = true;
+      error = message;
+    });
+  }
+
+  void valid() {
+    setState(() {
+      visible = false;
+      error = " ";
+    });
+  }
+
+  bool isValidEmail(String email) {
+    // Use a regular expression to validate the email format
+    // You can customize this regex to suit your validation criteria
+    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+    return emailRegex.hasMatch(email);
   }
 
   @override
@@ -38,11 +61,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: Constants.defaultPadding,
-
           child: SingleChildScrollView(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -55,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: AlignmentDirectional(0.00, -1.00),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
@@ -68,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00,1.00),
+                    alignment: AlignmentDirectional(0.00, 1.00),
                     child: Container(
                       width: double.infinity,
                       // height: 200,
@@ -77,30 +99,46 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                          TextFieldWidget(
-                            labelText: 'Email',
-                            paddingTop: 15.0,
-                            controller: emailController),
-                          TextFieldWidget(
-                            labelText: 'Password',
-                            paddingTop: 7.0,
-                            controller: passwordController,
-                            obscureText: true),
-
-                          ButtonWidget(buttonText: 'Login', paddingTop: 15.0, textColor: Colors.white,
-                            backgroundColor: Constants.DARK_BLUE,
-                            onPressed: (){
-
-                            },
-                            fontSize: 17.0,),
-                            TextButton(
+                            TextFieldWidget(
+                              labelText: 'Email',
+                              paddingTop: 15.0,
+                              controller: emailController,
+                            ),
+                            TextFieldWidget(
+                                labelText: 'Password',
+                                paddingTop: 7.0,
+                                controller: passwordController,
+                                obscureText: true),
+                            Visibility(
+                              visible: visible,
+                              child: TextWidget(
+                                  text: error,
+                                  fontSize: 12,
+                                  textColor: Colors.red,
+                                  paddingTop: 10),
+                            ),
+                            ButtonWidget(
+                              buttonText: 'Login',
+                              paddingTop: 15.0,
+                              textColor: Colors.white,
+                              backgroundColor: Constants.DARK_BLUE,
                               onPressed: () {
-
+                                if (!isValidEmail(emailController.text)) {
+                                  account_error("Enter a valid email adress");
+                                } else if(passwordController.text == ""){
+                                  account_error("Please enter your password");
+                                }else{
+                                  valid();
+                                }
                               },
+                              fontSize: 17.0,
+                            ),
+                            TextButton(
+                              onPressed: () {},
                               child: const Text('Forgot Password?'),
                               style: TextButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                            ),
+                                foregroundColor: Colors.black,
+                              ),
                             )
                           ],
                         ),
@@ -114,10 +152,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       paddingTop: 5.0,
                       textColor: Constants.DARK_BLUE,
                       backgroundColor: Colors.white,
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushNamed(context, '/signup');
-                        },
-                      fontSize: 15.0,),
+                      },
+                      fontSize: 15.0,
+                    ),
                   )
                 ],
               ),

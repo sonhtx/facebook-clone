@@ -1,5 +1,6 @@
 
 
+import 'package:anti_fb/constants/constants.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -49,14 +50,15 @@ class _PasswordState extends State<SignupForm6>{
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "Setup your password", fontSize: 20, textColor: Colors.cyan),
+        const TextWidget(text: "Setup your password", fontSize: 20, textColor: Colors.black),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 35.0),
           child: Row(
+            mainAxisSize: MainAxisSize.max,
             children: [
-              const TextWidget(text: "Enter your password", width : 145, fontSize: 12, textColor: Colors.grey),
-              TextFieldWidget(width : 145, controller: pw, obscureText: true,)
+              Expanded(child: const TextWidget(text: "Enter your password", fontSize: 12, textColor: Colors.black)),
+              Expanded(child: TextFieldWidget( controller: pw, obscureText: true,))
             ],
           )
           
@@ -65,9 +67,10 @@ class _PasswordState extends State<SignupForm6>{
             width: double.infinity,
             padding: const EdgeInsets.only(top: 15.0),
             child: Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                const TextWidget(text: "Re-Enter your password", width : 145, fontSize: 12, textColor: Colors.grey),
-                TextFieldWidget(width : 145, controller: repw, obscureText: true,)
+                Expanded(child: const TextWidget(text: "Re-Enter your password", width : 145, fontSize: 12, textColor: Colors.black)),
+                Expanded(child: TextFieldWidget(controller: repw, obscureText: true,))
               ],
             )
 
@@ -79,29 +82,29 @@ class _PasswordState extends State<SignupForm6>{
               paddingTop: 10),
         ),
 
-        ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Colors.cyan,
+        ButtonWidget(buttonText: 'Next', paddingTop: 35.0, textColor: Colors.white,
+            backgroundColor: Constants.DARK_BLUE,
             onPressed: () async {
-
-              if(!isPasswordMatch(pw.text, repw.text)){
-                setPasswordNotMatchState();
-              } else {
-                final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
-                signupState?.signupData.password = pw.text;
-
-                // send signup information to backend
-                // redirect to signup7 if receive OK response
-                // use await async for waiting response
-
-
-                final bool isSignupSuccessful = await SignupRepository.signupUser(signupState!.signupData);
-
-                if (isSignupSuccessful) {
-                  if (context.mounted) Navigator.pushNamed(context, '/signup7');
-                } else {
-                  if (context.mounted) showSignupErrorNotification(context);
-                }
-              }
+              Navigator.pushNamed(context, '/signup7');
+              // if(!isPasswordMatch(pw.text, repw.text)){
+              //   setPasswordNotMatchState();
+              // } else {
+              //   final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+              //   signupState?.signupData.password = pw.text;
+              //
+              //   send signup information to backend
+              //   redirect to signup7 if receive OK response
+              //   use await async for waiting response
+              //
+              //
+              //   final bool isSignupSuccessful = await SignupRepository.signupUser(signupState!.signupData);
+              //
+              //   if (isSignupSuccessful) {
+              //     if (context.mounted) Navigator.pushNamed(context, '/signup7');
+              //   } else {
+              //     if (context.mounted) showSignupErrorNotification(context);
+              //   }
+              // }
             }),
       ],
     );

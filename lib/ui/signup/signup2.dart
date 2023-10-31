@@ -1,5 +1,6 @@
 
 
+import 'package:anti_fb/constants/constants.dart';
 import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:anti_fb/widgets/TextWidget.dart';
@@ -45,20 +46,22 @@ class _NameState extends State<SignupForm2>{
     return Column(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const TextWidget(text: "What's your name?", fontSize: 20, textColor: Colors.cyan),
+          const TextWidget(text: "What's your name?", fontSize: 20, textColor: Colors.black),
           const TextWidget(text: "Enter the name you use in real life", fontSize: 10, textColor: Colors.grey, paddingTop: 5.0,),
 
           Container(
             width: double.infinity,
             padding: const EdgeInsets.only(top: 15.0),
             child: Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
-
-                TextFieldWidget(labelText: 'First name', width: 145,
-                    paddingRight: 5.0, controller: firstnameController, hintText: 'John',),
-                TextFieldWidget(labelText: 'Last name', width: 145,
-                    paddingLeft: 5.0, controller: lastnameController, hintText: 'Cena',),
-
+                Expanded(
+                    child: TextFieldWidget(labelText: 'First name',
+                      paddingRight: 5.0, controller: firstnameController, hintText: 'John',),
+                ),
+                Expanded(
+                  child: TextFieldWidget(labelText: 'Last name',
+                  paddingLeft: 5.0, controller: lastnameController, hintText: 'Cena',),)
               ],
 
             ),
@@ -72,7 +75,7 @@ class _NameState extends State<SignupForm2>{
           ),
 
           ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-              backgroundColor: Colors.cyan,
+              backgroundColor: Constants.DARK_BLUE,
               onPressed: (){
 
                 if(firstnameController.text == '' || lastnameController.text == ''){

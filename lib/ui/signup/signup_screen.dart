@@ -59,28 +59,30 @@ class SignupState extends State<SignupScreen>{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // title: const Text('Signup'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(
-          color: Colors.grey, // Set the color of the back arrow icon to black
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          // title: const Text('Signup'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: const IconThemeData(
+            color: Colors.grey, // Set the color of the back arrow icon to black
+          ),
+          leading: currentFormIndex > 0 ? BackButton(
+            onPressed: () {
+              navigateBack(); // Call the navigateBack method when the back button is pressed
+            },
+          )
+              : null,
         ),
-        leading: currentFormIndex > 0 ? BackButton(
-          onPressed: () {
-            navigateBack(); // Call the navigateBack method when the back button is pressed
-          },
-        )
-            : null,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: screen,
-        )
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: screen,
+          )
 
-      )
+        )
+      ),
     );
   }
 }

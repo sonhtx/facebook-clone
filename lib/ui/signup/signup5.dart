@@ -1,5 +1,6 @@
 
 
+import 'package:anti_fb/constants/constants.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,9 @@ class SignupForm5 extends StatelessWidget{
             maxLength: 6, // Set the maximum length to 6
             decoration: InputDecoration(
               labelText: 'Enter 6-Digit Code',
+              labelStyle: TextStyle(
+                color: Constants.DARK_BLUE
+              ),
               hintText: '123456',
               hintStyle: TextStyle(
                 color: Colors.grey.shade400, // Adjust the color to make it more bland
@@ -36,14 +40,13 @@ class SignupForm5 extends StatelessWidget{
         ),
 
         ButtonWidget(buttonText: 'Confirm', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Colors.cyan,
+            backgroundColor: Constants.DARK_BLUE,
             onPressed: (){
               final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
               signupState?.moveFoward();
-              // TODO: Signup new user
             }),
 
-        ButtonWidget(buttonText: "I'm not receive code", paddingTop: 5.0, textColor: Colors.cyan,
+        ButtonWidget(buttonText: "I'm not receive code", paddingTop: 5.0, textColor: Constants.DARK_BLUE,
             backgroundColor: Colors.white,
             onPressed: (){
               Navigator.pushNamed(context, '/signup');

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:anti_fb/routes.dart';
 
+import 'constants/constants.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,9 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.cyan,
-      // ),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Constants.scaffold
+      ),
 
       initialRoute: initialRoute,
       routes: routes,
