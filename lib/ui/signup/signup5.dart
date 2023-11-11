@@ -27,8 +27,8 @@ class SignupForm5 extends StatelessWidget{
             maxLength: 6, // Set the maximum length to 6
             decoration: InputDecoration(
               labelText: 'Enter 6-Digit Code',
-              labelStyle: TextStyle(
-                color: Constants.DARK_BLUE
+              labelStyle: const TextStyle(
+                color: Constants.darkBlue
               ),
               hintText: '123456',
               hintStyle: TextStyle(
@@ -40,13 +40,13 @@ class SignupForm5 extends StatelessWidget{
         ),
 
         ButtonWidget(buttonText: 'Confirm', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Constants.DARK_BLUE,
+            backgroundColor: Constants.darkBlue,
             onPressed: (){
               final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
               signupState?.moveFoward();
             }),
 
-        ButtonWidget(buttonText: "I'm not receive code", paddingTop: 5.0, textColor: Constants.DARK_BLUE,
+        ButtonWidget(buttonText: "I'm not receive code", paddingTop: 5.0, textColor: Constants.darkBlue,
             backgroundColor: Colors.white,
             onPressed: (){
               Navigator.pushNamed(context, '/signup');

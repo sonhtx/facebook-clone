@@ -9,9 +9,21 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../../models/post_model.dart';
 import '../../widgets/post_container.dart';
 
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends StatefulWidget{
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -46,7 +58,7 @@ class HomeScreen extends StatelessWidget{
               ],
             ),
 
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: CreatePostContainer(currentUser: currentUser),
             ),
             SliverPadding(
@@ -66,5 +78,6 @@ class HomeScreen extends StatelessWidget{
       ),
     );
   }
+
 
 }

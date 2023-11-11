@@ -11,40 +11,43 @@ class CustomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-      indicatorPadding: EdgeInsets.zero,
-      indicator: BoxDecoration(
-        border: isBottomIndicator
-            ? Border(
-          bottom: BorderSide(
-            color: Constants.facebookBlue,
-            width: 3.0,
-          ),
-        )
-            : Border(
-          top: BorderSide(
-            color: Constants.facebookBlue,
-            width: 3.0,
+    return Material(
+      color: Colors.white,
+      child: TabBar(
+        indicatorPadding: EdgeInsets.zero,
+        indicator: BoxDecoration(
+          border: isBottomIndicator
+              ? const Border(
+            bottom: BorderSide(
+              color: Constants.facebookBlue,
+              width: 3.0,
+            ),
+          )
+              : const Border(
+            top: BorderSide(
+              color: Constants.facebookBlue,
+              width: 3.0,
+            ),
           ),
         ),
+        tabs: icons
+            .asMap()
+            .map((i, e) => MapEntry(
+          i,
+          Tab(
+            icon: Icon(
+              e,
+              color: i == selectedIndex
+                  ? Constants.facebookBlue
+                  : Colors.black45,
+              size: 30.0,
+            ),
+          ),
+        ))
+            .values
+            .toList(),
+        onTap: onTap,
       ),
-      tabs: icons
-          .asMap()
-          .map((i, e) => MapEntry(
-        i,
-        Tab(
-          icon: Icon(
-            e,
-            color: i == selectedIndex
-                ? Constants.facebookBlue
-                : Colors.black45,
-            size: 30.0,
-          ),
-        ),
-      ))
-          .values
-          .toList(),
-      onTap: onTap,
     );
   }
 }

@@ -3,7 +3,6 @@
 import 'package:anti_fb/constants/constants.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../../widgets/ButtonWidget.dart';
 
@@ -17,7 +16,7 @@ class SignupForm1 extends StatelessWidget{
         children: [
 
           ButtonWidget(buttonText: 'Get started', paddingTop: 100.0, textColor: Colors.white,
-              backgroundColor: Constants.DARK_BLUE,
+              backgroundColor: Constants.darkBlue,
               onPressed: (){
                 final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
                 signupState?.moveFoward();

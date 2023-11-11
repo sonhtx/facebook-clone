@@ -23,7 +23,7 @@ class SignupForm7 extends StatelessWidget{
                 paddingTop: 100, textAlign: TextAlign.center,),
                 const TextWidget(text: 'You have successfully signup. Please go back to login page', fontSize: 20, textColor: Colors.black,
                   paddingTop: 20, textAlign: TextAlign.center,),
-                ButtonWidget(buttonText: 'Back to login page', paddingTop: 100.0, textColor: Constants.DARK_BLUE,
+                ButtonWidget(buttonText: 'Back to login page', paddingTop: 100.0, textColor: Constants.darkBlue,
                     backgroundColor: Colors.white,
                     onPressed: (){
                       Navigator.pushNamed(context, '/login');

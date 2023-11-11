@@ -9,7 +9,7 @@ class Post{
   final int comments;
   final int shares;
 
-  Post({required this.user, required this.caption, required this.timeAgo, required this.likes, required this.comments, required this.shares,this.imageUrl=null});
+  Post({required this.user, required this.caption, required this.timeAgo, required this.likes, required this.comments, required this.shares,this.imageUrl});
 
 
 

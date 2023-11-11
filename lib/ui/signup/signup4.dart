@@ -1,7 +1,6 @@
 
 
 import 'package:anti_fb/constants/constants.dart';
-import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +64,7 @@ class _EmailState extends State<SignupForm4>{
         ),
 
         ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Constants.DARK_BLUE,
+            backgroundColor: Constants.darkBlue,
             onPressed: (){
               if(!isValidEmail(emailController.text)){
                 errorInvalidEmail();

@@ -1,5 +1,4 @@
 import 'package:anti_fb/models/user_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CreatePostContainer extends StatelessWidget {
@@ -20,7 +19,7 @@ class CreatePostContainer extends StatelessWidget {
               CircleAvatar(
                 radius: 20.0,
                 backgroundColor: Colors.grey[200],
-                backgroundImage: AssetImage('assets/images/messi-world-cup.png'),
+                backgroundImage: const AssetImage('assets/images/messi-world-cup.png'),
               ),
               const SizedBox(width: 8.0),
               const Expanded(

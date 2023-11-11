@@ -1,10 +1,8 @@
 
 
 import 'package:anti_fb/constants/constants.dart';
-import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../repository/signupRepo/signup_repo.dart';
 import '../../widgets/AlertDialogWidget.dart';
 import '../../widgets/ButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
@@ -57,7 +55,7 @@ class _PasswordState extends State<SignupForm6>{
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(child: const TextWidget(text: "Enter your password", fontSize: 12, textColor: Colors.black)),
+              const Expanded(child: TextWidget(text: "Enter your password", fontSize: 12, textColor: Colors.black)),
               Expanded(child: TextFieldWidget( controller: pw, obscureText: true,))
             ],
           )
@@ -69,7 +67,7 @@ class _PasswordState extends State<SignupForm6>{
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Expanded(child: const TextWidget(text: "Re-Enter your password", width : 145, fontSize: 12, textColor: Colors.black)),
+                const Expanded(child: TextWidget(text: "Re-Enter your password", width : 145, fontSize: 12, textColor: Colors.black)),
                 Expanded(child: TextFieldWidget(controller: repw, obscureText: true,))
               ],
             )
@@ -83,7 +81,7 @@ class _PasswordState extends State<SignupForm6>{
         ),
 
         ButtonWidget(buttonText: 'Next', paddingTop: 35.0, textColor: Colors.white,
-            backgroundColor: Constants.DARK_BLUE,
+            backgroundColor: Constants.darkBlue,
             onPressed: () async {
               Navigator.pushNamed(context, '/signup7');
               // if(!isPasswordMatch(pw.text, repw.text)){

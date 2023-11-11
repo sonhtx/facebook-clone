@@ -47,7 +47,7 @@ class SignupForm3 extends StatelessWidget{
         ),
 
         ButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: Colors.white,
-            backgroundColor: Constants.DARK_BLUE,
+            backgroundColor: Constants.darkBlue,
             onPressed: (){
               if(!calculateAge(birthday)){
                 showAgeRestrictionNotification(context);
@@ -76,7 +76,7 @@ class SignupForm3 extends StatelessWidget{
 }
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({Key? key, required this.birthday, required this.onBirthdayChanged}) : super(key: key);
+  const DatePicker({super.key, required this.birthday, required this.onBirthdayChanged});
 
   final DateTime birthday;
   final Function(DateTime) onBirthdayChanged;

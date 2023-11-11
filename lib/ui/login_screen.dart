@@ -1,5 +1,4 @@
 import 'package:anti_fb/constants/constants.dart';
-import 'package:anti_fb/routes.dart';
 import 'package:anti_fb/widgets/ButtonWidget.dart';
 import 'package:anti_fb/widgets/TextFieldWidget.dart';
 import 'package:anti_fb/widgets/TextWidget.dart';
@@ -66,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Padding(
           padding: Constants.defaultPadding,
           child: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               child: Column(
@@ -75,9 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0.00, -1.00),
+                    alignment: const AlignmentDirectional(0.00, -1.00),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.asset(
@@ -90,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 1.00),
-                    child: Container(
+                    alignment: const AlignmentDirectional(0.00, 1.00),
+                    child: SizedBox(
                       width: double.infinity,
                       // height: 200,
                       child: Form(
@@ -121,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               buttonText: 'Login',
                               paddingTop: 15.0,
                               textColor: Colors.white,
-                              backgroundColor: Constants.DARK_BLUE,
+                              backgroundColor: Constants.darkBlue,
                               onPressed: () {
                                 if (!isValidEmail(emailController.text)) {
                                   account_error("Enter a valid email adress");
@@ -135,10 +134,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             TextButton(
                               onPressed: () {},
-                              child: const Text('Forgot Password?'),
                               style: TextButton.styleFrom(
                                 foregroundColor: Colors.black,
                               ),
+                              child: const Text('Forgot Password?'),
                             )
                           ],
                         ),
@@ -146,11 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.00, 0.00),
+                    alignment: const AlignmentDirectional(0.00, 0.00),
                     child: ButtonWidget(
                       buttonText: 'Signup new account',
                       paddingTop: 5.0,
-                      textColor: Constants.DARK_BLUE,
+                      textColor: Constants.darkBlue,
                       backgroundColor: Colors.white,
                       onPressed: () {
                         Navigator.pushNamed(context, '/signup');

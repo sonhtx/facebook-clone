@@ -2,9 +2,7 @@ import 'package:anti_fb/constants/constants.dart';
 import 'package:anti_fb/models/post_model.dart';
 import 'package:anti_fb/widgets/profile_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:readmore/readmore.dart';
 
 class PostContainer extends StatelessWidget {
@@ -35,7 +33,7 @@ class PostContainer extends StatelessWidget {
                 trimMode: TrimMode.Line,
                 trimCollapsedText: '    Show more',
                 trimExpandedText: '',
-                moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color:Colors.grey),
+                moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color:Colors.grey),
               ),
                 post.imageUrl != null ? const SizedBox.shrink():const SizedBox(height: 6.0,)
               ],
@@ -43,7 +41,7 @@ class PostContainer extends StatelessWidget {
           ),
           post.imageUrl != null ? Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: CachedNetworkImage(imageUrl: post.imageUrl!!),
+            child: CachedNetworkImage(imageUrl: post.imageUrl!),
           ) :const SizedBox.shrink(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -58,7 +56,7 @@ class PostContainer extends StatelessWidget {
 class _PostHeader extends StatelessWidget {
   final Post post;
 
-  const _PostHeader({super.key, required this.post});
+  const _PostHeader({required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +105,7 @@ class _PostHeader extends StatelessWidget {
 class _PostStats extends StatelessWidget {
   final Post post;
 
-  const _PostStats({super.key, required this.post});
+  const _PostStats({required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +115,7 @@ class _PostStats extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Constants.facebookBlue,
                 shape: BoxShape.circle,
               ),
@@ -154,32 +152,25 @@ class _PostStats extends StatelessWidget {
         const Divider(),
         Row(
           children: [
-            _PostButton(
-              icon:Icon(
-                MdiIcons.thumbUpOutline,
-                color: Colors.grey[600],
-                size: 20.0,
-              ),
-              label: 'Like',
+            PostButton(
+              label: 'kudos',
               onTap: (){},
+              isLiked: true,
+              textColors: Constants.facebookBlue,
             ),
-            _PostButton(
-              icon:Icon(
-                MdiIcons.commentOutline,
-                color: Colors.grey[600],
-                size: 20.0,
-              ),
-              label: 'Comment',
+            PostButton(
+              label: 'mark',
               onTap: (){},
+              isLiked: false,
+              textColors: Constants.text,
             ),
-            _PostButton(
-              icon:Icon(
-                MdiIcons.shareOutline,
-                color: Colors.grey[600],
-                size: 20.0,
-              ),
-              label: 'Share',
-              onTap: (){},
+            PostButton(
+              label: 'disappointed',
+              onTap: (){
+
+              },
+              isLiked: true,
+              textColors: Colors.red,
             ),
           ],
         )
@@ -188,12 +179,32 @@ class _PostStats extends StatelessWidget {
   }
 }
 
-class _PostButton extends StatelessWidget {
-  final Icon icon;
+class PostButton extends StatefulWidget {
   final String label;
   final VoidCallback? onTap;
+  final bool isLiked;
+  final Color textColors;
 
-  const _PostButton({super.key, required this.icon, required this.label, this.onTap});
+  const PostButton({super.key, required this.label, this.onTap,required this.isLiked,required this.textColors});
+
+  @override
+  State<PostButton> createState() => _PostButtonState();
+}
+
+class _PostButtonState extends State<PostButton> {
+  late bool like;
+  Color? textColor;
+
+  @override
+  void initState(){
+    super.initState();
+    like = widget.isLiked;
+    if(like){
+      textColor = widget.textColors;
+    }else{
+      textColor = Constants.text;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,16 +212,16 @@ class _PostButton extends StatelessWidget {
       child: Material(
         color: Colors.white,
         child: InkWell(
-          onTap: onTap,
+          onTap: widget.onTap,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             height: 25.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                icon,
                 const SizedBox(width: 4.0),
-                Text(label),
+                Text(widget.label,
+                style: TextStyle(color: textColor),),
               ],
             ),
           ),
@@ -219,3 +230,4 @@ class _PostButton extends StatelessWidget {
     );
   }
 }
+
