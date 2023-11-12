@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               child: CreatePostContainer(currentUser: currentUser),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
+              padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 5.0),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                     (context,index){

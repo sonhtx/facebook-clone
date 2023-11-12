@@ -221,7 +221,10 @@ class _PostButtonState extends State<PostButton> {
               children: [
                 const SizedBox(width: 4.0),
                 Text(widget.label,
-                style: TextStyle(color: textColor),),
+                style: TextStyle(
+                    color: textColor,
+                    fontSize: 12.0,
+                ),),
               ],
             ),
           ),

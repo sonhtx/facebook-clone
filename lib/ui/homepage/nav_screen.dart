@@ -12,24 +12,24 @@ class NavScreen extends StatefulWidget {
   State<NavScreen> createState() => _NavScreenState();
 }
 
-class _NavScreenState extends State<NavScreen> {
+class _NavScreenState extends State<NavScreen> with TickerProviderStateMixin {
   final List<Widget> _screens = [
     const HomeScreen(),
     const ProfileScreen(),
-    // const Scaffold(
-    //   key: PageStorageKey("Notification Screen"),
-    // ),
-    // const Scaffold(
-    //   key: PageStorageKey("Menu Screen")
-    // ),
+    const Scaffold(
+    ),
+    const Scaffold(
+    ),
   ];
 
   late PageController pageController;
+  late TabController tabController;
   int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 4, vsync: this);
     pageController = PageController();
   }
 
@@ -37,14 +37,15 @@ class _NavScreenState extends State<NavScreen> {
   @override
   void dispose() {
     pageController.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
   final List<IconData> _icons = [
     Icons.home,
     MdiIcons.accountCircleOutline,
-    // MdiIcons.bellOutline,
-    // Icons.menu,
+    MdiIcons.bellOutline,
+    Icons.menu,
   ];
 
   _onTapped(int index){
@@ -54,6 +55,14 @@ class _NavScreenState extends State<NavScreen> {
     pageController.jumpToPage(index);
   }
 
+  void onPageChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    pageController.addListener(() {
+      tabController.animateTo(pageController.page!.round());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +75,7 @@ class _NavScreenState extends State<NavScreen> {
             children: _screens,
           ),
           bottomNavigationBar: CustomTabBar(
+            controller: tabController,
             icons:_icons,
             onTap: _onTapped,
             selectedIndex: _selectedIndex,
@@ -74,9 +84,5 @@ class _NavScreenState extends State<NavScreen> {
     );
   }
 
-  void onPageChanged(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+
 }
