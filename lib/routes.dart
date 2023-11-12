@@ -1,5 +1,4 @@
 // import 'dart:js';
-import 'package:anti_fb/ui/homepage/home_screen.dart';
 import 'package:anti_fb/ui/homepage/nav_screen.dart';
 import 'package:anti_fb/ui/signup/signup7.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
@@ -14,7 +13,7 @@ final Map<String, WidgetBuilder> routes = {
   '/signup7': (context) => const SignupForm7(),
 
 
-  '/home': (context) => const HomeScreen(),
+  // '/home': (context) => const HomeScreen(),
   '/nav': (context) => const NavScreen(),
   // '/profile': (context) => ProfileScreen(),
   // '/friends': (context) => FriendsScreen(),

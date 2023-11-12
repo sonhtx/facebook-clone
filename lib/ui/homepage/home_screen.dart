@@ -9,15 +9,17 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../../models/post_model.dart';
 import '../../widgets/post_container.dart';
 
-class HomeScreen extends StatefulWidget{
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+
+  final ScrollController scrollController;
+  const HomeScreen({super.key, required this.scrollController});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
-
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -27,13 +29,14 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
+          controller: widget.scrollController,
           slivers: [
             SliverAppBar(
-              backgroundColor: Colors.white,
+              backgroundColor : Colors.white,
               systemOverlayStyle: SystemUiOverlayStyle.light,
               title: const Text(
                 'facebook',
-                  style: TextStyle(
+                style: TextStyle(
                   color: Constants.facebookBlue,
                   fontSize: 28.0,
                   fontWeight: FontWeight.bold,
@@ -43,32 +46,26 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               centerTitle: false,
               floating: true,
               actions: [
+                CircleButton(icon: Icons.add, iconSize: 30.0, onPressed: () {}),
                 CircleButton(
-                    icon: Icons.add,
-                    iconSize: 30.0,
-                    onPressed: (){}),
-                CircleButton(
-                    icon: Icons.search,
-                    iconSize: 30.0,
-                    onPressed: (){}),
+                    icon: Icons.search, iconSize: 30.0, onPressed: () {}),
                 CircleButton(
                     icon: MdiIcons.facebookMessenger,
                     iconSize: 30.0,
-                    onPressed: (){})
+                    onPressed: () {})
               ],
             ),
-
             const SliverToBoxAdapter(
               child: CreatePostContainer(currentUser: currentUser),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
+              padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 5.0),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                    (context,index){
-                      final Post post = posts[index];
-                      return PostContainer(post: post);
-                    },
+                  (context, index) {
+                    final Post post = posts[index];
+                    return PostContainer(post: post);
+                  },
                   childCount: posts.length,
                 ),
               ),
@@ -78,6 +75,4 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
       ),
     );
   }
-
-
 }

@@ -6,47 +6,59 @@ class CustomTabBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onTap;
   final bool isBottomIndicator;
+  final TabController controller;
 
-  const CustomTabBar({super.key, required this.icons, required this.selectedIndex, required this.onTap,this.isBottomIndicator = false});
+  const CustomTabBar(
+      {super.key,
+      required this.icons,
+      required this.selectedIndex,
+      required this.onTap,
+      this.isBottomIndicator = false,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      child: TabBar(
-        indicatorPadding: EdgeInsets.zero,
-        indicator: BoxDecoration(
-          border: isBottomIndicator
-              ? const Border(
-            bottom: BorderSide(
-              color: Constants.facebookBlue,
-              width: 3.0,
-            ),
-          )
-              : const Border(
-            top: BorderSide(
-              color: Constants.facebookBlue,
-              width: 3.0,
-            ),
-          ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          //This is for background color
+          color: Colors.white.withOpacity(0.0),
+
+          //This is for bottom border that is needed
+          border: const Border(
+              top: BorderSide(color: Colors.black, width: 0.2)),
         ),
-        tabs: icons
-            .asMap()
-            .map((i, e) => MapEntry(
-          i,
-          Tab(
-            icon: Icon(
-              e,
-              color: i == selectedIndex
-                  ? Constants.facebookBlue
-                  : Colors.black45,
-              size: 30.0,
+        child: TabBar(
+          controller: controller,
+          indicatorPadding: EdgeInsets.zero,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicator: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Constants.facebookBlue,
+                width: 2.0,
+              ),
             ),
           ),
-        ))
-            .values
-            .toList(),
-        onTap: onTap,
+          tabs: icons
+              .asMap()
+              .map((i, e) => MapEntry(
+                    i,
+                    Tab(
+                      icon: Icon(
+                        e,
+                        color: i == selectedIndex
+                            ? Constants.facebookBlue
+                            : Colors.black45,
+                        size: 30.0,
+                      ),
+                    ),
+                  ))
+              .values
+              .toList(),
+          onTap: onTap,
+        ),
       ),
     );
   }

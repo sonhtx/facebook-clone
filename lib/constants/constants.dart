@@ -10,6 +10,8 @@ class Constants {
   static const Color scaffold = Color(0xFFD1D2D5);
   static const Color facebookBlue = Color(0xFF1777F2);
   static const Color online = Color(0xFF4BCB1F);
-  static const Color text = Color(0xFF757575);
+  static const Color text = Color(0xFFEFF1F4);
+  static const Color bg = Color(0xFFEFF1F5);
+  static const Color btnbg = Color(0xFFE5E4E9);
 // Add more color constants as needed
 }

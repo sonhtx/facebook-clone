@@ -32,8 +32,9 @@ class PostContainer extends StatelessWidget {
                 colorClickableText: Colors.grey,
                 trimMode: TrimMode.Line,
                 trimCollapsedText: '    Show more',
-                trimExpandedText: '',
+                trimExpandedText: '   Show less',
                 moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color:Colors.grey),
+                lessStyle:  const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color:Colors.grey),
               ),
                 post.imageUrl != null ? const SizedBox.shrink():const SizedBox(height: 6.0,)
               ],
@@ -221,7 +222,10 @@ class _PostButtonState extends State<PostButton> {
               children: [
                 const SizedBox(width: 4.0),
                 Text(widget.label,
-                style: TextStyle(color: textColor),),
+                style: TextStyle(
+                    color: textColor,
+                    fontSize: 12.0,
+                ),),
               ],
             ),
           ),

@@ -7,7 +7,9 @@ class ButtonWidget extends StatelessWidget{
   final Color backgroundColor;
   final Color borderColor;
   final VoidCallback onPressed;
+  final double radius;
   final fontSize;
+  final double width;
 
   const ButtonWidget({
     super.key,
@@ -17,19 +19,21 @@ class ButtonWidget extends StatelessWidget{
     required this.backgroundColor,
     this.borderColor = Colors.cyan,
     required this.onPressed,
-    this.fontSize=20.0});
+    this.radius = 20.0,
+    this.fontSize=20.0,
+    this.width = double.infinity});
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: paddingTop),
-      width: double.infinity,
+      width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor, // Set the background color to transparent
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(radius),
             side: BorderSide(color: borderColor)
           ),
           elevation: 0,
