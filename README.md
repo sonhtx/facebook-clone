@@ -1,2 +1,1 @@
-# facebook-clone
-Clone facebook with additional features
+# Facebook Clone with additional features app 

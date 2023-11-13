@@ -1,0 +1,24 @@
+Yêu cầu của thầy (còn thiếu, ae thêm vào sau):
+- clone giao diện fb (chỉ làm phía client, api đã có nhóm api cung cấp)
+- mark: bình luận ngay dưới bài viết
+- bình luận: là bình luận ko phải ngay dưới bài viết 
+- Đăng ký: username = email (hợp lệ), pass khác email + ko chứa ký tự đặc biệt
+- mỗi người khi đăng ký thành công thì thành guest, được cấp 10 coins, sau lần nạp đầu tiên thành special guest (user)
+- chỉ có user mới được đăng bài viết (guest thường ko đc)
+- các yêu cầu lằng nhằng khác: xem slide bài tập tuần chương 1 phần 3 (yêu cầu chức năng)
+
+
+
+
+Chia việc:
+- login/ signup: Hoàng đã làm, mọi người nên làm để hiểu (sau lấy cái đẹp nhất)
+- giao diện trang chủ: Sơn
+- giao diện thông báo: Long
+- giao diện profile cá nhân: Nam
+- giao diện bạn bè: Dũng
+- giao diện menu: Hoàng
+
+
+Tham khảo:
+- https://www.youtube.com/watch?v=HvLb5gdUfDE&t=224s
+
