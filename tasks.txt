@@ -12,10 +12,10 @@ Yêu cầu của thầy (còn thiếu, ae thêm vào sau):
 
 Chia việc:
 - login/ signup: Hoàng đã làm, mọi người nên làm để hiểu (sau lấy cái đẹp nhất)
-- giao diện trang chủ: Sơn
+- giao diện trang chủ: Dũng
 - giao diện thông báo: Long
 - giao diện profile cá nhân: Nam
-- giao diện bạn bè: Dũng
+- giao diện bạn bè: Sơn
 - giao diện menu: Hoàng
 
 
