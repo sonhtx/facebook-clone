@@ -2,6 +2,8 @@ import 'package:facebook_clone/signup/su_routes.dart';
 import "package:flutter/material.dart";
 import 'package:facebook_clone/global/colors.dart';
 
+// need to add WebView later
+
 void main() {
   runApp(const SignUpConfirmation());
 }
@@ -23,6 +25,7 @@ class SignUpConfirmation extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   // handle back
+                  Navigator.popAndPushNamed(context, '/signup/birthdate');
                 },
                 tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
               );
@@ -54,6 +57,8 @@ class SignUpConfirmation extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Add your onPressed logic here
+                    print("clicked");
+                    Navigator.pushNamed(context, '/signup/email');
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(

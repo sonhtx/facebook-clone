@@ -36,6 +36,7 @@ class _SignUpBirthdateState extends State<SignUpBirthdate> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: GlobalColor.facebookBlue,
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
@@ -79,6 +80,7 @@ class _SignUpBirthdateState extends State<SignUpBirthdate> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Add your onPressed logic here
+                    Navigator.pushNamed(context, '/signup/confirmation');
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(

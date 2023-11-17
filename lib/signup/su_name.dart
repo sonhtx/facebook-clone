@@ -33,6 +33,7 @@ class _SignUpNameState extends State<SignUpName> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: GlobalColor.facebookBlue,
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
@@ -60,7 +61,7 @@ class _SignUpNameState extends State<SignUpName> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(20.0),
                 child: TextField(
                   decoration: InputDecoration(
                     labelText: 'First name',
@@ -82,6 +83,7 @@ class _SignUpNameState extends State<SignUpName> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Add your onPressed logic here
+                    Navigator.popAndPushNamed(context, '/signup/birthdate');
                   },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(
