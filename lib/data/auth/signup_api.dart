@@ -1,20 +1,30 @@
 
 
-import 'package:anti_fb/models/SignupData.dart';
+import 'dart:convert';
+
+import 'package:anti_fb/models/request/ReqSignupData.dart';
 import 'package:http/http.dart' as http;
 
 import '../../constants.dart';
 
 class SignupApi{
+  static final Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    // Add any additional headers you need
+  };
+  static Future signup(SignupData signupData) async {
 
-  static Future<bool> signup(SignupData signupData) async {
+    final String jsonData = jsonEncode(signupData.toJson());
+
     final response = await http.post(
-      Uri.parse('$authUrl/signup'),
-      body: signupData.toJson(),
+      Uri.parse('$apiUrl/signup'),
+      headers: headers,
+      body: jsonData,
     );
 
     if (response.statusCode == 200) {
-      return true; // Signup successful
+      final jsonResponse = json.decode(response.body);
+      return jsonResponse;
     } else {
       return false; // Signup failed
     }

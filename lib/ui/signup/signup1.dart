@@ -16,14 +16,14 @@ class SignupForm1 extends StatelessWidget{
         children: [
 
           ElevatedButtonWidget(buttonText: 'Get started', paddingTop: 100.0, textColor: WHITE,
-              backgroundColor: CYAN,
+              backgroundColor: FBBLUE,
               onPressed: (){
                 final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
                 signupState?.moveFoward();
                 // TODO: Signup new user
               }),
 
-          ElevatedButtonWidget(buttonText: 'I already have an account', paddingTop: 0.0, textColor: CYAN,
+          ElevatedButtonWidget(buttonText: 'I already have an account', paddingTop: 0.0, textColor: FBBLUE,
               backgroundColor: WHITE,
               onPressed: (){
                 Navigator.pushNamed(context, '/login');

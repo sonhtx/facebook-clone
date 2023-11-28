@@ -6,7 +6,7 @@ import 'package:anti_fb/widgets/TextFieldWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../../models/LoginData.dart';
+import '../../models/request/ReqLoginData.dart';
 import '../../widgets/AlertDialogWidget.dart';
 
 class LoginScreen extends StatelessWidget{
@@ -64,7 +64,7 @@ class LoginForm extends StatelessWidget{
             TextFieldWidget(labelText: 'Password',  paddingTop: 7.0, controller: passwordController, obscureText: true),
 
             ElevatedButtonWidget(buttonText: 'Login', paddingTop: 7.0, textColor: WHITE,
-                backgroundColor: CYAN,
+                backgroundColor: FBBLUE,
                 onPressed: () async{
                   if(emailController.text == '' || passwordController.text == ''){
                     showNeedToEnterEmailAndPasswordNotification(context);
@@ -75,8 +75,7 @@ class LoginForm extends StatelessWidget{
                     return;
                   }
                   LoginData loginData = LoginData(emailController.text,
-                                                passwordController.text,
-                                                "aaaaa");
+                                                passwordController.text,);
                   LoginRepository loginRepo = LoginRepository();
                   final loginStatus = await loginRepo.login(loginData);
 
@@ -88,7 +87,7 @@ class LoginForm extends StatelessWidget{
 
             TextButtonWidget(buttonText: 'Forgot password?', paddingTop: 5, textColor: BLACK, backgroundColor: TRANSPARENT,
                   onPressed: (){ Navigator.pushNamed(context, '/signup');}),
-            ElevatedButtonWidget(buttonText: 'Signup new account', paddingTop: 100.0, textColor: CYAN,
+            ElevatedButtonWidget(buttonText: 'Signup new account', paddingTop: 100.0, textColor: FBBLUE,
                 backgroundColor: WHITE,
                 onPressed: (){ Navigator.pushNamed(context, '/signup');}),
 

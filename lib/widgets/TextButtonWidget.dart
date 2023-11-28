@@ -15,7 +15,7 @@ class TextButtonWidget extends StatelessWidget{
   final VoidCallback onPressed;
 
   const TextButtonWidget({super.key, required this.buttonText, required this.paddingTop, required this.textColor,
-    required this.backgroundColor, this.borderColor = CYAN, required this.onPressed});
+    required this.backgroundColor, this.borderColor = FBBLUE, required this.onPressed});
 
 
   @override

@@ -32,7 +32,7 @@ class SignupForm3 extends StatelessWidget{
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "What's your birthday?", fontSize: 20, textColor: CYAN),
+        const TextWidget(text: "What's your birthday?", fontSize: 20, textColor: FBBLUE),
         const TextWidget(text: "Choose your date of birth. You can always make it private later.",
             fontSize: 10, textColor: GREY, paddingTop: 5.0),
 
@@ -45,7 +45,7 @@ class SignupForm3 extends StatelessWidget{
         ),
 
         ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
-            backgroundColor: CYAN,
+            backgroundColor: FBBLUE,
             onPressed: (){
               if(!calculateAge(birthday)){
                 showAgeRestrictionNotification(context);
@@ -149,7 +149,7 @@ class _DatePickerState extends State<DatePicker> {
                   child: Text(
                     '${bday.month}-${bday.day}-${bday.year}',
                     style: const TextStyle(
-                      color : CYAN,
+                      color : FBBLUE,
                       fontSize: 16.0,
                     ),
                   ),

@@ -18,14 +18,17 @@ const storage = FlutterSecureStorage();
 // }
 
 void saveUser(User user){
-  storage.write(key: 'id', value: user.id.toString());
+  print(user.token);
+  storage.write(key: 'id', value: user.id);
   storage.write(key: 'email', value: user.email );
-  storage.write(key: 'firstname', value: user.firstname );
-  storage.write(key: 'lastname', value: user.lastname );
+  storage.write(key: 'username', value: user.username );
   storage.write(key: 'token', value: user.token);
-  storage.write(key: 'avatar', value: user.avatar.toString());
-  storage.write(key: 'active', value: user.active.toString());
+  storage.write(key: 'avatar', value: user.avatar);
+  storage.write(key: 'active', value: user.active);
   storage.write(key: 'coins', value: user.coins.toString());
+}
+void saveVerifyCode(String code){
+  storage.write(key: 'verify_code', value : code);
 }
 
 // Retrieve JWT from secure storage
@@ -47,6 +50,9 @@ Future<String?> getId(){
 Future<String?> getEmail(){
   return storage.read(key: 'email');
 }
+Future<String?> getVerifyCode(){
+  return storage.read(key: 'verify_code');
+}
 
 
 Future<void> printJwt()async {
@@ -54,4 +60,8 @@ Future<void> printJwt()async {
 }
 Future<void> printCoin()async {
   print(await getCoin());
+}
+
+Future<void> deleteAllSecureStorageData() async {
+  await storage.deleteAll();
 }

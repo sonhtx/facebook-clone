@@ -18,12 +18,12 @@ class SignupForm7 extends StatelessWidget{
         child: Column(
           children: [
 
-            const TextWidget(text: 'Welcome!', fontSize: 20, textColor: CYAN,
+            const TextWidget(text: 'Welcome!', fontSize: 20, textColor: FBBLUE,
             paddingTop: 100, textAlign: TextAlign.center,),
             const TextWidget(text: 'You have successfully signup. Please go back to login page', fontSize: 14, textColor: GREY,
               paddingTop: 10, textAlign: TextAlign.center,),
             ElevatedButtonWidget(buttonText: 'Back to login page', paddingTop: 100.0, textColor: WHITE,
-                backgroundColor: CYAN,
+                backgroundColor: FBBLUE,
                 onPressed: (){
                   Navigator.pushNamed(context, '/login');
                 }),

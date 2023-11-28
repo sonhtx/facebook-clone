@@ -10,13 +10,15 @@ class SignupData{
       this.email, this.firstName, this.lastName, this.birthday, this.password);
 
   Map<String, dynamic> toJson() {
-    String birth = birthday.toIso8601String() ;
+    // String birth = birthday.toIso8601String() ;
     return {
       "email": email,
-      "firstname" : firstName,
-      "lastname" : lastName,
-      "birth" : birth,
+      // "firstname" : firstName,
+      // "lastname" : lastName,
+      // "birth" : birth,
       "password": password,
+      "uuid" : "string"
     };
   }
+
 }

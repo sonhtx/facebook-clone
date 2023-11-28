@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../widgets/icon/IconSearchWidget.dart';
 import '../../../widgets/icon/IconSettingWidget.dart';
-import '../homepage/home_page.dart';
 
 
 class NotificationPage extends StatelessWidget{
@@ -30,7 +29,12 @@ class NotificationPage extends StatelessWidget{
           floating: true,
         ),
         SliverList(
-            delegate: SliverChildListDelegate( [const HomePageContent()]
+            delegate: SliverChildListDelegate( [
+
+
+
+
+            ]
             )
         ),
       ]

@@ -3,11 +3,13 @@
 import 'package:image_picker/image_picker.dart';
 
 class CreatePostData{
-  int userid;
-  DateTime? timestamp;
-  String content;
-  List<XFile>? images;
-  XFile? video;
+  late String described;
+  late List<XFile>? images = [];
+  late XFile? video;
+  late String status = '';
+  late String auto_accept = '';
 
-  CreatePostData(this.userid, this.timestamp, this.content, this.images, this.video);
+  CreatePostData();
+
+  // CreatePostData(this.decribed, this.images, this.video, this.status);
 }

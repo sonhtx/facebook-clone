@@ -2,15 +2,14 @@
 class LoginData{
   String email;
   String password;
-  String deviceId;
 
-  LoginData(this.email, this.password, this.deviceId);
+  LoginData(this.email, this.password);
 
   Map<String, dynamic> toJson() {
     return {
       "email": email,
       "password": password,
-      "deviceId" : deviceId
+      "uuid" : "string"
     };
   }
 }

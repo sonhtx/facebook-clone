@@ -1,34 +1,32 @@
 class User {
-  final int id;
+  final String id;
   final String email;
-  final String firstname;
-  final String lastname;
+  final String username;
   final String token;
-  final bool avatar;
-  final bool active;
+  final String avatar;
+  final String active;
   final int coins;
 
   User({
     required this.id,
-    required this.email,
-    required this.firstname,
-    required this.lastname,
+    this.email = "",
+    required this.username,
     required this.token,
     required this.avatar,
     required this.active,
     required this.coins,
   });
 
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['data']['id'] as int,
-      email : json['data']['email'] as String,
-      firstname: json['data']['firstname'] as String,
-      lastname: json['data']['lastname'] as String,
+      id: json['data']['id'] as String,
+      // email : json['data']['email'] as String,
+      username: json['data']['username'] as String,
       token: json['data']['token'] as String,
-      avatar: json['data']['avatar'] as bool,
-      active: json['data']['active'] as bool,
-      coins: json['data']['coins'] as int,
+      avatar: json['data']['avatar'] as String,
+      active: json['data']['active'] as String,
+      coins: int.tryParse(json['data']['coins'] ?? '') ?? 0,
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../../data/auth/checkemail_api.dart';
 import '../../widgets/AlertDialogWidget.dart';
 import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
@@ -52,7 +51,7 @@ class _EmailState extends State<SignupForm4>{
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "Enter your email", fontSize: 20, textColor: CYAN),
+        const TextWidget(text: "Enter your email", fontSize: 20, textColor: FBBLUE),
         const TextWidget(text: "Enter the email where you can be contacted. "
             "No one will see this on your profile.", fontSize: 12, textColor: GREY,
         paddingTop: 10),
@@ -66,25 +65,29 @@ class _EmailState extends State<SignupForm4>{
         ),
 
         ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
-            backgroundColor: CYAN,
-            onPressed: () async{
+            backgroundColor: FBBLUE,
+            onPressed: () {
               if (!isValidEmail(emailController.text)) {
                 errorInvalidEmail();
-                return;
+              return;
               }
-
-              final emailExists = await CheckEmailApi.checkEmailExist(emailController.text);
-              if(context.mounted){
-                if (emailExists) {
-                  showExistEmailNotification(context);
-                } else {
-                  final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
-                  signupState?.signupData.email = emailController.text;
-                  signupState?.moveFoward();
-                }
-              }
-
-            }),
+              final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+              signupState?.signupData.email = emailController.text;
+              signupState?.moveFoward();
+            })
+            // onPressed: () {
+            //   if (!isValidEmail(emailController.text)) {
+            //     errorInvalidEmail();
+            //   return;
+            //   }
+            //
+            //   final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+            //   signupState?.signupData.email = emailController.text;
+            //
+            //   signupState?.moveFoward();
+            //
+            //
+            // }),
       ],
     );
   }
@@ -94,6 +97,14 @@ class _EmailState extends State<SignupForm4>{
       context: context,
       builder: (BuildContext context) {
         return const AlertDialogWidget(title: 'Error', text: 'Email already exist');
+      },
+    );
+  }
+  void showErrorlNotification(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialogWidget(title: 'Error', text: 'Error when try to sent verify code to this email');
       },
     );
   }

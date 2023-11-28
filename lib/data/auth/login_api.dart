@@ -4,23 +4,29 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../constants.dart';
-import '../../models/LoginData.dart';
+import '../../models/request/ReqLoginData.dart';
 
 
 class LoginApi{
-
+  static final Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    // Add any additional headers you need
+  };
   static Future login(LoginData loginData) async {
+
+    final String jsonData = jsonEncode(loginData.toJson());
     final response = await http.post(
-      Uri.parse('$authUrl/login'),
-      body: loginData.toJson(),
+      Uri.parse('$apiUrl/login'),
+      headers: headers,
+      body: jsonData,
     );
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
 
-      return jsonResponse; // Signup successful
+      return jsonResponse; // Login successful
     } else {
-      return false; // Signup failed
+      return false; // Login failed
     }
   }
 }

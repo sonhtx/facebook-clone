@@ -45,7 +45,7 @@ class _NameState extends State<SignupForm2>{
     return Column(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const TextWidget(text: "What's your name?", fontSize: 20, textColor: CYAN),
+          const TextWidget(text: "What's your name?", fontSize: 20, textColor: FBBLUE),
           const TextWidget(text: "Enter the name you use in real life", fontSize: 10, textColor: GREY, paddingTop: 5.0,),
 
           Container(
@@ -72,7 +72,7 @@ class _NameState extends State<SignupForm2>{
           ),
 
           ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
-              backgroundColor: CYAN,
+              backgroundColor: FBBLUE,
               onPressed: (){
 
                 if(firstnameController.text == '' || lastnameController.text == ''){

@@ -1,11 +1,11 @@
 
 
+import 'package:anti_fb/ui/homepage/menupage/menu_option.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../widgets/icon/IconSearchWidget.dart';
 import '../../../widgets/icon/IconSettingWidget.dart';
-import '../homepage/home_page.dart';
 
 class MenuPage extends StatelessWidget{
   const MenuPage({super.key});
@@ -26,10 +26,12 @@ class MenuPage extends StatelessWidget{
                 ],
               ),
             ],
-            backgroundColor: Colors.white,
+            backgroundColor: WHITE,
             floating: true,
           ),
-          SliverList( delegate: SliverChildListDelegate( [const HomePageContent()])
+          SliverList( delegate: SliverChildListDelegate( [
+            const MenuOption(),
+          ])
           ),
         ]
     );

@@ -15,7 +15,7 @@ class ElevatedButtonWidget extends StatelessWidget{
   final VoidCallback onPressed;
 
   const ElevatedButtonWidget({super.key, required this.buttonText, this.paddingTop = 0, this.textColor = BLACK,
-    required this.backgroundColor, this.borderColor = CYAN, required this.onPressed});
+    required this.backgroundColor, this.borderColor = FBBLUE, required this.onPressed});
 
 
   @override

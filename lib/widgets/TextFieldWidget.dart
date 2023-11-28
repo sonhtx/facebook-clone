@@ -44,7 +44,7 @@ class TextFieldWidget extends StatelessWidget{
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: const BorderSide(
-                color: CYAN,
+                color: FBBLUE,
                 width: 2.0, // Adjust the width as needed for the desired thickness
               ),
             ),
