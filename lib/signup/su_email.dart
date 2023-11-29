@@ -31,8 +31,9 @@ class SignUpEmail extends StatefulWidget {
 class _SignUpEmailState extends State<SignUpEmail> {
   String email = '';
   String password = '';
+  int verifyCode = -1;
   List<String> notis = [];
-  final TextEditingController _passwordController = TextEditingController();
+  // final TextEditingController _passwordController = TextEditingController();
   bool obscureText = true;
 
   @override
@@ -95,7 +96,7 @@ class _SignUpEmailState extends State<SignUpEmail> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                controller: _passwordController,
+                // controller: _passwordController,
                 onChanged: (text) {
                   // This callback is called whenever the text changes
                   setState(() {
@@ -124,18 +125,19 @@ class _SignUpEmailState extends State<SignUpEmail> {
               padding: const EdgeInsets.all(30),
               child: ElevatedButton(
                 onPressed: () async {
-                  print('Before fetching, your email is ${password}');
-                  print(validate(email, password));
+                  // print('Before fetching, your email is ${password}');
                   if (validate(email, password)) {
-                    print('Ok');
-                    signUp();
+                    if (await signUp()) {
+                      await verifyAccount(email);
+                      // print(verifyCode);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(
+                        context,
+                        '/signup/verify',
+                        arguments: {'email': email, 'verifyCode': verifyCode},
+                      );
+                    }
                   }
-                  print("After fetching!");
-                  Navigator.pushNamed(
-                    context,
-                    '/signup/verify',
-                    arguments: {'email': email},
-                  );
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
@@ -202,29 +204,35 @@ class _SignUpEmailState extends State<SignUpEmail> {
   }
 
   Future<void> verifyAccount(String email) async {
-    final Uri uri = Uri.parse(
-      'https://it4788.catan.io.vn/get_verify_code?email=sutest19892%40gmail.com',
+    final Uri url = Uri.parse(
+      'https://it4788.catan.io.vn/get_verify_code',
     );
-
-    Map<String, String> requestBody = {
-      'email': email,
-    };
 
     try {
       final response = await http.post(
-        uri,
-        body: jsonEncode(requestBody),
-        headers: {'Content-Type': 'application/json'},
+        url,
+        body: {
+          'email': email,
+        },
       );
 
-      print(response.body + " " + email);
+      Map<String, dynamic> rp = json.decode(response.body);
+      print(rp);
+      int code = int.parse(rp["code"]);
+      String message = rp["message"];
+      verifyCode = int.parse(rp["data"]["verify_code"]);
+      print(verifyCode);
+
+      // Map<String, dynamic> data = rp["data"];
+      // validate input here
+      // print(message);
     } catch (e) {
       // Handle errors
       print('Error: $e');
     }
   }
 
-  Future<void> signUp() async {
+  Future<bool> signUp() async {
     final url = Uri.parse('https://it4788.catan.io.vn/signup');
 
     try {
@@ -238,23 +246,33 @@ class _SignUpEmailState extends State<SignUpEmail> {
       );
 
       Map<String, dynamic> rp = json.decode(response.body);
-      print(rp);
+      // print(rp);
       int code = int.parse(rp["code"]);
-      String message = rp["message"];
+      // String message = rp["message"];
+      // print(message);
+
       // Map<String, dynamic> data = rp["data"];
       // validate input here
-      print(message);
+      // print(message);
 
-      if (code == 1000 || email == "sonfortestonly@gmail.com") {
+      // print(code);
+
+      if (code == 1000) {
         // verify account
-        await verifyAccount(email);
+        print("go to verify account");
+        return true;
         // move to the next page
       } else if (code == 9996) {
         // user existed
+        addNoti("This email has been used by another account.");
+        print(email);
+        return false;
       }
     } catch (e) {
       // Handle errors
       print('Error: $e');
+      return false;
     }
+    return false;
   }
 }

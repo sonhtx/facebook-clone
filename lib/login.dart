@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+import "package:facebook_clone/global/colors.dart";
+import "package:flutter/material.dart";
+import "package:facebook_clone/signup/su_routes.dart";
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -7,119 +11,184 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+      debugShowCheckedModeBanner: false,
+      routes: routes,
+      home: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: GlobalColor.facebookBlue,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, '/signup/confirmation');
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          ),
+          title: const Text('Log In'),
+        ),
+        body: const LogInForm(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class LogInForm extends StatefulWidget {
+  const LogInForm({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<LogInForm> createState() => _LogInFormState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _LogInFormState extends State<LogInForm> {
+  String email = '';
+  String password = '';
+  // final TextEditingController _passwordController = TextEditingController();
+  bool obscureText = true;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Future<bool> logIn(String email, String password) async {
+    print(email);
+    print(password);
+    final url = Uri.parse('https://it4788.catan.io.vn/login');
+
+    try {
+      final response = await http.post(
+        url,
+        body: {
+          'email': email,
+          'password': password,
+          'uuid': 'uuid',
+        },
+      );
+
+      Map<String, dynamic> rp = json.decode(response.body);
+      // print(rp);
+      int code = int.parse(rp["code"]);
+      // String message = rp["message"];
+      // print(message);
+
+      // Map<String, dynamic> data = rp["data"];
+      // validate input here
+      // print(message);
+
+      print(code);
+
+      if (code == 1000) {
+        // verify account
+        print("to homepage");
+        return true;
+        // move to the next page
+      }
+    } catch (e) {
+      // Handle errors
+      print('Error: $e');
+      return false;
+    }
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+    return SingleChildScrollView(
+      child: Center(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(
+                top: 70.0,
+                bottom: 60.0,
+                left: 40,
+                right: 40,
+              ), // Add padding to the first child
+              child: Image(
+                image: AssetImage('images/fb_icon.jpg'),
+                width: 50,
+                height: 50,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "Enter your email and password",
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold, // Make the text bold
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                onChanged: (text) {
+                  // This callback is called whenever the text changes
+                  setState(() {
+                    email = text; // Update the enteredText variable
+                  });
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: TextField(
+                // controller: _passwordController,
+                onChanged: (text) {
+                  // This callback is called whenever the text changes
+                  setState(() {
+                    password = text; // Update the enteredText variable
+                  });
+                },
+                obscureText: obscureText,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      !obscureText ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      // Toggle visibility of the password
+                      setState(() {
+                        obscureText = !obscureText;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: ElevatedButton(
+                onPressed: () async {
+                  // add logic here
+                  print('Pressed');
+                  if (await logIn(email, password)) {
+                    // go in
+                  }
+                },
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all<Size>(
+                    const Size(500, 50), // set weight, height of our button
+                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    GlobalColor.facebookBlue,
+                  ),
+                ),
+                child: const Text('Log In'),
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

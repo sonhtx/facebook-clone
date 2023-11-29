@@ -1,6 +1,8 @@
 import "package:facebook_clone/global/colors.dart";
 import "package:flutter/material.dart";
 import 'su_routes.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -14,20 +16,59 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: routes,
       debugShowCheckedModeBanner: false,
-      home: const SignUpVerfify(),
+      home: const SignUpVerify(),
     );
   }
 }
 
-class SignUpVerfify extends StatefulWidget {
-  const SignUpVerfify({super.key});
+class SignUpVerify extends StatefulWidget {
+  const SignUpVerify({super.key});
 
   @override
-  State<SignUpVerfify> createState() => _SignUpVerfifyState();
+  State<SignUpVerify> createState() => _SignUpVerifyState();
 }
 
-class _SignUpVerfifyState extends State<SignUpVerfify> {
+class _SignUpVerifyState extends State<SignUpVerify> {
   String email = 'notnullemail@gmail.com';
+  int verifyCode = -1;
+  int userInput = -2;
+
+  Future<bool> checkVerifyCode(String email, int verifyCode) async {
+    final url = Uri.parse('https://it4788.catan.io.vn/check_verify_code');
+    try {
+      final response = await http.post(
+        url,
+        body: {
+          'email': email,
+          'code_verify': userInput.toString(),
+        },
+      );
+
+      Map<String, dynamic> rp = json.decode(response.body);
+      // print(rp);
+      int code = int.parse(rp["code"]);
+      // String message = rp["message"];
+      // print(message);
+
+      // Map<String, dynamic> data = rp["data"];
+      // validate input here
+      // print(message);
+
+      // print(code);
+
+      if (code == 1000) {
+        // verify account
+        print("Account verified.");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      // Handle errors
+      print('Error: $e');
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +76,11 @@ class _SignUpVerfifyState extends State<SignUpVerfify> {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
     if (args != null) {
       email = args['email'];
+      verifyCode = args['verifyCode'];
     }
 
     print(email);
+    print("This is your verify code: $verifyCode");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: GlobalColor.facebookBlue,
@@ -84,10 +127,15 @@ class _SignUpVerfifyState extends State<SignUpVerfify> {
                 textAlign: TextAlign.center,
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
               child: TextField(
-                decoration: InputDecoration(
+                onChanged: (text) {
+                  setState(() {
+                    userInput = int.parse(text);
+                  });
+                },
+                decoration: const InputDecoration(
                   prefixIcon: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
@@ -104,8 +152,13 @@ class _SignUpVerfifyState extends State<SignUpVerfify> {
             Padding(
               padding: const EdgeInsets.all(40),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Add your onPressed logic here
+                  if (await checkVerifyCode(email, userInput)) {
+                    // go to log in
+                    // ignore: use_build_context_synchronously
+                    Navigator.popAndPushNamed(context, 'signup/su_tologin');
+                  }
                 },
                 style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(

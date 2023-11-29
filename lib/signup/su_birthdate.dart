@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUpBirthdate(),
+      routes: routes,
+      home: const SignUpBirthdate(),
     );
   }
 }
@@ -28,73 +29,103 @@ class SignUpBirthdate extends StatefulWidget {
 
 class _SignUpBirthdateState extends State<SignUpBirthdate> {
   DateTime _selectedDate = DateTime.now();
+  List<String> notis = [];
+
+  bool ageRestrict(DateTime birthdate) {
+    final now = DateTime.now();
+    if (now.year - birthdate.year < 18) return true;
+    return false;
+  }
+
+  void addNoti(String notification) {
+    setState(() {
+      notis.clear();
+      notis.add(notification);
+    });
+  }
+
+  void ageRestrictNotification() {
+    addNoti("You must be >= 18 years old to sign up.");
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: routes,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: GlobalColor.facebookBlue,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.popAndPushNamed(context, '/signup/name');
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
-          title: const Text("Birthdate"),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: GlobalColor.facebookBlue,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.popAndPushNamed(context, '/signup/name');
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
         ),
-        body: Center(
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  "When's your birthday?",
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold, // Make the text bold
-                  ),
+        title: const Text("Birthdate"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "When's your birthday?",
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold, // Make the text bold
                 ),
               ),
-              SizedBox(
-                height: 250,
-                child: ScrollDatePicker(
-                  selectedDate: _selectedDate,
-                  locale: const Locale('en'),
-                  onDateTimeChanged: (DateTime value) {
-                    setState(() {
-                      _selectedDate = value;
-                    });
-                  },
-                ),
+            ),
+            SizedBox(
+              height: 250,
+              child: ScrollDatePicker(
+                selectedDate: _selectedDate,
+                locale: const Locale('en'),
+                onDateTimeChanged: (DateTime value) {
+                  setState(() {
+                    _selectedDate = value;
+                    if (ageRestrict(_selectedDate)) {
+                      ageRestrictNotification();
+                    } else {
+                      notis.clear();
+                    }
+                  });
+                },
               ),
+            ),
+            for (var text in notis)
               Padding(
-                padding: const EdgeInsets.all(40),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Add your onPressed logic here
-                    Navigator.pushNamed(context, '/signup/confirmation');
-                  },
-                  style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      const Size(300, 50), // set weight, height of our button
-                    ),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      GlobalColor.facebookBlue,
-                    ),
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  text,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.red,
                   ),
-                  child: const Text('Continue'),
                 ),
               ),
-            ],
-          ),
+            Padding(
+              padding: const EdgeInsets.all(40),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Add your onPressed logic here
+                  Navigator.pushNamed(context, '/signup/confirmation');
+                },
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all<Size>(
+                    const Size(300, 50), // set weight, height of our button
+                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    GlobalColor.facebookBlue,
+                  ),
+                ),
+                child: const Text('Continue'),
+              ),
+            ),
+          ],
         ),
       ),
     );

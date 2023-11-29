@@ -1,6 +1,7 @@
 // routes.dart for everything in use case sign up
 import 'package:facebook_clone/signup/su_confirmation.dart';
 import 'package:facebook_clone/signup/su_name.dart';
+import 'package:facebook_clone/signup/su_tologin.dart';
 import 'package:facebook_clone/signup/su_verify.dart';
 
 import 'package:flutter/material.dart';
@@ -15,7 +16,8 @@ final Map<String, WidgetBuilder> routes = {
   '/signup/birthdate': (context) => const SignUpBirthdate(),
   '/signup/confirmation': (context) => const SignUpConfirmation(),
   '/signup/email': (context) => const SignUpEmail(),
-  '/signup/verify': (contest) => const SignUpVerfify(),
+  '/signup/verify': (contest) => const SignUpVerify(),
+  '/signup/tologin': (contest) => const SignUpToLogin(),
 
   // Add more named routes as needed
 };
