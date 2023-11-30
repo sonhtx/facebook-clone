@@ -1,6 +1,10 @@
 
+import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/post/PostListData.dart';
+import '../../models/request/ReqListPostData.dart';
+import '../../repository/post/getlistpost_repo.dart';
 import '../../widgets/custom_tab_bar.dart';
 import 'homepage/home_page.dart';
 import 'menupage/menu_page.dart';
@@ -13,10 +17,10 @@ class NavScreen extends StatefulWidget {
   const NavScreen({super.key});
 
   @override
-  State<NavScreen> createState() => _NavScreenState();
+  State<NavScreen> createState() => NavScreenState();
 }
 
-class _NavScreenState extends State<NavScreen> with TickerProviderStateMixin {
+class NavScreenState extends State<NavScreen> with TickerProviderStateMixin {
 
 
   late PageController pageController;
@@ -25,14 +29,15 @@ class _NavScreenState extends State<NavScreen> with TickerProviderStateMixin {
 
   late String coin = '';
   late String email = '';
+  late List<PostListData> postlist = [];
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 4, vsync: this);
     pageController = PageController();
-  }
 
+  }
 
   @override
   void dispose() {
@@ -68,8 +73,8 @@ class _NavScreenState extends State<NavScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     final List<Widget> screens = [
-      HomePage(email: email, coin: coin),
-
+      HomePage(email: email, coin: coin, postlists: postlist,),
+      const PeoplePage(),
       const NotificationPage(),
       const MenuPage(),
       // const PersonalPage(),

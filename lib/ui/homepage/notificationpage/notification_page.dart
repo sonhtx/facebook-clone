@@ -25,7 +25,7 @@ class NotificationPage extends StatelessWidget{
               ],
             ),
           ],
-          backgroundColor: Colors.white,
+          backgroundColor: WHITE,
           floating: true,
         ),
         SliverList(

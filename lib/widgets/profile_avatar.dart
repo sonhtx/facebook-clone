@@ -21,7 +21,8 @@ class ProfileAvatar extends StatelessWidget {
           child: CircleAvatar(
             radius: hasBorder ? 17.0 : 20.0,
             backgroundColor: Colors.grey[200],
-            backgroundImage: CachedNetworkImageProvider(imageUrl),
+            backgroundImage: imageUrl == '' ? const CachedNetworkImageProvider(defaultAvatar)
+                : CachedNetworkImageProvider(imageUrl),
           ),
         ),
         isActive
@@ -36,7 +37,7 @@ class ProfileAvatar extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(
                 width: 2.0,
-                color: Colors.white,
+                color: WHITE,
               ),
             ),
           ),

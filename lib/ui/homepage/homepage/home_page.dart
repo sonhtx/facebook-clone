@@ -4,15 +4,17 @@ import 'package:anti_fb/widgets/icon/IconSearchWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../../../models/post/PostListData.dart';
 import 'appbar.dart';
 import 'createpostbar.dart';
 import 'listpost.dart';
 
 class HomePage extends StatelessWidget{
-  const HomePage({super.key, required this.coin, required this.email});
+  const HomePage({super.key, required this.coin, required this.email, required this.postlists});
 
   final String coin ;
   final String email;
+  final List<PostListData> postlists;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -32,7 +34,7 @@ class HomePage extends StatelessWidget{
 
           const SliverToBoxAdapter( child: CreatePostButton()),
 
-          SliverList( delegate: SliverChildListDelegate( [const ListPostWidget()])),
+          SliverList( delegate: SliverChildListDelegate( [ListPostWidget(postlists: postlists,)])),
 
         ]
     );

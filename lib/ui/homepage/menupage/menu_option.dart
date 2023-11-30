@@ -16,12 +16,12 @@ class MenuOption extends StatelessWidget{
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ElevatedButtonWidget(buttonText: 'Email', paddingTop: 10, textColor: BLACK, backgroundColor: GREY,
-            onPressed: (){
-              final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
-              homeState?.gotoPersonal();
+        // ElevatedButtonWidget(buttonText: 'Email', paddingTop: 10, textColor: BLACK, backgroundColor: GREY,
+        //     onPressed: (){
+        //       final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
+        //       homeState?.gotoPersonal();
 
-            }),
+            // }),
         ElevatedButtonWidget(buttonText: 'Change password', paddingTop: 10, textColor: BLACK, backgroundColor: GREY,
             onPressed: (){
           // Navigator.pushNamed(context, '/');

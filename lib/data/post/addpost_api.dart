@@ -13,8 +13,6 @@ class AddPostApi{
     String? jwtToken = await getJwt();
     String token = jwtToken!;
 
-    print(token);
-
     final Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer $token',

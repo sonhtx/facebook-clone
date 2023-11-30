@@ -1,15 +1,29 @@
 
 
 class RequestListPostData{
-  late String user_id;
-  late String in_campaign;
-  late String campaign_id;
-  late String latitude;
-  late String longitude;
-  late String last_id;
-  late String index;
-  late String count;
+  final String user_id;
+  final String in_campaign;
+  final String campaign_id;
+  final String latitude;
+  final String longitude;
+  final String last_id;
+  final String index;
+  final String count;
 
+  RequestListPostData(this.user_id, this.in_campaign, this.campaign_id,
+      this.latitude, this.longitude, this.last_id, this.index, this.count);
 
+  Map<String, dynamic> toJson() {
+    return {
+    "user_id" : user_id,
+    "in_campaign" : in_campaign,
+    "campaign_id" :campaign_id,
+    "latitude" : latitude,
+    "longitude" : longitude,
+    "last_id" : last_id,
+    "index" : index,
+    "count" : count
+    };
+  }
 }
 

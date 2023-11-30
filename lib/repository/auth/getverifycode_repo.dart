@@ -2,7 +2,7 @@
 
 import 'package:anti_fb/storage.dart';
 
-import '../data/auth/getverifycode_api.dart';
+import '../../data/auth/getverifycode_api.dart';
 
 class GetVerifyCodeRepository {
 

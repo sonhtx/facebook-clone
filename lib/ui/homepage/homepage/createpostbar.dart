@@ -10,7 +10,7 @@ class CreatePostButton extends StatelessWidget{
     return Container(
       padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0.0),
       height: 50,
-      color: Colors.white,
+      color: WHITE,
       child:
           Row(
             children: [

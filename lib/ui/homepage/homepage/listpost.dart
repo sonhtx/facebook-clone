@@ -1,90 +1,106 @@
 
-
-
 // List of posts
+import 'package:anti_fb/models/post/PostListData.dart';
+import 'package:anti_fb/models/request/ReqListPostData.dart';
+import 'package:anti_fb/repository/post/getlistpost_repo.dart';
+import 'package:anti_fb/ui/homepage/homepage/postpage/post_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../../constants.dart';
+import '../../../models/post/ImageData.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/profile_avatar.dart';
+import '../nav_screen.dart';
 
 class ListPostWidget extends StatefulWidget {
 
-  const ListPostWidget({super.key});
+  const ListPostWidget({super.key, required this.postlists});
+
+  final List<PostListData> postlists;
 
   @override
   State<ListPostWidget> createState() => _ListPostWidgetState();
 }
 
 class _ListPostWidgetState extends State<ListPostWidget> {
-  late List<Widget> listPosts = [];
+  late List<PostListData> _postlists;
+
+  late List<Widget> listPostsWidget = [];
+
+  static final RequestListPostData requestListPostData = RequestListPostData("1", "1", "1","1.0", "1.0", "6", "0", "10");
+
+  Future<void> getlistpost() async{
+    try{
+      List<PostListData>? listPost = await GetListPostRepository.getlistpost(requestListPostData);
+      for (int i = 0; i < listPost!.length; i++) {
+        PostListData curPost = listPost[i];
+        listPostsWidget.add(PostWidget(
+            curPost.id, curPost.name, curPost.image, curPost.described, curPost.created, curPost.feel,
+            curPost.comment_mark, curPost.is_felt, curPost.author.name, curPost.author.avatar
+        ));
+      }
+      final NavScreenState? navState = context.findAncestorStateOfType<NavScreenState>();
+      navState?.postlist = listPost;
+    }catch (error) {
+      print(error);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < 10; i++) {
-      listPosts.add(const PostWidget('abc@123.com','10h37', 'ssssssssssiiiiiiiiiiiiiiiiiiiiiiiiiiuuuuuuuuuuuuuuu'
-          'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu'
-          'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu'
-          'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu'
-          'uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu',[]));
-    }
+    _postlists = widget.postlists;
+
+    setState(() {
+      if(_postlists.isEmpty){
+        getlistpost();
+      } else {
+        for (int i = 0; i < _postlists!.length; i++) {
+          PostListData curPost = _postlists[i];
+          listPostsWidget.add(PostWidget(
+              curPost.id, curPost.name, curPost.image, curPost.described, curPost.created, curPost.feel,
+              curPost.comment_mark, curPost.is_felt, curPost.author.name, curPost.author.avatar
+          ));
+        }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         color: GREY,
-        child: Column( children: listPosts,)
+        child: Column( children: listPostsWidget,)
     );
   }
 }
 
 // post
-class PostWidget extends StatefulWidget {
-  final String useremail;
-  final String timestamp;
-  final String content;
-  final List<XFile> images;
+class PostWidget extends StatelessWidget {
+  final String id;
+  final String name;
+  final List<ImageData> images;
+  final String described;
+  final String created;
+  final String feel;
+  final String comment_mark;
+  final String is_felt;
+  final String author_name ;
+  final String author_avatar_url;
 
-  const PostWidget(this.useremail, this.timestamp, this.content, this.images, {super.key});
-  @override
-  State<PostWidget> createState() => _PostWidgetState();
-}
 
-class _PostWidgetState extends State<PostWidget>{
-  late String useremail;
-  late String timestamp;
-  late String content;
-  late List<XFile> images;
+  PostWidget(
+      this.id, this.name, this.images, this.described, this.created, this.feel,
+      this.comment_mark, this.is_felt, this.author_name, this.author_avatar_url, {super.key} );
 
-  late String imageUrl;
-
-  late double height;
-  late bool kudosChoose;
-  late bool disChoose;
-  @override
-  void initState() {
-    super.initState();
-    timestamp = widget.timestamp;
-    useremail = widget.useremail;
-    content = widget.content;
-    images = widget.images;
-
-    imageUrl = 'assets/images/messi-world-cup.png';
-
-    height = 30;
-    kudosChoose = false;
-    disChoose = false;
-  }
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      color: Colors.white,
+      color: WHITE,
       child: Column(
         children: [
           Padding(
@@ -92,110 +108,78 @@ class _PostWidgetState extends State<PostWidget>{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _PostHeader(imageUrl: imageUrl, email: useremail, timestamp: timestamp, ),
+                _PostHeader(imageUrl: author_avatar_url, email: author_name, timestamp: created, ),
                 const SizedBox(height: 4.0),
                 // _PostCaption(caption: post.caption,),
                 ReadMoreText(
-                  content,
+                  described,
                   trimLines: 2,
-                  colorClickableText: Colors.grey,
+                  colorClickableText: GREY,
                   trimMode: TrimMode.Line,
                   trimCollapsedText: '    Show more',
                   trimExpandedText: '',
                   moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: GREY),
                 ),
-                imageUrl != null ? const SizedBox.shrink():const SizedBox(height: 6.0,)
+                // images != [] ? const SizedBox.shrink():const SizedBox(height: 6.0,)
               ],
             ),
           ),
-          imageUrl != null ? Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: CachedNetworkImage(imageUrl : imageUrl),
-          ) :const SizedBox.shrink(),
+
+          // ----------------------------
+          images != [] ?
+            SizedBox (
+              height: 200,
+               child: GridView.builder(
+                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                   crossAxisCount: 4, // Adjust the number of images per row as needed
+                 ),
+                  itemCount: images.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: CachedNetworkImage(
+                        imageUrl: images[index].url,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      ),
+                    );
+                  },
+                )
+            ) :const SizedBox.shrink(),
+          // ------------------------------
+
           Container(
               height: 30,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                  children: [
-                    Row (
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: const BoxDecoration( color: FBBLUE, shape: BoxShape.circle,),
-                          child: const Icon( Icons.thumb_up, size: 10.0, color: WHITE,),
-                        ),
-                        const TextWidget(text: '10', textColor: FBBLUE ,fontSize: 10, paddingLeft: 5, width: 30,)
-                      ],
-                    ),
-                    Row (
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: const BoxDecoration( color: RED, shape: BoxShape.circle,),
-                          child: const Icon( Icons.thumb_down, size: 10.0, color: WHITE,),
-                        ),
-                        const TextWidget(text: '10', textColor: RED ,fontSize: 10, paddingLeft: 5, width: 30,)
-                      ],
-                    ),
-                    const SizedBox(width: 4.0,),
-                    Text('Mark', style: TextStyle(color: GREY[600]),),
-                  ]
-              )
-          ),
-          const Divider( thickness: 0.1, color: GREY, ),
-          SizedBox(
-              height : 30,
+              padding: const EdgeInsets.only(left: 5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child : GestureDetector(
-                          onTap: (){ setState(() {
-                            if(!disChoose){ kudosChoose = !kudosChoose;}
-                          });},
-                          child: Row (
-                            children: [
-                              Icon( Icons.sentiment_satisfied_alt, color: kudosChoose ? FBBLUE : GREY ,),
-                              TextWidget(text: 'Kudos', textColor: kudosChoose ? FBBLUE : GREY,fontSize: 12, paddingLeft: 5, width: 50,)
-                            ],
-                          ),
-                        )
-                    ),
-                    GestureDetector(
-                      onTap: (){ setState(() {
-                        if(!kudosChoose){ disChoose = !disChoose;}
-                      });},
-                      child: Row (
+                      padding : const EdgeInsets.only(left: 10),
+                      child: Row(
                         children: [
-                          Icon( Icons.sentiment_dissatisfied_sharp, color: disChoose ? RED : GREY ,),
-                          TextWidget(text: 'Dissapoint', textColor: disChoose ? RED : GREY,fontSize: 12, paddingLeft: 5, width: 70,)
+                          TextWidget(text: feel, textColor: GREY ,fontSize: 12, width: 12,),
+                          Container(
+                            padding: const EdgeInsets.all(4.0),
+                            decoration: const BoxDecoration( color: FBBLUE, shape: BoxShape.circle,),
+                            child: const Icon( Icons.thumb_up, size: 10.0, color: WHITE,),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(4.0),
+                            decoration: const BoxDecoration( color: RED, shape: BoxShape.circle,),
+                            child: const Icon( Icons.thumb_down, size: 10.0, color: WHITE,),
+                          ),
                         ],
                       ),
                     ),
                     Container(
-                        padding: const EdgeInsets.only(right: 10),
-                        child : GestureDetector(
-                          onTap: (){
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => PostScreen(),
-                            //   ),
-                            // );
-                          },
-                          child: const Row (
-                            children: [
-                              Icon( Icons.comment, color: GREY,),
-                              TextWidget(text: 'Mark', textColor: GREY,fontSize: 12, paddingLeft: 5, width: 40,)
-                            ],
-                          ),
-                        )
-                    ),
+                      padding : const EdgeInsets.only(right: 10),
+                      child : Text('$comment_mark Mark', style: TextStyle(color: GREY[600]),),
+                    )
                   ]
               )
-          )
-
+          ),
+          const Divider( thickness: 0.1, color: GREY, ),
+          _PostBottom(id: id, is_felt: is_felt)
         ],
       ),
     );
@@ -254,3 +238,114 @@ class _PostHeader extends StatelessWidget {
   }
 }
 
+
+class _PostBottom extends StatefulWidget{
+  const _PostBottom({super.key, required this.id, required this.is_felt});
+
+  final String id;
+  final String is_felt;
+
+
+  @override
+  State<_PostBottom> createState() => _PostBottomState();
+}
+
+class _PostBottomState extends State<_PostBottom>{
+
+  late bool kudosChoose;
+  late bool disChoose;
+
+  @override
+  void initState() {
+    super.initState();
+    String is_felt = widget.is_felt;
+
+    kudosChoose = false;
+    disChoose = false;
+
+    if(is_felt == '0') {
+      kudosChoose = true;
+    } else if (is_felt == '1'){
+      disChoose = true;
+    }
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 30,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (!disChoose) {
+                          kudosChoose = !kudosChoose;
+                        }
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.sentiment_satisfied_alt,
+                          color: kudosChoose ? FBBLUE : GREY,),
+                        TextWidget(text: 'Kudos',
+                          textColor: kudosChoose ? FBBLUE : GREY,
+                          fontSize: 12,
+                          paddingLeft: 5,
+                          width: 50,)
+                      ],
+                    ),
+                  )
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (!kudosChoose) {
+                      disChoose = !disChoose;
+                    }
+                  });
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.sentiment_dissatisfied_sharp,
+                      color: disChoose ? RED : GREY,),
+                    TextWidget(text: 'Dissapoint',
+                      textColor: disChoose ? RED : GREY,
+                      fontSize: 12,
+                      paddingLeft: 5,
+                      width: 70,)
+                  ],
+                ),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PostScreen(id: widget.id,),
+                        ),
+                      );
+                    },
+                    child: const Row (
+                      children: [
+                        Icon(Icons.comment, color: GREY,),
+                        TextWidget(text: 'Mark',
+                          textColor: GREY,
+                          fontSize: 12,
+                          paddingLeft: 5,
+                          width: 40,)
+                      ],
+                    ),
+                  )
+              ),
+            ]
+        )
+    );
+  }
+}

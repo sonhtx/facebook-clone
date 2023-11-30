@@ -4,7 +4,7 @@ import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../../repository/signup_repo.dart';
+import '../../repository/auth/signup_repo.dart';
 import '../../widgets/AlertDialogWidget.dart';
 import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';

@@ -1,5 +1,5 @@
 
-import 'package:anti_fb/repository/login_repo.dart';
+import 'package:anti_fb/repository/auth/login_repo.dart';
 import 'package:anti_fb/widgets/ElevatedButtonWidget.dart';
 import 'package:anti_fb/widgets/TextButtonWidget.dart';
 import 'package:anti_fb/widgets/TextFieldWidget.dart';

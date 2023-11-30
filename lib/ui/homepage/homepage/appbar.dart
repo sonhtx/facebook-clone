@@ -35,15 +35,15 @@ class HomeAppBarTitleState extends State<HomeAppBarTitle>{
           ),
           Padding(
               padding: const EdgeInsets.only(left: 10), //
-              child: Container(
+                child : Container(
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color : GREY,
+                    border: Border.all( color: TRANSPARENT,),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: TextWidget(text: "Coin", fontSize: 16, textColor: YELLOW,paddingLeft: 5,)
                 // padding: const EdgeInsets.only(left: 100),
-                width: 100,
-                decoration: BoxDecoration(
-                  color : GREY,
-                  border: Border.all( color: TRANSPARENT,),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: TextWidget(text: "Coin : $coin", fontSize: 16, textColor: YELLOW,paddingLeft: 5,)
               )
           ),
         ]

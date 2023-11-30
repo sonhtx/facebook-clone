@@ -13,7 +13,7 @@ class CustomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: WHITE,
       child: TabBar(
         controller: controller,
         indicatorPadding: EdgeInsets.zero,
@@ -26,9 +26,7 @@ class CustomTabBar extends StatelessWidget {
           ),
         ),
         tabs: icons
-            .asMap()
-            .map((i, e) => MapEntry(
-          i,
+            .asMap() .map((i, e) => MapEntry(i,
           Tab(
             icon: Icon(
               e,
@@ -37,6 +35,7 @@ class CustomTabBar extends StatelessWidget {
                   : Colors.black45,
               size: 30.0,
             ),
+            // text: ,
           ),
         ))
             .values

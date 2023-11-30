@@ -5,13 +5,9 @@ import 'package:anti_fb/constants.dart';
 import 'package:flutter/material.dart';
 
 class PostScreen extends StatelessWidget{
-  String email;
-  String avatarUrl;
-  String time;
-  List<String> imageUrl;
+  final String id ;
 
-  PostScreen({super.key, required this.email, required this.avatarUrl, required this.time, required this.imageUrl});
-
+  const PostScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
