@@ -5,16 +5,27 @@ import '../../constants/constants.dart';
 import '../../widgets/ButtonWidget.dart';
 import '../../widgets/circle_button.dart';
 
-class MenuTab extends StatelessWidget {
-  const MenuTab({super.key});
+class MenuTab extends StatefulWidget {
+  final ScrollController scrollController;
+  const MenuTab({super.key, required this.scrollController});
 
   @override
+  State<MenuTab> createState() => _MenuTabState();
+}
+
+class _MenuTabState extends State<MenuTab> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Constants.bg,
       body: SafeArea(
           child: CustomScrollView(
+            controller: widget.scrollController,
             slivers: [
               SliverAppBar(
                   backgroundColor: Constants.bg,
@@ -28,90 +39,89 @@ class MenuTab extends StatelessWidget {
                         icon: Icons.search, iconSize: 30.0, onPressed: () {}),
               ]),
               SliverToBoxAdapter(
-                child: Container(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    CardItem(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  CardItem(
+                    width: screenWidth - 20.0,
+                    height: 100.0,
+                    label: 'Messi',
+                    widget: const CircleAvatar(
+                      backgroundImage:
+                          AssetImage('assets/images/messi-world-cup.png'),
+                      radius: 35.0,
+                    ),
+                    onPressed: () {},
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ExpandTab(
+                    image: const Icon(
+                      Icons.help_outline,
+                      size: 30.0,
+                    ),
+                    title: 'Help & Support',
+                    card: CardItem(
                       width: screenWidth - 20.0,
-                      height: 100.0,
-                      label: 'Messi',
-                      widget: const CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/messi-world-cup.png'),
-                        radius: 35.0,
+                      height: 65 - .0,
+                      label: "Terms & Policies",
+                      widget: const Icon(
+                        Icons.policy_outlined,
+                        size: 30.0,
                       ),
                       onPressed: () {},
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ExpandTab(
-                      image: const Icon(
-                        Icons.help_outline,
-                        size: 30.0,
-                      ),
-                      title: 'Help & Support',
+                  ),
+                  ExpandTab(
+                      title: "Setting and privacy",
                       card: CardItem(
                         width: screenWidth - 20.0,
-                        height: 65 - .0,
-                        label: "Terms & Policies",
+                        height: 65.0,
+                        label: "Settings",
                         widget: const Icon(
-                          Icons.policy_outlined,
+                          Icons.person,
                           size: 30.0,
                         ),
                         onPressed: () {},
                       ),
-                    ),
-                    ExpandTab(
-                        title: "Setting and privacy",
-                        card: CardItem(
-                          width: screenWidth - 20.0,
-                          height: 65.0,
-                          label: "Settings",
-                          widget: const Icon(
-                            Icons.person,
-                            size: 30.0,
-                          ),
-                          onPressed: () {},
-                        ),
-                        image: const Icon(
-                          Icons.settings,
-                          size: 30.0,
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ButtonWidget(
-                        width: screenWidth - 20.0,
-                        fontSize: 13.0,
-                        buttonText: "Logout",
-                        paddingTop: 15.0,
-                        textColor: Colors.black,
-                        backgroundColor: Constants.btnbg,
-                        borderColor: Constants.bg,
-                        radius: 8.0,
-                        onPressed: () {}),
-                    ButtonWidget(
-                        width: screenWidth - 20.0,
-                        fontSize: 13.0,
-                        buttonText: "Exit",
-                        paddingTop: 15.0,
-                        textColor: Colors.black,
-                        backgroundColor: Constants.btnbg,
-                        borderColor: Constants.bg,
-                        radius: 8.0,
-                        onPressed: () {}),
-                ],
-              ),
-            ),
+                      image: const Icon(
+                        Icons.settings,
+                        size: 30.0,
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ButtonWidget(
+                      width: screenWidth - 20.0,
+                      fontSize: 13.0,
+                      buttonText: "Logout",
+                      paddingTop: 15.0,
+                      textColor: Colors.black,
+                      backgroundColor: Constants.btnbg,
+                      borderColor: Constants.bg,
+                      radius: 8.0,
+                      onPressed: () {}),
+                  ButtonWidget(
+                      width: screenWidth - 20.0,
+                      fontSize: 13.0,
+                      buttonText: "Exit",
+                      paddingTop: 15.0,
+                      textColor: Colors.black,
+                      backgroundColor: Constants.btnbg,
+                      borderColor: Constants.bg,
+                      radius: 8.0,
+                      onPressed: () {}),
+                                ],
+                              ),
           )
         ],
       )),
     );
   }
+
 }
 
 class ExpandTab extends StatefulWidget {

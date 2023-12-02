@@ -2,19 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:anti_fb/models/user_notification.dart';
 import '../../widgets/NotificationWidget.dart';
 
-class NotificationsTab extends StatelessWidget {
+class NotificationsTab extends StatefulWidget {
 
   final ScrollController scrollController;
 
   const NotificationsTab({super.key, required this.scrollController});
 
   @override
+  State<NotificationsTab> createState() => _NotificationsTabState();
+}
+
+class _NotificationsTabState extends State<NotificationsTab> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          controller: scrollController,
+          controller: widget.scrollController,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

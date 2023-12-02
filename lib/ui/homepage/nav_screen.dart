@@ -81,7 +81,7 @@ class _NavScreenState extends State<NavScreen> with TickerProviderStateMixin {
             HomeScreen(scrollController: scrollController),
             const ProfileScreen(),
             NotificationsTab(scrollController: scrollController),
-            const MenuTab(),
+            MenuTab(scrollController: scrollController),
           ],
         ),
         bottomNavigationBar: CustomTabBar(
