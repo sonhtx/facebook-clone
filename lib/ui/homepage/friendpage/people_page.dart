@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../widgets/icon/IconSearchWidget.dart';
-import '../../../widgets/icon/IconSettingWidget.dart';
+import '../home_screen.dart';
 
 // show people can be friend
 
 class PeoplePage extends StatelessWidget{
   const PeoplePage({super.key});
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +33,11 @@ class PeoplePage extends StatelessWidget{
               child: Row(
                 children: [
                   TextButtonWidget(buttonText: 'Suggestions', textColor: BLACK, paddingLeft : 10, backgroundColor: GREY.shade100, paddingTop: 0, radiusRoundBorder: 15.0,
-                      onPressed: (){
+                      onPressed: () {
+                        final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
+                        homeState?.gotoSuggestion();
 
-                      }),
+                  }),
                   TextButtonWidget(buttonText: 'Your friends',textColor: BLACK, paddingLeft : 10, backgroundColor: GREY.shade100, paddingTop: 0, radiusRoundBorder: 15.0,
                       onPressed: (){
                       })

@@ -10,31 +10,35 @@ import 'createpostbar.dart';
 import 'listpost.dart';
 
 class HomePage extends StatelessWidget{
-  const HomePage({super.key, required this.coin, required this.email, required this.postlists});
+  const HomePage({super.key, required this.coin, required this.email, required this.postlists, required this.scrollController});
 
   final String coin ;
   final String email;
   final List<PostListData> postlists;
+
+  final ScrollController scrollController;
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            title: HomeAppBarTitle(coin),
-            centerTitle: false,
-            backgroundColor: WHITE,
-            floating: true,
-            actions: const [
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Row( children: [ IconSearchWidget(), IconMessageWidget() ],)
-              ),
-            ],
-          ),
+      controller: scrollController,
+      slivers: <Widget>[
+        SliverAppBar(
+          title: HomeAppBarTitle(coin),
+          centerTitle: false,
+          backgroundColor: WHITE,
+          floating: true,
+          actions: const [
+            Align(
+                alignment: Alignment.centerRight,
+                child: Row( children: [ IconSearchWidget(), IconMessageWidget() ],)
+            ),
+          ],
+        ),
 
-          const SliverToBoxAdapter( child: CreatePostButton()),
+        const SliverToBoxAdapter( child: CreatePostButton()),
 
-          SliverList( delegate: SliverChildListDelegate( [ListPostWidget(postlists: postlists,)])),
+        SliverList( delegate: SliverChildListDelegate( [ListPostWidget(postlists: postlists,)])),
 
         ]
     );

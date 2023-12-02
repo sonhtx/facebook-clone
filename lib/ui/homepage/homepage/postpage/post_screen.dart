@@ -2,6 +2,7 @@
 import 'dart:core';
 
 import 'package:anti_fb/constants.dart';
+import 'package:anti_fb/widgets/TextWidget.dart';
 import 'package:flutter/material.dart';
 
 class PostScreen extends StatelessWidget{
@@ -13,7 +14,11 @@ class PostScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: GREEN,
+        backgroundColor: WHITE,
+        title: const Text('Post',style: TextStyle(color: BLACK, fontSize: 20, fontWeight: FontWeight.bold,),),
+        iconTheme: const IconThemeData(
+          color: GREY, // Set the color of the back arrow icon to black
+        ),
       ),
       body: Column(
         children: [
@@ -21,8 +26,13 @@ class PostScreen extends StatelessWidget{
 
 
         ],
-      )
-
+      ),
+      bottomNavigationBar: Container(
+        color: GREEN,
+        height: 50,
+        child: const TextWidget(text: '555', fontSize: 12,),
+      ),
+    
     );
   }
 }

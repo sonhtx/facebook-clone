@@ -9,22 +9,22 @@ class PostData{
   final String name;
   final String created;
   final String described;
-  final int modified;
-  final int fake;
-  final int trust;
-  final int kudos;
-  final int disappointed;
-  final int is_felt;
-  final int is_marked;
+  final String modified;
+  final String fake;
+  final String trust;
+  final String kudos;
+  final String disappointed;
+  final String is_felt;
+  final String is_marked;
   final List<ImageData> image;
   final AuthorData author;
   final _CategoryData category;
   final String state;
-  final int is_blocked;
-  final int can_edit;
-  final int banned;
-  final int can_mark;
-  final int can_rate;
+  final String is_blocked;
+  final String can_edit;
+  final String banned;
+  final String can_mark;
+  final String can_rate;
   final String url;
   final String messages;
 
@@ -55,7 +55,7 @@ class PostData{
 
 class _CategoryData{
   final String id;
-  final int has_name;
+  final String has_name;
   final String name;
 
   _CategoryData(this.id, this.has_name, this.name);

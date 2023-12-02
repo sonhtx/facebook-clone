@@ -1,24 +1,27 @@
 
 import 'package:anti_fb/models/post/PostListData.dart';
 
-import '../../data/post/getlistpost_api.dart';
-import '../../models/request/ReqListPostData.dart';
+import '../../api/post/post_api.dart';
+import '../../models/request/ReqListPost_VideoData.dart';
 
-class GetListPostRepository{
-  static Future getlistpost(RequestListPostData requestListPostData) async {
+class PostRepository{
+  final PostApi _postApi = PostApi();
+  Future getlistpost(RequestListPost_VideoData requestListPostData) async {
     try {
-      final getlistpostResult = await ListPostApi.getListPost(requestListPostData);
+      final getlistpostResult = await _postApi.getListPost(requestListPostData);
 
       if(getlistpostResult == null){
         return false;
       }
 
-    List<PostListData> listpost = [];
+      List<PostListData> listpost = [];
       List<dynamic> listpostraw = getlistpostResult['data']['post'] ;
       for (dynamic x in listpostraw){
         PostListData post = PostListData.fromJson(x);
+        print(post.created);
         listpost.add(post);
       }
+      print('zzz');
       return listpost;
 
     } catch (e) {

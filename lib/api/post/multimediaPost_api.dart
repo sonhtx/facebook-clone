@@ -8,16 +8,27 @@ import '../../models/post/CreatePostData.dart';
 import '../../storage.dart';
 
 class AddPostApi{
+  late String token;
+  late Map<String, String> headers = {};
 
-  static Future<void> addPost(CreatePostData createPostData) async {
-    String? jwtToken = await getJwt();
-    String token = jwtToken!;
+  AddPostApi() {
+    // Initialize headers by fetching the token from secure storage
+  }
 
-    final Map<String, String> headers = {
+  Future<void> _initializeHeaders() async {
+    // Fetch the token from secure storage
+    token = (await getJwt())!; // Replace with your actual code to get the token
+
+    // Update the headers with the fetched token
+    headers = {
       'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer $token',
-      // Add any additional headers you need
     };
+  }
+
+  Future<void> addPost(CreatePostData createPostData) async {
+    await _initializeHeaders();
+    
     final request = http.MultipartRequest(
       'POST',
       Uri.parse('$apiUrl/add_post'),
@@ -64,4 +75,19 @@ class AddPostApi{
     print(responseBody);
 
   }
+
+  // Future editPost(String id) async {
+  //   await _initializeHeaders();
+  //
+  //   final response = await http.post(
+  //     Uri.parse('$apiUrl/get_list_posts'),
+  //     headers: headers,
+  //   );
+  //   if (response.statusCode == 200) {
+  //
+  //     return jsonResponse; // get list success
+  //   } else {
+  //     return null; // get list false
+  //   }
+  // }
 }

@@ -4,7 +4,7 @@ import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../../data/auth/getverifycode_api.dart';
+import '../../api/auth/getverifycode_api.dart';
 import '../../widgets/AlertDialogWidget.dart';
 import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextWidget.dart';

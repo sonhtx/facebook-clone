@@ -12,6 +12,8 @@ const GREY = Colors.grey;
 const RED = Colors.red;
 const BLACK = Colors.black;
 const TEXT = Color(0xFF757575);
+const BG = Color(0xFFEFF1F5);
+const BTNBG = Color(0xFFE5E4E9);
 
 
 const TRANSPARENT = Colors.transparent;

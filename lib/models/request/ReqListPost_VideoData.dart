@@ -1,6 +1,6 @@
 
 
-class RequestListPostData{
+class RequestListPost_VideoData{
   final String user_id;
   final String in_campaign;
   final String campaign_id;
@@ -10,7 +10,7 @@ class RequestListPostData{
   final String index;
   final String count;
 
-  RequestListPostData(this.user_id, this.in_campaign, this.campaign_id,
+  RequestListPost_VideoData(this.user_id, this.in_campaign, this.campaign_id,
       this.latitude, this.longitude, this.last_id, this.index, this.count);
 
   Map<String, dynamic> toJson() {

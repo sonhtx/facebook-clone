@@ -5,7 +5,7 @@ class User {
   final String token;
   final String avatar;
   final String active;
-  final int coins;
+  final String coins;
 
   User({
     required this.id,
@@ -26,7 +26,7 @@ class User {
       token: json['data']['token'] as String,
       avatar: json['data']['avatar'] as String,
       active: json['data']['active'] as String,
-      coins: int.tryParse(json['data']['coins'] ?? '') ?? 0,
+      coins: json['data']['coins'] as String,
     );
   }
 }

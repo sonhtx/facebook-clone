@@ -29,7 +29,7 @@ class TextButtonWidget extends StatelessWidget{
       padding: EdgeInsets.only(top: paddingTop, left: paddingLeft),
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: BLACK,
+          foregroundColor: textColor,
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radiusRoundBorder), // Set border radius
@@ -37,7 +37,7 @@ class TextButtonWidget extends StatelessWidget{
         ),
 
         child: Text(buttonText),
-        onPressed: () {},
+        onPressed: onPressed,
       ),
     );
 

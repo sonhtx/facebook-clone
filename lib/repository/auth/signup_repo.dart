@@ -2,7 +2,7 @@
 
 import 'package:anti_fb/models/request/ReqSignupData.dart';
 
-import '../../data/auth/signup_api.dart';
+import '../../api/auth/signup_api.dart';
 import '../../storage.dart';
 
 class SignupRepository {

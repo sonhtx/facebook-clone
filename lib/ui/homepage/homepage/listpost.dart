@@ -1,21 +1,21 @@
-
 // List of posts
 import 'package:anti_fb/models/post/PostListData.dart';
-import 'package:anti_fb/models/request/ReqListPostData.dart';
-import 'package:anti_fb/repository/post/getlistpost_repo.dart';
+import 'package:anti_fb/models/request/ReqListPost_VideoData.dart';
+import 'package:anti_fb/repository/post/post_repo.dart';
 import 'package:anti_fb/ui/homepage/homepage/postpage/post_screen.dart';
+import 'package:anti_fb/ui/homepage/homepage/reaction_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../../constants.dart';
 import '../../../models/post/ImageData.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/profile_avatar.dart';
-import '../nav_screen.dart';
+import '../home_screen.dart';
 
 class ListPostWidget extends StatefulWidget {
-
   const ListPostWidget({super.key, required this.postlists});
 
   final List<PostListData> postlists;
@@ -29,21 +29,35 @@ class _ListPostWidgetState extends State<ListPostWidget> {
 
   late List<Widget> listPostsWidget = [];
 
-  static final RequestListPostData requestListPostData = RequestListPostData("1", "1", "1","1.0", "1.0", "6", "0", "10");
+  final PostRepository _postRepository = PostRepository();
 
-  Future<void> getlistpost() async{
-    try{
-      List<PostListData>? listPost = await GetListPostRepository.getlistpost(requestListPostData);
+  static final RequestListPost_VideoData requestListPostData =
+  RequestListPost_VideoData("1", "1", "1", "1.0", "1.0", "6", "60", "10");
+
+  Future<void> getlistpost() async {
+    try {
+      List<PostListData>? listPost =
+          await _postRepository.getlistpost(requestListPostData);
+      print(listPost?.length);
+
       for (int i = 0; i < listPost!.length; i++) {
         PostListData curPost = listPost[i];
         listPostsWidget.add(PostWidget(
-            curPost.id, curPost.name, curPost.image, curPost.described, curPost.created, curPost.feel,
-            curPost.comment_mark, curPost.is_felt, curPost.author.name, curPost.author.avatar
-        ));
+            curPost.id,
+            curPost.name,
+            curPost.image,
+            curPost.described,
+            curPost.created,
+            curPost.feel,
+            curPost.comment_mark,
+            curPost.is_felt,
+            curPost.author.name,
+            curPost.author.avatar));
       }
-      final NavScreenState? navState = context.findAncestorStateOfType<NavScreenState>();
-      navState?.postlist = listPost;
-    }catch (error) {
+      final HomeState? homeState =
+          context.findAncestorStateOfType<HomeState>();
+      homeState?.postlist = listPost;
+    } catch (error) {
       print(error);
     }
   }
@@ -54,26 +68,35 @@ class _ListPostWidgetState extends State<ListPostWidget> {
     _postlists = widget.postlists;
 
     setState(() {
-      if(_postlists.isEmpty){
+      if (_postlists.isEmpty) {
         getlistpost();
       } else {
-        for (int i = 0; i < _postlists!.length; i++) {
+        for (int i = 0; i < _postlists.length; i++) {
           PostListData curPost = _postlists[i];
           listPostsWidget.add(PostWidget(
-              curPost.id, curPost.name, curPost.image, curPost.described, curPost.created, curPost.feel,
-              curPost.comment_mark, curPost.is_felt, curPost.author.name, curPost.author.avatar
-          ));
+              curPost.id,
+              curPost.name,
+              curPost.image,
+              curPost.described,
+              curPost.created,
+              curPost.feel,
+              curPost.comment_mark,
+              curPost.is_felt,
+              curPost.author.name,
+              curPost.author.avatar));
         }
       }
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: GREY,
-        child: Column( children: listPostsWidget,)
-    );
+      color: GREY,
+      child: Column(
+        children: listPostsWidget,
+      ));
   }
 }
 
@@ -87,13 +110,22 @@ class PostWidget extends StatelessWidget {
   final String feel;
   final String comment_mark;
   final String is_felt;
-  final String author_name ;
+  final String author_name;
+
   final String author_avatar_url;
 
-
   PostWidget(
-      this.id, this.name, this.images, this.described, this.created, this.feel,
-      this.comment_mark, this.is_felt, this.author_name, this.author_avatar_url, {super.key} );
+      this.id,
+      this.name,
+      this.images,
+      this.described,
+      this.created,
+      this.feel,
+      this.comment_mark,
+      this.is_felt,
+      this.author_name,
+      this.author_avatar_url,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +140,11 @@ class PostWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _PostHeader(imageUrl: author_avatar_url, email: author_name, timestamp: created, ),
+                _PostHeader(
+                  imageUrl: author_avatar_url,
+                  email: author_name,
+                  timestamp: created,
+                ),
                 const SizedBox(height: 4.0),
                 // _PostCaption(caption: post.caption,),
                 ReadMoreText(
@@ -118,7 +154,8 @@ class PostWidget extends StatelessWidget {
                   trimMode: TrimMode.Line,
                   trimCollapsedText: '    Show more',
                   trimExpandedText: '',
-                  moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: GREY),
+                  moreStyle: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold, color: GREY),
                 ),
                 // images != [] ? const SizedBox.shrink():const SizedBox(height: 6.0,)
               ],
@@ -126,25 +163,29 @@ class PostWidget extends StatelessWidget {
           ),
 
           // ----------------------------
-          images != [] ?
-            SizedBox (
-              height: 200,
-               child: GridView.builder(
-                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                   crossAxisCount: 4, // Adjust the number of images per row as needed
-                 ),
-                  itemCount: images.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: CachedNetworkImage(
-                        imageUrl: images[index].url,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
-                      ),
-                    );
-                  },
-                )
-            ) :const SizedBox.shrink(),
+          images != []
+              ? SizedBox(
+                  height: 200,
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:
+                          4, // Adjust the number of images per row as needed
+                    ),
+                    itemCount: images.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: CachedNetworkImage(
+                          imageUrl: images[index].url,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      );
+                    },
+                  ))
+              : const SizedBox.shrink(),
           // ------------------------------
 
           Container(
@@ -154,37 +195,59 @@ class PostWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding : const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Row(
                         children: [
-                          TextWidget(text: feel, textColor: GREY ,fontSize: 12, width: 12,),
-                          Container(
-                            padding: const EdgeInsets.all(4.0),
-                            decoration: const BoxDecoration( color: FBBLUE, shape: BoxShape.circle,),
-                            child: const Icon( Icons.thumb_up, size: 10.0, color: WHITE,),
+                          TextWidget(
+                            text: feel,
+                            textColor: GREY,
+                            fontSize: 12,
+                            width: 12,
                           ),
                           Container(
                             padding: const EdgeInsets.all(4.0),
-                            decoration: const BoxDecoration( color: RED, shape: BoxShape.circle,),
-                            child: const Icon( Icons.thumb_down, size: 10.0, color: WHITE,),
+                            decoration: const BoxDecoration(
+                              color: FBBLUE,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.thumb_up,
+                              size: 10.0,
+                              color: WHITE,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(4.0),
+                            decoration: const BoxDecoration(
+                              color: RED,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.thumb_down,
+                              size: 10.0,
+                              color: WHITE,
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Container(
-                      padding : const EdgeInsets.only(right: 10),
-                      child : Text('$comment_mark Mark', style: TextStyle(color: GREY[600]),),
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Text(
+                        '$comment_mark Mark',
+                        style: TextStyle(color: GREY[600]),
+                      ),
                     )
-                  ]
-              )
+                  ])),
+          const Divider(
+            thickness: 0.1,
+            color: GREY,
           ),
-          const Divider( thickness: 0.1, color: GREY, ),
-          _PostBottom(id: id, is_felt: is_felt)
+          _PostBottom(id, is_felt)
         ],
       ),
     );
   }
-
 }
 
 class _PostHeader extends StatelessWidget {
@@ -192,8 +255,8 @@ class _PostHeader extends StatelessWidget {
   final String email;
   final String timestamp;
 
-  const _PostHeader({required this.imageUrl, required this.email, required this.timestamp});
-
+  const _PostHeader(
+      {required this.imageUrl, required this.email, required this.timestamp});
 
   @override
   Widget build(BuildContext context) {
@@ -214,16 +277,9 @@ class _PostHeader extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '$timestamp  • ',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12.0,
-                    ),),
-                  Icon(
-                    Icons.public,
-                    color: Colors.grey[600],
-                    size: 12.0,
-                  )
+                    '$timestamp  • ', style: TextStyle( color: Colors.grey[600], fontSize: 12.0,),
+                  ),
+                  Icon( Icons.public, color: Colors.grey[600], size: 12.0,)
                 ],
               )
             ],
@@ -231,121 +287,69 @@ class _PostHeader extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.more_horiz),
-          onPressed: (){},
+          onPressed: () {},
         )
       ],
     );
   }
 }
 
+class _PostBottom extends StatelessWidget {
 
-class _PostBottom extends StatefulWidget{
-  const _PostBottom({super.key, required this.id, required this.is_felt});
+  const _PostBottom(this.id, this.is_felt);
 
   final String id;
   final String is_felt;
 
 
-  @override
-  State<_PostBottom> createState() => _PostBottomState();
-}
-
-class _PostBottomState extends State<_PostBottom>{
-
-  late bool kudosChoose;
-  late bool disChoose;
-
-  @override
-  void initState() {
-    super.initState();
-    String is_felt = widget.is_felt;
-
-    kudosChoose = false;
-    disChoose = false;
-
-    if(is_felt == '0') {
-      kudosChoose = true;
-    } else if (is_felt == '1'){
-      disChoose = true;
-    }
-
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 30,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (!disChoose) {
-                          kudosChoose = !kudosChoose;
-                        }
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.sentiment_satisfied_alt,
-                          color: kudosChoose ? FBBLUE : GREY,),
-                        TextWidget(text: 'Kudos',
-                          textColor: kudosChoose ? FBBLUE : GREY,
-                          fontSize: 12,
-                          paddingLeft: 5,
-                          width: 50,)
-                      ],
-                    ),
-                  )
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(left: 30),
+          child: ReactionButton<String>(
+            toggle: false,
+            direction: ReactionsBoxAlignment.rtl,
+            onReactionChanged: (Reaction<String>? reaction) {
+
+            },
+            reactions: reaction,
+            placeholder:
+              reaction[int.parse(is_felt) + 1],
+            // boxColor: Colors.black.withOpacity(0.5),
+            boxRadius: 20,
+            itemsSpacing: 10,
+            itemSize: const Size(40, 40),
+          ),
+        ),
+        Container(
+            padding: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostScreen(id: id,),
+                  ),
+                );
+              },
+              child: const Row (
+                children: [
+                  Icon(Icons.comment, color: GREY,),
+                  TextWidget(text: 'Mark',
+                    textColor: GREY,
+                    fontSize: 12,
+                    paddingLeft: 5,
+                    width: 40,)
+                ],
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (!kudosChoose) {
-                      disChoose = !disChoose;
-                    }
-                  });
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.sentiment_dissatisfied_sharp,
-                      color: disChoose ? RED : GREY,),
-                    TextWidget(text: 'Dissapoint',
-                      textColor: disChoose ? RED : GREY,
-                      fontSize: 12,
-                      paddingLeft: 5,
-                      width: 70,)
-                  ],
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PostScreen(id: widget.id,),
-                        ),
-                      );
-                    },
-                    child: const Row (
-                      children: [
-                        Icon(Icons.comment, color: GREY,),
-                        TextWidget(text: 'Mark',
-                          textColor: GREY,
-                          fontSize: 12,
-                          paddingLeft: 5,
-                          width: 40,)
-                      ],
-                    ),
-                  )
-              ),
-            ]
-        )
+            )
+        ),
+      ]
     );
   }
+
 }

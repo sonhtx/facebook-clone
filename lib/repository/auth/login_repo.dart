@@ -2,7 +2,7 @@
 
 import 'package:anti_fb/storage.dart';
 
-import '../../data/auth/login_api.dart';
+import '../../api/auth/login_api.dart';
 import '../../models/request/ReqLoginData.dart';
 import '../../models/User.dart';
 

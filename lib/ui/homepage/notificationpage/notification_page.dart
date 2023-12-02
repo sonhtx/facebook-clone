@@ -1,8 +1,10 @@
+import 'package:anti_fb/ui/homepage/notificationpage/user_notification.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../widgets/icon/IconSearchWidget.dart';
 import '../../../widgets/icon/IconSettingWidget.dart';
+import 'NotificationWidget.dart';
 
 
 class NotificationPage extends StatelessWidget{
@@ -30,10 +32,7 @@ class NotificationPage extends StatelessWidget{
         ),
         SliverList(
             delegate: SliverChildListDelegate( [
-
-
-
-
+              for(UserNotification notification in notifications) NotificationWidget(notification: notification)
             ]
             )
         ),

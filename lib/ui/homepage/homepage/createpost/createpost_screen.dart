@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../constants.dart';
-import '../../../../data/post/addpost_api.dart';
+import '../../../../api/post/multimediaPost_api.dart';
 import 'ImageUpWidget.dart';
 
 
@@ -21,6 +21,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   late CreatePostData createPostData;
 
   late Color postButtonBackgroundColor;
+
+  final AddPostApi _addPostApi = AddPostApi();
 
   TextEditingController textController = TextEditingController();
   ValueNotifier<List<XFile>> imagesNotifier = ValueNotifier<List<XFile>>([]);
@@ -84,7 +86,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   createPostData.described = textController.text;
 
                   // send create post request, need jwt
-                  await AddPostApi.addPost(createPostData);
+                  await _addPostApi.addPost(createPostData);
 
                 },
               ),
