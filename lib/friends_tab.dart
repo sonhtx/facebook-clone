@@ -111,16 +111,25 @@ class _FriendsTabState extends State<FriendsTab> {
                                     color: Colors.white, fontSize: 15.0)),
                           ),
                           SizedBox(width: 10.0),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 35.0, vertical: 10.0),
-                            decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(5.0)),
-                            child: Text('Delete',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 15.0)),
-                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Xử lý khi nút được nhấn
+                              showBottomSheetMenu(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 35.0, vertical: 10.0),
+                              primary: Colors.grey[300],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 15.0),
+                            ),
+                          )
                         ],
                       )
                     ],
@@ -131,6 +140,116 @@ class _FriendsTabState extends State<FriendsTab> {
           ),
         ),
       ),
+    );
+  }
+
+  void showBottomSheetMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext builderContext) {
+        return Container(
+          height: 250,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              GestureDetector(
+                onTap: () {
+                  // Handle Option 1
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        Icons.person_off_rounded,
+                        size: 22.0, // Kích thước của biểu tượng
+                        color: Colors.black, // Màu của biểu tượng
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Report or give feedback',
+                            style: TextStyle(
+                                fontSize: 14.0, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            'A won\'t be notified',
+                            style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.normal,
+                                color: Color.fromARGB(197, 14, 13, 13)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  // Handle Option 1
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        Icons.person_remove_outlined,
+                        size: 22.0, // Kích thước của biểu tượng
+                        color: Colors.black, // Màu của biểu tượng
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Block A',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            'A won\'t be able to see you or contact you on Facebook',
+                            style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.normal,
+                                color: Color.fromARGB(197, 14, 13, 13)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

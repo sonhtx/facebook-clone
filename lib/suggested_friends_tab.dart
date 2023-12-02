@@ -31,57 +31,23 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('SuggestedFriends',
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.bold)),
                   IconButton(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: _onSearch,
+                  ),
+                  const Text('Suggestions',
+                      style: TextStyle(
+                          fontSize: 22.0, fontWeight: FontWeight.normal)),
+                  IconButton(
+                    icon: const Icon(Icons.search),
                     onPressed: _onSearch,
                   ),
                 ],
               ),
               const SizedBox(height: 15.0),
-              Row(
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(30.0)),
-                    child: const Text('Suggestions',
-                        style: TextStyle(
-                            fontSize: 17.0, fontWeight: FontWeight.bold)),
-                  ),
-                  const SizedBox(width: 10.0),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(30.0)),
-                    child: const Text('All SuggestedFriends',
-                        style: TextStyle(
-                            fontSize: 17.0, fontWeight: FontWeight.bold)),
-                  )
-                ],
-              ),
-              const Divider(height: 30.0),
-              const Row(
-                children: <Widget>[
-                  Text('Friend Requests',
-                      style: TextStyle(
-                          fontSize: 21.0, fontWeight: FontWeight.bold)),
-                  SizedBox(width: 10.0),
-
-                  //count of friend requests
-                  Text('8',
-                      style: TextStyle(
-                          fontSize: 21.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red)),
-                ],
-              ),
+              const Text('People you may know',
+                  style:
+                      TextStyle(fontSize: 21.0, fontWeight: FontWeight.bold)),
               const SizedBox(height: 20.0),
               Row(
                 children: <Widget>[
@@ -102,22 +68,55 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 35.0, vertical: 10.0),
+                                horizontal: 32.0, vertical: 10.0),
                             decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(5.0)),
-                            child: Text('Confirm',
+                            child: Text('Add friend',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 15.0)),
                           ),
                           SizedBox(width: 10.0),
                           Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 35.0, vertical: 10.0),
+                                horizontal: 25.0, vertical: 10.0),
                             decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0)),
-                            child: Text('Delete',
+                            child: Text('Remove',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 15.0)),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    backgroundImage: AssetImage('./images/fb_icon.jpg'),
+                    radius: 40.0,
+                  ),
+                  SizedBox(width: 20.0),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Chris',
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 15.0),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 100.0, vertical: 10.0),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)),
+                            child: Text('Cancel',
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 15.0)),
                           ),
