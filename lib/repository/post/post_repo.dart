@@ -18,10 +18,8 @@ class PostRepository{
       List<dynamic> listpostraw = getlistpostResult['data']['post'] ;
       for (dynamic x in listpostraw){
         PostListData post = PostListData.fromJson(x);
-        print(post.created);
         listpost.add(post);
       }
-      print('zzz');
       return listpost;
 
     } catch (e) {

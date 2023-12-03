@@ -15,37 +15,123 @@ class NotificationWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              CircleAvatar(
-                  backgroundImage: AssetImage(notification.imageUrl),
-                radius: 35.0,
-              ),
-              const SizedBox(width: 15.0),
-              Column(
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.15,
+            child: CircleAvatar(
+              backgroundImage: AssetImage(notification.imageUrl),
+              radius: MediaQuery.of(context).size.width * 0.09,
+            ),
+          ),
+          // const SizedBox(width: 15.0),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(notification.content,
-                      style: const TextStyle(
-                          fontSize: 13.0, fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: Text(notification.content,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                        maxLines: 3,
+                        style: const TextStyle(
+                            fontSize: 13.0, fontWeight: FontWeight.bold)),
+                  ),
                   Text(notification.time,
                       style:
-                          const TextStyle(fontSize: 15.0, color: Colors.grey)),
+                      const TextStyle(fontSize: 12.0, color: Colors.grey)),
                 ],
               ),
-            ],
+            ),
           ),
-          // const Column(
-          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //   children: <Widget>[
-          //     Icon(Icons.more_horiz),
-          //     Text(''),
-          //   ],
-          // )
+          SizedBox(
+            // width: MediaQuery.of(context).size.width * .10,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                // Icon(Icons.more_horiz),
+                IconButton(
+                    onPressed: (){
+                      optionBottomSheet(context);
+                    },
+                    icon: const Icon(
+                      Icons.more_horiz,)),
+                const Text(''),
+              ],
+            ),
+          )
         ],
       ),
     );
+  }
+
+  void optionBottomSheet(BuildContext context) {
+    showModalBottomSheet(context: context, builder: (BuildContext bc){
+      return Wrap(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 15.0, 8.0, 30.0),
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(notification.imageUrl),
+                      radius: 35.0,
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Center(
+                        child: Text(notification.content,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            maxLines: 2,
+                            style: const TextStyle(fontSize: 13.0)),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton.icon(
+                      style: TextButton.styleFrom(
+                          iconColor: Colors.black,
+                          textStyle: const TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black
+                          ),
+                          maximumSize: Size(MediaQuery.of(context).size.width, 50.0),
+                          minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
+                          alignment: Alignment.centerLeft,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0.0)
+                          )
+                      ),
+                      onPressed: (){},
+                      icon: const Icon(Icons.close),
+                      label: const Text(
+                        "Remove this notification",
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

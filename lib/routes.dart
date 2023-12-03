@@ -13,11 +13,7 @@ final Map<String, WidgetBuilder> routes = {
   '/signup': (context) => const SignupScreen(),
 
   '/home' : (context) => const HomeScreen(),
-  // '/home' : (context) => const NavScreen(),
-
   '/post' : (context) => const CreatePostScreen(),
-
-  // '/suggestion' : (context) => const SuggestionScreen(),
 
   '/personal' :(context) => const PersonalPage(),
 
@@ -27,4 +23,4 @@ final Map<String, WidgetBuilder> routes = {
 };
 
 // Optionally, you can define a default route to handle unknown routes
-const String initialRoute = '/login';
+const String initialRoute = '/home';

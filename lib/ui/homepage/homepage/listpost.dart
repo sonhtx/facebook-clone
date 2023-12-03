@@ -38,8 +38,6 @@ class _ListPostWidgetState extends State<ListPostWidget> {
     try {
       List<PostListData>? listPost =
           await _postRepository.getlistpost(requestListPostData);
-      print(listPost?.length);
-
       for (int i = 0; i < listPost!.length; i++) {
         PostListData curPost = listPost[i];
         listPostsWidget.add(PostWidget(
@@ -88,6 +86,8 @@ class _ListPostWidgetState extends State<ListPostWidget> {
       }
 
     });
+
+
   }
 
   @override
