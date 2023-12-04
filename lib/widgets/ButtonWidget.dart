@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatelessWidget{
   final String buttonText;
   final double paddingTop;
+  final double paddingLeft;
+  final double paddingRight;
+
   final Color textColor;
   final Color backgroundColor;
   final Color borderColor;
@@ -21,13 +24,13 @@ class ButtonWidget extends StatelessWidget{
     required this.onPressed,
     this.radius = 20.0,
     this.fontSize=20.0,
-    this.width = double.infinity});
+    this.width = double.infinity, this.paddingLeft = 0, this.paddingRight = 0});
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: paddingTop),
+      padding: EdgeInsets.only(top: paddingTop, left: paddingLeft),
       width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

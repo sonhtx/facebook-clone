@@ -18,8 +18,8 @@ class PeoplePage extends StatelessWidget{
         title: const Text('Friends',style: TextStyle(color: BLACK, fontSize: 20, fontWeight: FontWeight.bold,),),
         backgroundColor: WHITE,
         elevation: 0.0,
-        actions: const [
-          IconSearchWidget()
+        actions: [
+          IconSearchWidget( onPressed: (){Navigator.pushNamed(context, '/search');},)
         ],
       ),
 
@@ -40,6 +40,7 @@ class PeoplePage extends StatelessWidget{
                   }),
                   TextButtonWidget(buttonText: 'Your friends',textColor: BLACK, paddingLeft : 10, backgroundColor: GREY.shade100, paddingTop: 0, radiusRoundBorder: 15.0,
                       onPressed: (){
+                        Navigator.pushNamed(context, '/friend');
                       })
                 ],
               ),
@@ -47,7 +48,7 @@ class PeoplePage extends StatelessWidget{
             // const Divider(height: 0.2, color: GREY, ),
             Container(
               padding: const EdgeInsets.all(0),
-              child : Column(
+              child : const Column(
                 children: [
                   SizedBox(
                     height :50,

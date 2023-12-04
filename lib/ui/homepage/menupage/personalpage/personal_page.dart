@@ -18,13 +18,17 @@ class PersonalPage extends StatelessWidget{
 
     return CustomScrollView(
         slivers: <Widget>[
-          const SliverAppBar(
+          SliverAppBar(
             title: PersonalAppBarTitle(),
             actions:  [
               Row(
                 children: [
                   IconSettingWidget(),
-                  Padding( padding: EdgeInsets.only(right: 5), child: IconSearchWidget()
+                  Padding( padding: EdgeInsets.only(right: 5), child: IconSearchWidget(
+                    onPressed: (){
+
+                    },
+                  )
                   ),
                 ],
               ),

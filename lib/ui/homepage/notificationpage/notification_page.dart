@@ -14,15 +14,17 @@ class NotificationPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
-        const SliverAppBar(
+        SliverAppBar(
           title: NotificationsAppBarTitle(),
           actions:  [
             Row(
               children: [
                 IconSettingWidget(),
                 Padding(
-                    padding: EdgeInsets.only(right: 5), //
-                    child: IconSearchWidget()
+                    padding: const EdgeInsets.only(right: 5), //
+                    child: IconSearchWidget(
+                      onPressed: (){},
+                    )
                 ),
               ],
             ),

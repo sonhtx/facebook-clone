@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class IconMessageWidget extends StatelessWidget {
-  const IconMessageWidget({super.key});
+  const IconMessageWidget({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +18,7 @@ class IconMessageWidget extends StatelessWidget {
         Icons.message,
         color: GREY,
       ),
-      onPressed: () {
-        // Add your search action here
-      },
+      onPressed: onPressed
     );
   }
 

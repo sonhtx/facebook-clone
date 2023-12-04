@@ -28,7 +28,9 @@ class SuggestionScreen extends StatelessWidget{
             homeState?.backfromSuggestion();
           },
         ),
-        actions: const [ IconSearchWidget() ],
+        actions: [ IconSearchWidget(
+          onPressed: (){Navigator.pushNamed(context, '/search');},
+        ) ],
       ),
       body:
       // const SuggestionList()

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class IconSearchWidget extends StatelessWidget {
-  const IconSearchWidget({super.key});
+  const IconSearchWidget({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +15,7 @@ class IconSearchWidget extends StatelessWidget {
         Icons.search,
         color: GREY,
       ),
-      onPressed: () {
-        // Add your search action here
-      },
+      onPressed: onPressed
     );
   }
 

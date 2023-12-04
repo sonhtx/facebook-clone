@@ -28,10 +28,24 @@ class HomePage extends StatelessWidget{
           centerTitle: false,
           backgroundColor: WHITE,
           floating: true,
-          actions: const [
+          actions: [
             Align(
                 alignment: Alignment.centerRight,
-                child: Row( children: [ IconSearchWidget(), IconMessageWidget() ],)
+                child: Row(
+                  children: [
+                    IconSearchWidget(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/search');
+                      },
+                    ),
+                    IconMessageWidget(
+                      onPressed: () {
+
+
+                      },
+                    )
+
+                  ],)
             ),
           ],
         ),
