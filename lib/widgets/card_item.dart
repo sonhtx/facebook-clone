@@ -16,7 +16,7 @@ class CardItem extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
-            onTap: () {},
+            onTap: onPressed,
             child: SizedBox(
               width: width,
               height: height,

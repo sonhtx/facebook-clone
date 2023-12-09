@@ -48,11 +48,9 @@ class NotificationWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            // width: MediaQuery.of(context).size.width * .10,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                // Icon(Icons.more_horiz),
                 IconButton(
                     onPressed: (){
                       optionBottomSheet(context);

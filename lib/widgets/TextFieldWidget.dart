@@ -32,8 +32,11 @@ class TextFieldWidget extends StatelessWidget{
             contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
             labelText: labelText,
             hintText : hintText,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
             hintStyle: TextStyle(
-              color: Colors.grey.shade400, // Adjust the color to make it more bland
+              color: Colors.grey.shade400,
+              fontWeight: FontWeight.normal,
+              fontSize: 13.0// Adjust the color to make it more bland
             ),
             labelStyle: const TextStyle(fontSize: 14.0),
 

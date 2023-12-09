@@ -1,6 +1,7 @@
+import 'package:anti_fb/ui/settingpage/setting_screen.dart';
 import 'package:anti_fb/widgets/card_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../constants/constants.dart';
 import '../../widgets/ButtonWidget.dart';
 import '../../widgets/circle_button.dart';
@@ -85,7 +86,12 @@ class _MenuTabState extends State<MenuTab> with AutomaticKeepAliveClientMixin {
                           Icons.person,
                           size: 30.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(builder: (context) => const SettingScreen()),
+                          );
+                        },
                       ),
                       image: const Icon(
                         Icons.settings,
