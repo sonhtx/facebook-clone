@@ -2,7 +2,7 @@
 
 import 'dart:js';
 
-import 'package:anti_fb/ui/homepage/friendpage/friendlist/friends_tab.dart';
+import 'package:anti_fb/ui/homepage/friendpage/yourfriendtag/friends_tab.dart';
 import 'package:anti_fb/ui/homepage/home_screen.dart';
 import 'package:anti_fb/ui/homepage/homepage/createpost/createpost_screen.dart';
 import 'package:anti_fb/ui/homepage/menupage/personalpage/personal_page.dart';

@@ -312,7 +312,7 @@ class _PostBottom extends StatelessWidget {
           padding: const EdgeInsets.only(left: 30),
           child: ReactionButton<String>(
             toggle: false,
-            direction: ReactionsBoxAlignment.rtl,
+            // direction: ReactionsBoxAlignment.rtl,
             onReactionChanged: (Reaction<String>? reaction) {
 
             },
