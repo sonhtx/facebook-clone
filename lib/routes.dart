@@ -1,6 +1,5 @@
-import 'dart:js';
 
-import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
+import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
 import 'package:anti_fb/ui/homepage/home_screen.dart';
 import 'package:anti_fb/ui/homepage/homepage/createpost/createpost_screen.dart';
 import 'package:anti_fb/ui/homepage/menupage/personalpage/personal_page.dart';
@@ -21,7 +20,6 @@ final Map<String, WidgetBuilder> routes = {
   '/search': (context) => SearchTab(),
   '/personal': (context) => const PersonalPage(),
   '/history_search': (context) => const HistorySearchTab(),
-  '/friend': (context) => FriendsPage(),
 
   // '/profile': (context) => ProfileScreen(),
   // '/friends': (context) => FriendsScreen(),
@@ -29,4 +27,4 @@ final Map<String, WidgetBuilder> routes = {
 };
 
 // Optionally, you can define a default route to handle unknown routes
-const String initialRoute = '/home';
+const String initialRoute = '/login';

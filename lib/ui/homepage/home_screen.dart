@@ -1,9 +1,11 @@
-import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
+import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 import '../../constants.dart';
 import '../../models/post/PostListData.dart';
+import 'friendpage/friendpage/friend_screen.dart';
+import 'friendpage/suggestionpage/suggestion_screen.dart';
 import 'homepage/home_page.dart';
 import 'menupage/menu_screen.dart';
 import 'menupage/personalpage/personal_page.dart';
@@ -60,12 +62,7 @@ class HomeState extends State<HomeScreen> {
     }
   }
 
-  void gotoSuggestion() {
-    setState(() {
-      _pageIndex = 5;
-    });
-  }
-
+  void gotoSuggestion() { setState(() { _pageIndex = 5; });}
   void backfromSuggestion() {
     setState(() {
       _selectedIndex = 1;
@@ -73,12 +70,15 @@ class HomeState extends State<HomeScreen> {
     });
   }
 
-  void gotoPersonal() {
+  void gotoFriend() { setState(() { _pageIndex = 6; });}
+  void backfromFriend() {
     setState(() {
-      _pageIndex = 4;
+      _selectedIndex = 1;
+      _pageIndex = _selectedIndex;
     });
   }
 
+  void gotoPersonal() { setState(() { _pageIndex = 4; });}
   void backFromPersonal() {
     setState(() {
       _selectedIndex = 3;
@@ -107,11 +107,13 @@ class HomeState extends State<HomeScreen> {
         postlists: postlist,
         scrollController: scrollController,
       ),
-       FriendsPage(),
+      PeoplePage(scrollController : scrollController),
       const NotificationPage(),
       const MenuPage(),
       const PersonalPage(),
-     
+      const SuggestionScreen(),
+      const FriendScreen()
+
     ];
 
     // TODO: implement build

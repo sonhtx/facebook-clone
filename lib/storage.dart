@@ -7,25 +7,25 @@ import 'models/User.dart';
 const storage = FlutterSecureStorage();
 
 // Save JWT to secure storage
-// Future<void> saveUser(User user) async {
-//   await storage.write(key: 'id', value: user.id.toString());
-//   await storage.write(key: 'firstname', value: user.firstname ?? '');
-//   await storage.write(key: 'lastname', value: user.lastname ?? '');
-//   await storage.write(key: 'token', value: user.token);
-//   await storage.write(key: 'avatar', value: user.avatar.toString());
-//   await storage.write(key: 'active', value: user.active.toString());
-//   await storage.write(key: 'coins', value: user.coins.toString());
-// }
-
-void saveUser(User user){
-  storage.write(key: 'id', value: user.id);
-  storage.write(key: 'email', value: user.email );
-  storage.write(key: 'username', value: user.username );
-  storage.write(key: 'token', value: user.token);
-  storage.write(key: 'avatar', value: user.avatar);
-  storage.write(key: 'active', value: user.active);
-  storage.write(key: 'coins', value: user.coins.toString());
+Future<void> saveUser(User user) async {
+  await storage.write(key: 'id', value: user.id.toString());
+  await storage.write(key: 'email', value: user.email );
+  await storage.write(key: 'username', value: user.username );
+  await storage.write(key: 'token', value: user.token);
+  await storage.write(key: 'avatar', value: user.avatar.toString());
+  await storage.write(key: 'active', value: user.active.toString());
+  await storage.write(key: 'coins', value: user.coins.toString());
 }
+
+// void saveUser(User user){
+//   storage.write(key: 'id', value: user.id);
+//   storage.write(key: 'email', value: user.email );
+//   storage.write(key: 'username', value: user.username );
+//   storage.write(key: 'token', value: user.token);
+//   storage.write(key: 'avatar', value: user.avatar);
+//   storage.write(key: 'active', value: user.active);
+//   storage.write(key: 'coins', value: user.coins.toString());
+// }
 void saveVerifyCode(String code){
   storage.write(key: 'verify_code', value : code);
 }
