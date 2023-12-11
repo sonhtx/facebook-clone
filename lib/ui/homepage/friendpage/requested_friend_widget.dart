@@ -1,6 +1,9 @@
 import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
+import '../../../widgets/TextButtonWidget.dart';
+
 class FriendRequestWidget extends StatelessWidget {
   final String id;
   final String username;
@@ -17,22 +20,22 @@ class FriendRequestWidget extends StatelessWidget {
 
     // Xác định xem có phải là "ngày trước", "tháng trước", hay "năm trước"
     if (difference.inDays == 1) {
-      return 'Yesterday';
+      return '1d';
     } else if (difference.inDays > 1 && difference.inDays <= 7) {
-      return '${difference.inDays} days ago';
+      return '${difference.inDays} d';
     } else if (difference.inDays > 7 && difference.inDays <= 30) {
       int weeks = (difference.inDays / 7).floor();
-      return '$weeks weeks ago';
+      return '$weeks w';
     } else if (difference.inDays > 30 && difference.inDays <= 365) {
       int months = (difference.inDays / 30).floor();
-      return '$months months ago';
+      return '$months mnth';
     } else if (difference.inDays > 365) {
       int years = (difference.inDays / 365).floor();
-      return '$years years ago';
+      return '$years y';
     } else if (difference.inHours > 0) {
-      return '${difference.inHours} hours ago';
+      return '${difference.inHours} hrs';
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} minutes ago';
+      return '${difference.inMinutes} min';
     } else {
       return 'Just now';
     }
@@ -49,12 +52,7 @@ class FriendRequestWidget extends StatelessWidget {
             content: Text(
                 'Do you want to accept the friend request from $username?'),
             actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
-                child: const Text('Cancel'),
-              ),
+
               TextButton(
                 onPressed: () {
                   // Perform the accept action
@@ -64,6 +62,12 @@ class FriendRequestWidget extends StatelessWidget {
                   Navigator.of(context).pop(); // Close the dialog
                 },
                 child: const Text('Accept'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: const Text('Cancel'),
               ),
             ],
           );
@@ -125,7 +129,7 @@ class FriendRequestWidget extends StatelessWidget {
                   Text(
                     username,
                     style: const TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                        fontSize: 14.0, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     width: 10,
@@ -139,55 +143,17 @@ class FriendRequestWidget extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 35.0, vertical: 5.0),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5.0)),
-                    child: TextButton(
-                      onPressed: handleAccept,
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      child: const Text(
-                        'Confirm',
-                        style: TextStyle(color: Colors.white, fontSize: 15.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10.0),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 35.0, vertical: 5.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(5.0)),
-                    child: TextButton(
-                      onPressed: () {
-                        // Handle button press
+                children: [
+                  TextButtonWidget(buttonText: 'Confirm', textColor: WHITE, backgroundColor: FBBLUE,
+                      radiusRoundBorder : 5,
+                      onPressed: (){
+                        handleAccept();
+                      }),
+                  TextButtonWidget(buttonText: 'Cancel', textColor: BLACK, backgroundColor: GREY,
+                      radiusRoundBorder : 5, paddingLeft: 10,
+                      onPressed: (){
                         handleDelRequest();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 35.0, vertical: 10.0),
-                        backgroundColor: Colors.grey[300],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      child: const Text(
-                        'Delete',
-                        style: TextStyle(color: Colors.black, fontSize: 15.0),
-                      ),
-                    ),
-                  ),
+                      }),
                 ],
               )
             ],

@@ -17,17 +17,20 @@ class PostApi {
 
   Future<void> _initializeHeaders() async {
     // Fetch the token from secure storage
-    // token = (await getJwt())!; // Replace with your actual code to get the token
+    token = (await getJwt())!; // Replace with your actual code to get the token
     // Update the headers with the fetched token
+    // token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIzMDIxNTN9.5d0ctn1T2C2O2zn0FqyHa4GHeOCEMGBPII_pcDTKbQc';
     headers = {
       'Content-Type': 'application/json',
-      'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIyNzU0MDJ9.HksJr9Xt3devEU_mSv0fYcVw_0PRYt9vn-59BL2NsRo',
+      'Authorization': 'Bearer $token',
+
+      // 'Authorization':
+      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIyNzU0MDJ9.HksJr9Xt3devEU_mSv0fYcVw_0PRYt9vn-59BL2NsRo',
     };
   }
 
   Future getPost(String id) async {
-    // await _initializeHeaders();
+    await _initializeHeaders();
 
     final Map<String, dynamic> requestBody = {"id": id};
     final response = await http.post(

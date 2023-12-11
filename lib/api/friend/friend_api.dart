@@ -59,8 +59,7 @@ class FriendApi {
       body: json.encode(requestBody),
     );
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      return jsonResponse;
+      return true;
     } else {
       return false; // Email not exist
     }
@@ -149,8 +148,7 @@ class FriendApi {
       body: json.encode(requestBody),
     );
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      return jsonResponse;
+      return true;
     } else {
       return false; // Email not exist
     }
