@@ -32,7 +32,7 @@ class _ListPostWidgetState extends State<ListPostWidget> {
   final PostRepository _postRepository = PostRepository();
 
   static final RequestListPost_VideoData requestListPostData =
-  RequestListPost_VideoData("1", "1", "1", "1.0", "1.0", "6", "60", "10");
+  RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", "6", "60", "10");
 
   Future<void> getlistpost() async {
     try {

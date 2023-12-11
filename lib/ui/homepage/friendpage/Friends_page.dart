@@ -3,6 +3,7 @@ import 'package:anti_fb/repository/friend/friend_repo.dart';
 import 'package:anti_fb/ui/homepage/friendpage/requested_friend_widget.dart';
 import 'package:anti_fb/ui/homepage/friendpage/suggestiontag/suggested_friend_tab.dart';
 import 'package:anti_fb/ui/homepage/friendpage/yourfriendtag/your_friends_tab.dart';
+import 'package:anti_fb/ui/homepage/search/search_tab.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../widgets/icon/IconSearchWidget.dart';
@@ -95,7 +96,7 @@ class _FriendsPageState extends State<FriendsPage> {
     void selectSuggest(BuildContext context) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) =>  SuggestedFriendsTab(),
+          builder: (ctx) => SuggestedFriendsTab(),
         ),
       );
     }
@@ -103,7 +104,7 @@ class _FriendsPageState extends State<FriendsPage> {
     void selectAllFriend(BuildContext context) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) =>  YourFriendsTab(),
+          builder: (ctx) => YourFriendsTab(),
         ),
       );
     }
@@ -123,7 +124,11 @@ class _FriendsPageState extends State<FriendsPage> {
         actions: [
           IconSearchWidget(
             onPressed: () {
-              Navigator.pushNamed(context, '/search');
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) =>  SearchTab(),
+                ),
+              );
             },
           )
         ],

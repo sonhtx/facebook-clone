@@ -15,14 +15,16 @@ class FriendApi {
 
   Future<void> _initializeHeaders() async {
     // Fetch the token from secure storage
-    // token = (await getJwt())!; // Replace with your actual code to get the token
+    token = (await getJwt())!;
 
     // Update the headers with the fetched token
+    // print(token);
+
     headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
-      // 'Authorization':
-      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIxMDAzMjl9.1HJLPsCrlUVtzaA_H7FG727v3cJZxLTSHrrUvIggKVg',
+      //'Authorization':
+      //    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIyNzU0MDJ9.HksJr9Xt3devEU_mSv0fYcVw_0PRYt9vn-59BL2NsRo',
     };
   }
 
@@ -33,7 +35,7 @@ class FriendApi {
       "count": count,
     };
     final response = await http.post(
-      Uri.parse('https://it4788.catan.io.vn/get_requested_friends'),
+      Uri.parse('$apiUrl/get_requested_friends'),
       headers: headers,
       body: json.encode(requestBody),
     );
@@ -123,6 +125,7 @@ class FriendApi {
   }
 
   Future unFriend(String user_id) async {
+    await _initializeHeaders();
     final Map<String, dynamic> requestBody = {"user_id": user_id};
     final response = await http.post(
       Uri.parse('$apiUrl/unfriend'),

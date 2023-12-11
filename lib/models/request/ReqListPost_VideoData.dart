@@ -1,7 +1,5 @@
-
-
-class RequestListPost_VideoData{
-  final String user_id;
+class RequestListPost_VideoData {
+  final String? user_id;
   final String in_campaign;
   final String campaign_id;
   final String latitude;
@@ -15,15 +13,14 @@ class RequestListPost_VideoData{
 
   Map<String, dynamic> toJson() {
     return {
-    "user_id" : user_id,
-    "in_campaign" : in_campaign,
-    "campaign_id" :campaign_id,
-    "latitude" : latitude,
-    "longitude" : longitude,
-    "last_id" : last_id,
-    "index" : index,
-    "count" : count
+      "user_id": user_id,
+      "in_campaign": in_campaign,
+      "campaign_id": campaign_id,
+      "latitude": latitude,
+      "longitude": longitude,
+      "last_id": last_id,
+      "index": index,
+      "count": count
     };
   }
 }
-

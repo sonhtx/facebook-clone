@@ -1,8 +1,6 @@
-
-
 import 'dart:js';
 
-import 'package:anti_fb/ui/homepage/friendpage/yourfriendtag/friends_tab.dart';
+import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
 import 'package:anti_fb/ui/homepage/home_screen.dart';
 import 'package:anti_fb/ui/homepage/homepage/createpost/createpost_screen.dart';
 import 'package:anti_fb/ui/homepage/menupage/personalpage/personal_page.dart';
@@ -17,13 +15,13 @@ final Map<String, WidgetBuilder> routes = {
   '/login': (context) => const LoginScreen(),
   '/signup': (context) => const SignupScreen(),
 
-  '/home' : (context) => const HomeScreen(),
-  '/post' : (context) => const CreatePostScreen(),
+  '/home': (context) => const HomeScreen(),
+  '/post': (context) => const CreatePostScreen(),
 
-  '/search' :(context) => const SearchTab(),
-  '/personal' :(context) => const PersonalPage(),
-  '/history_search' : (context) => const HistorySearchTab(),
-  '/friend' : (context) => const FriendsTab(),
+  '/search': (context) => SearchTab(),
+  '/personal': (context) => const PersonalPage(),
+  '/history_search': (context) => const HistorySearchTab(),
+  '/friend': (context) => FriendsPage(),
 
   // '/profile': (context) => ProfileScreen(),
   // '/friends': (context) => FriendsScreen(),
