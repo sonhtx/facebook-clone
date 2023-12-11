@@ -1,38 +1,35 @@
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 
 import 'package:anti_fb/models/request/ReqListPost_VideoData.dart';
 
 import '../../constants.dart';
 import '../../storage.dart';
 
-class PostApi{
-  late String token ;
+class PostApi {
+  late String token;
   late Map<String, String> headers = {};
 
-  PostApi () {
+  PostApi() {
     // Initialize headers by fetching the token from secure storage
     // _initializeHeaders();
   }
 
   Future<void> _initializeHeaders() async {
     // Fetch the token from secure storage
-    token = (await getJwt())!; // Replace with your actual code to get the token
+    // token = (await getJwt())!; // Replace with your actual code to get the token
     // Update the headers with the fetched token
     headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
+      'Authorization':
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIyNzU0MDJ9.HksJr9Xt3devEU_mSv0fYcVw_0PRYt9vn-59BL2NsRo',
     };
   }
 
   Future getPost(String id) async {
     // await _initializeHeaders();
 
-    final Map<String, dynamic> requestBody = {
-      "id" : id
-    };
+    final Map<String, dynamic> requestBody = {"id": id};
     final response = await http.post(
       Uri.parse('$apiUrl/get_post'),
       headers: headers,
@@ -65,7 +62,7 @@ class PostApi{
     }
   }
 
-  Future getListVideo(RequestListPost_VideoData req ) async {
+  Future getListVideo(RequestListPost_VideoData req) async {
     await _initializeHeaders();
 
     final String jsonData = jsonEncode(req.toJson());
@@ -81,14 +78,11 @@ class PostApi{
     } else {
       return null; // get list false
     }
-
   }
 
   Future deletePost(String id) async {
     await _initializeHeaders();
-    final Map<String, String> requestBody = {
-      "id" : id
-    };
+    final Map<String, String> requestBody = {"id": id};
     final response = await http.post(
       Uri.parse('$apiUrl/delete_post'),
       headers: headers,
@@ -123,6 +117,4 @@ class PostApi{
       return null; // get list false
     }
   }
-
-
 }
