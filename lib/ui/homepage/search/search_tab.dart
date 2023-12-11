@@ -1,10 +1,16 @@
+import 'package:anti_fb/models/search/SavedSearch.dart';
+import 'package:anti_fb/repository/search/search_repo.dart';
+import 'package:anti_fb/ui/homepage/search/search_result_widget.dart';
 import 'package:anti_fb/widgets/ButtonWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
 class SearchTab extends StatefulWidget {
-  const SearchTab({super.key});
+  SearchTab({super.key});
+
+  final SearchRepository _searchRepository = SearchRepository();
+  late List<SearchResultWidget> searchResultWidgetList;
 
   @override
   State<StatefulWidget> createState() {
@@ -14,8 +20,70 @@ class SearchTab extends StatefulWidget {
 
 class _SearchTabState extends State<SearchTab> {
   TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.searchResultWidgetList = [];
+    getSearchResult();
+  }
+
+  Future<void> getSearchResult() async {
+    try {
+      List<SavedSearch>? listSuggest =
+          await widget._searchRepository.getSavedSearch('0', '5');
+      setState(() {
+        widget.searchResultWidgetList = listSuggest
+                ?.map((curSuggest) => SearchResultWidget(
+                      curSuggest.id,
+                      curSuggest.keyword,
+                      curSuggest.created,
+                    ))
+                .toList() ??
+            [];
+        print(widget.searchResultWidgetList);
+      });
+    } catch (e) {
+      print("error fetching saved search");
+      print(e);
+    }
+  }
+
+  void handleSearch(String value) {}
+
   @override
   Widget build(BuildContext context) {
+    Widget content = const Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Uh no ... nothing here!',
+            // style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+            //       color: Theme.of(context).colorScheme.onBackground,
+            // ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            'Try selecting a different catogory',
+            // style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            //       color: Theme.of(context).colorScheme.onBackground,
+            // ),
+          ),
+        ],
+      ),
+    );
+    if (widget.searchResultWidgetList.isNotEmpty) {
+      content = Column(
+        children: [
+          for (int i = 0; i < widget.searchResultWidgetList.length; i++)
+            widget.searchResultWidgetList[i],
+        ],
+      );
+    }
+
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -53,6 +121,7 @@ class _SearchTabState extends State<SearchTab> {
                         hintText: 'Search Facebook',
                         border: InputBorder.none,
                       ),
+                      onChanged: handleSearch,
                     ),
                   ),
                 ],
@@ -64,49 +133,20 @@ class _SearchTabState extends State<SearchTab> {
                   const Text('Recent',
                       style: TextStyle(
                           fontSize: 25.0, fontWeight: FontWeight.bold)),
-                  ButtonWidget(buttonText: 'See all', textColor: BLACK,
-                      backgroundColor: WHITE, onPressed: (){
-                        Navigator.pushNamed(context, '/history_search');
-                      }, paddingTop: 0 ,width: 100,)
+                  ButtonWidget(
+                    buttonText: 'See all',
+                    textColor: BLACK,
+                    backgroundColor: WHITE,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/history_search');
+                    },
+                    paddingTop: 0,
+                    width: 100,
+                  )
                 ],
               ),
               const Divider(height: 30.0),
-              const Row(
-                children: <Widget>[
-                  // CircleAvatar(
-                  //   backgroundImage: AssetImage('./images/fb_icon.jpg'),
-                  //   radius: 40.0,
-                  // ),
-                  Icon(
-                    Icons.search_rounded,
-                    size: 22.0, // Kích thước của biểu tượng
-                    color: Colors.black, // Màu của biểu tượng
-                  ),
-                  SizedBox(width: 20.0),
-                  Text(
-                    'Nguyen Van A',
-                    style:
-                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: AssetImage('./images/fb_icon.jpg'),
-                    radius: 10.0,
-                  ),
-                  SizedBox(width: 20.0),
-                  Text(
-                    'Nguyen Van A',
-                    style:
-                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+              content,
             ],
           ),
         ),

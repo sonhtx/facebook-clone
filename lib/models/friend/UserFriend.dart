@@ -1,5 +1,5 @@
 
-class FriendSuggestion{
+class UserFriend{
 
   final String id;
   final String username;
@@ -7,11 +7,11 @@ class FriendSuggestion{
   final String created;
   final String same_friends;
 
-  FriendSuggestion({required this.id, required this.username,
+  UserFriend({required this.id, required this.username,
     required this.avatar, required this.created, required this.same_friends});
 
-  factory FriendSuggestion.fromJson(Map<String, dynamic> json) {
-    return FriendSuggestion(
+  factory UserFriend.fromJson(Map<String, dynamic> json) {
+    return UserFriend(
       id: json['id'] as String,
       username: json['username'] as String,
       avatar: json['avatar'] as String,
