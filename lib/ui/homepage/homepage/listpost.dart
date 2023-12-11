@@ -163,14 +163,14 @@ class PostWidget extends StatelessWidget {
           ),
 
           // ----------------------------
-          images != []
+          (images.isNotEmpty)
               ? SizedBox(
-                  height: 200,
+                  height: 200 ,
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount:
-                          4, // Adjust the number of images per row as needed
+                          2, // Adjust the number of images per row as needed
                     ),
                     itemCount: images.length,
                     itemBuilder: (context, index) {

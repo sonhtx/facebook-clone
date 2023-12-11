@@ -1,4 +1,5 @@
 import 'package:anti_fb/api/friend/friend_api.dart';
+import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -43,6 +44,7 @@ class FriendRequestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     void handleAccept() {
       showDialog(
         context: context,
@@ -60,12 +62,16 @@ class FriendRequestWidget extends StatelessWidget {
                   friendApi.setAcceptFriend(id, "1");
                   print('Accepted friend request from $username');
                   Navigator.of(context).pop(); // Close the dialog
+                  final ListFriendReqWidgetState? listState = context.findAncestorStateOfType<ListFriendReqWidgetState>();
+                  listState?.removeItem(id);
                 },
                 child: const Text('Accept'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
+                  final ListFriendReqWidgetState? listState = context.findAncestorStateOfType<ListFriendReqWidgetState>();
+                  listState?.removeItem(id);
                 },
                 child: const Text('Cancel'),
               ),

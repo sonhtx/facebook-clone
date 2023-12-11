@@ -8,8 +8,6 @@ import '../../../../constants.dart';
 import '../../../../api/post/multimediaPost_api.dart';
 import 'ImageUpWidget.dart';
 
-
-
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
 
@@ -84,7 +82,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 child: const Text( "Post", style: TextStyle(color: WHITE),),
                 onPressed: () async {
                   createPostData.described = textController.text;
-
+                  createPostData.status = "Hyped";
+                  createPostData.auto_accept = "1";
                   // send create post request, need jwt
                   await _addPostApi.addPost(createPostData);
 
@@ -98,7 +97,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             children: <Widget>[
 
               Container(
-                padding :const EdgeInsets.only(), width: double.infinity, height: 30,
+                padding :const EdgeInsets.all(10), width: double.infinity, height: 70,
                 child: Row(
                   children: [
                     const TextWidget(text: 'Choose images', fontSize: 12, width: 100,),
@@ -110,7 +109,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 )
               ),
               Container(
-                  padding :const EdgeInsets.only(), width: double.infinity, height: 30,
+                  padding :const EdgeInsets.all(10), width: double.infinity, height: 70,
                   child: Row(
                       children: [
                         const TextWidget(text: 'Choose video', fontSize: 12, width: 100,),
@@ -157,17 +156,19 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               Container(
                 height: 300,
                 padding :const EdgeInsets.only(left: 5),
-                child: ValueListenableBuilder<XFile?>(
-                  valueListenable: videoNotifier,
-                  builder: (context, videoFile, _) {
-                    if (videoFile == null) {
-                      return const Text('No video selected.');
-                    } else {
-                      return const Text('1 video selected.');
-                      // return VideoPlayerWidget(videoFile: videoFile);
-                    }
-                  },
-                ),
+                child:
+                  ValueListenableBuilder<XFile?>(
+                        valueListenable: videoNotifier,
+                        builder: (context, videoFile, _) {
+                          if (videoFile!.path.isEmpty) {
+                            return const Text('No video selected.');
+                          } else {
+                            return const Text('1 video selected.');
+                            // return VideoPlayerWidget(videoFile: videoFile);
+                          }
+                        },
+                      ),
+
               )
             ]
           )

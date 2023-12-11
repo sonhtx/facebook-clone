@@ -87,10 +87,10 @@ class ListFriendReqWidget extends StatefulWidget {
   late List<FriendRequestWidget> requestWidgetList = [];
 
   @override
-  State<ListFriendReqWidget> createState() => _ListFriendReqWidgetState();
+  State<ListFriendReqWidget> createState() => ListFriendReqWidgetState();
 }
 
-class _ListFriendReqWidgetState extends State<ListFriendReqWidget> {
+class ListFriendReqWidgetState extends State<ListFriendReqWidget> {
   String countRequest = '0';
 
   @override
@@ -98,6 +98,12 @@ class _ListFriendReqWidgetState extends State<ListFriendReqWidget> {
     super.initState();
     widget.requestWidgetList = [];
     getFriendSuggest();
+  }
+
+  void removeItem(String id){
+    setState(() {
+      widget.requestWidgetList.removeWhere((obj) => obj.id == id);
+    });
   }
 
   Future<void> getFriendSuggest() async {
