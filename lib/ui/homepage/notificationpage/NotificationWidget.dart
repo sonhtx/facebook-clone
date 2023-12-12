@@ -15,16 +15,15 @@ class NotificationWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.15,
+          Container(
+            margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
             child: CircleAvatar(
               backgroundImage: AssetImage(notification.imageUrl),
-              radius: MediaQuery.of(context).size.width * 0.09,
+              radius: 35.0,
             ),
           ),
           // const SizedBox(width: 15.0),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.6,
+          Expanded(
             child: Align(
               alignment: Alignment.centerLeft,
               child: Column(
