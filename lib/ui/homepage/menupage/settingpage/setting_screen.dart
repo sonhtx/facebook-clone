@@ -64,6 +64,7 @@ class SettingScreen extends StatelessWidget {
                         );
                       },
                       style: TextButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
                         shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.zero),
                       ),
@@ -75,11 +76,14 @@ class SettingScreen extends StatelessWidget {
                           children: <Widget>[
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.15,
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                   radius:
-                                      MediaQuery.of(context).size.width * 0.05,
+                                      20.0,
                                   backgroundColor: BTNBG,
-                                  child: const Icon(Icons.person)),
+                                  child: Icon(
+                                      Icons.person,
+                                    color: Colors.black,
+                                  )),
                             ),
                             const Expanded(
                               child: Column(
@@ -120,6 +124,7 @@ class SettingScreen extends StatelessWidget {
                         );
                       },
                       style: TextButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
                         shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.zero),
                       ),
@@ -131,11 +136,10 @@ class SettingScreen extends StatelessWidget {
                           children: <Widget>[
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.15,
-                              child: CircleAvatar(
-                                  radius:
-                                      MediaQuery.of(context).size.width * 0.05,
+                              child: const CircleAvatar(
+                                  radius: 20.0,
                                   backgroundColor: BTNBG,
-                                  child: const Icon(Icons.security)),
+                                  child: Icon(Icons.security,color: Colors.black,)),
                             ),
                             const Expanded(
                               child: Column(
@@ -211,6 +215,7 @@ class SettingScreen extends StatelessWidget {
                         );
                       },
                       style: TextButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
                         shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.zero),
                       ),
@@ -222,11 +227,10 @@ class SettingScreen extends StatelessWidget {
                           children: <Widget>[
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.15,
-                              child: CircleAvatar(
-                                  radius:
-                                      MediaQuery.of(context).size.width * 0.05,
+                              child: const CircleAvatar(
+                                  radius: 20.0,
                                   backgroundColor: BTNBG,
-                                  child: const Icon(Icons.block)),
+                                  child: Icon(Icons.block,color: Colors.black,)),
                             ),
                             const Expanded(
                               child: Column(
@@ -268,6 +272,7 @@ class SettingScreen extends StatelessWidget {
                         );
                       },
                       style: TextButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
                         shape: const BeveledRectangleBorder(
                             borderRadius: BorderRadius.zero),
                       ),
@@ -279,11 +284,10 @@ class SettingScreen extends StatelessWidget {
                           children: <Widget>[
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.15,
-                              child: CircleAvatar(
-                                  radius:
-                                      MediaQuery.of(context).size.width * 0.05,
+                              child: const CircleAvatar(
+                                  radius:20.0,
                                   backgroundColor: BTNBG,
-                                  child: const Icon(Icons.notifications)),
+                                  child: Icon(Icons.notifications,color: Colors.black,)),
                             ),
                             const Expanded(
                               child: Column(
