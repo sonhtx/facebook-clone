@@ -1,13 +1,12 @@
 import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
+import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-
 import '../../constants.dart';
 import '../../models/post/PostListData.dart';
 import 'friendpage/friendpage/friend_screen.dart';
 import 'friendpage/suggestionpage/suggestion_screen.dart';
 import 'homepage/home_page.dart';
-import 'menupage/menu_screen.dart';
 import 'menupage/personalpage/personal_page.dart';
 import 'notificationpage/notification_page.dart';
 
@@ -40,19 +39,11 @@ class HomeState extends State<HomeScreen> {
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) {
-      if (index == 0) {
-        scrollController.animateTo(
-          0.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 300),
-        );
-      } else {
-        pageController.animateTo(
-          0.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 300),
-        );
-      }
+      scrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
     } else {
       setState(() {
         _selectedIndex = index;
@@ -62,7 +53,12 @@ class HomeState extends State<HomeScreen> {
     }
   }
 
-  void gotoSuggestion() { setState(() { _pageIndex = 5; });}
+  void gotoSuggestion() {
+    setState(() {
+      _pageIndex = 5;
+    });
+  }
+
   void backfromSuggestion() {
     setState(() {
       _selectedIndex = 1;
@@ -70,7 +66,12 @@ class HomeState extends State<HomeScreen> {
     });
   }
 
-  void gotoFriend() { setState(() { _pageIndex = 6; });}
+  void gotoFriend() {
+    setState(() {
+      _pageIndex = 6;
+    });
+  }
+
   void backfromFriend() {
     setState(() {
       _selectedIndex = 1;
@@ -78,7 +79,12 @@ class HomeState extends State<HomeScreen> {
     });
   }
 
-  void gotoPersonal() { setState(() { _pageIndex = 4; });}
+  void gotoPersonal() {
+    setState(() {
+      _pageIndex = 4;
+    });
+  }
+
   void backFromPersonal() {
     setState(() {
       _selectedIndex = 3;
@@ -107,16 +113,14 @@ class HomeState extends State<HomeScreen> {
         postlists: postlist,
         scrollController: scrollController,
       ),
-      PeoplePage(scrollController : scrollController),
+      PeoplePage(scrollController: scrollController),
       const NotificationPage(),
-      const MenuPage(),
+      MenuPage(scrollController: scrollController),
       const PersonalPage(),
       const SuggestionScreen(),
       const FriendScreen()
-
     ];
 
-    // TODO: implement build
     return Scaffold(
         // body: PageView(
         //   controller: pageController,
