@@ -74,8 +74,8 @@ class SettingScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.15,
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                               child: const CircleAvatar(
                                   radius:
                                       20.0,
@@ -134,8 +134,8 @@ class SettingScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.15,
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                               child: const CircleAvatar(
                                   radius: 20.0,
                                   backgroundColor: BTNBG,
@@ -225,8 +225,8 @@ class SettingScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.15,
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                               child: const CircleAvatar(
                                   radius: 20.0,
                                   backgroundColor: BTNBG,
@@ -282,8 +282,8 @@ class SettingScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.15,
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                               child: const CircleAvatar(
                                   radius:20.0,
                                   backgroundColor: BTNBG,
