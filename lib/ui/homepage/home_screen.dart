@@ -17,11 +17,12 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => HomeState();
 }
 
-class HomeState extends State<HomeScreen> {
+class HomeState extends State<HomeScreen> with TickerProviderStateMixin {
   final log = Logger('HomeState');
 
   late PageController pageController;
   late ScrollController scrollController;
+  late TabController tabController;
 
   int _selectedIndex = 0;
   int _pageIndex = 0;
@@ -34,6 +35,7 @@ class HomeState extends State<HomeScreen> {
   void dispose() {
     pageController.dispose();
     scrollController.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
@@ -49,7 +51,7 @@ class HomeState extends State<HomeScreen> {
         _selectedIndex = index;
         _pageIndex = _selectedIndex;
       });
-      // pageController.jumpToPage(index);
+      pageController.jumpToPage(index);
     }
   }
 
@@ -93,13 +95,20 @@ class HomeState extends State<HomeScreen> {
   }
 
   // void gotoChangePassword(){setState(() { _pageIndex = 3;});}
-
+  void onPageChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    pageController.addListener(() {
+      tabController.animateTo(pageController.page!.round());
+    });
+  }
   @override
   void initState() {
     super.initState();
     pageController = PageController(initialPage: _selectedIndex);
     scrollController = ScrollController();
-
+    tabController = TabController(length: 4, vsync: this);
     // coin = getCoin() as String;
     // initCoin();
   }
@@ -122,14 +131,11 @@ class HomeState extends State<HomeScreen> {
     ];
 
     return Scaffold(
-        // body: PageView(
-        //   controller: pageController,
-        //   onPageChanged: (index) {
-        //     setState(() { _selectedIndex = index; });
-        //
-        //   },
-        //   children: pages,
-        body: pages[_pageIndex],
+        body: PageView(
+          controller: pageController,
+          onPageChanged: onPageChanged,
+          children: pages,
+        ),
         // ),
         bottomNavigationBar: Visibility(
             child: BottomNavigationBar(

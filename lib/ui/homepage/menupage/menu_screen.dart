@@ -9,7 +9,6 @@ import 'package:anti_fb/storage.dart';
 
 class MenuPage extends StatefulWidget {
   final ScrollController scrollController;
-  final String username = "";
   const MenuPage({super.key, required this.scrollController});
 
   @override
@@ -19,8 +18,7 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  String? _name;
-
+  String? name = "";
   @override
   void initState() {
     super.initState();
@@ -29,7 +27,6 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
-
     super.build(context);
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -59,7 +56,7 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                 CardItem(
                   width: screenWidth - 20.0,
                   height: 100.0,
-                  label: _name?? "",
+                  label: "",
                   widget: const CircleAvatar(
                     backgroundImage:
                         AssetImage('assets/images/messi-world-cup.png'),

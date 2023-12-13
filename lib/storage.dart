@@ -34,8 +34,12 @@ void saveVerifyCode(String code){
 Future<String?> getJwt() async {
   return await storage.read(key: 'token');
 }
+Future<String?> getImageUrl() async {
+  return await storage.read(key: 'username');
+}
 
-Future<String?> getUsername() async {
+
+Future<String?> getUserName() async {
   return await storage.read(key: 'username');
 }
 
