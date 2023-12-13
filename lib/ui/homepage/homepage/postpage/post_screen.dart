@@ -27,7 +27,6 @@ class PostScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController commentController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -45,28 +44,7 @@ class PostScreen extends StatelessWidget{
               Text(described),
               (images.isNotEmpty)
                   ? ImageWidget(images: images)
-              // SizedBox(
-              //     height: 200 ,
-              //     child: GridView.builder(
-              //       gridDelegate:
-              //       const SliverGridDelegateWithFixedCrossAxisCount(
-              //         crossAxisCount:
-              //         2, // Adjust the number of images per row as needed
-              //       ),
-              //       itemCount: images.length,
-              //       itemBuilder: (context, index) {
-              //         return ListTile(
-              //           title: CachedNetworkImage(
-              //             imageUrl: images[index].url,
-              //             placeholder: (context, url) =>
-              //             const CircularProgressIndicator(),
-              //             errorWidget: (context, url, error) =>
-              //             const Icon(Icons.error),
-              //           ),
-              //         );
-              //       },
-              //     ))
-                  : const SizedBox.shrink(),
+                   : const SizedBox.shrink(),
               Container(
                   height: 30,
                   padding: const EdgeInsets.only(left: 5),
@@ -117,7 +95,46 @@ class PostScreen extends StatelessWidget{
 
         )
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: BottomTextField(id: id,)
+    );
+  }
+}
+
+class BottomTextField extends StatefulWidget{
+  BottomTextField({super.key, required this.id});
+  final String id;
+
+
+  @override
+  State<BottomTextField> createState() => BottomTextFieldState();
+
+}
+class BottomTextFieldState extends State<BottomTextField> {
+
+  TextEditingController commentController = TextEditingController();
+  late Color commentButtonBackgroundColor;
+
+  @override
+  void initState() {
+    super.initState();
+    commentButtonBackgroundColor = GREY;
+    commentController.addListener(() {
+      setState(() {
+        if (commentController.text != '') {
+          commentButtonBackgroundColor = FBBLUE; // Change button color
+        } else {
+          commentButtonBackgroundColor = GREY; // Reset button color
+        }
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Container(
+        padding: const EdgeInsets.only(left: 10, bottom: 5),
         color: WHITE,
         height: 50,
         child: Row(
@@ -127,17 +144,18 @@ class PostScreen extends StatelessWidget{
                 decoration: const InputDecoration( hintText: 'Comment', ),
               ),
             ),
-            IconWidget(icon: Icons.send_rounded, onPressed: (){})
+            IconWidget(icon: Icons.send_rounded,
+                color: commentButtonBackgroundColor,
+                onPressed: (
+
+                ){})
           ],
         )
-
-
-      ),
-    
     );
+
   }
+
+
 }
-
-
 
 

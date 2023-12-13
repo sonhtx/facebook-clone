@@ -6,7 +6,7 @@ import 'package:anti_fb/ui/homepage/friendpage/suggestionpage/suggestion_list.da
 import 'package:flutter/material.dart';
 
 import '../../../../widgets/IconWidget.dart';
-import '../../home_screen.dart';
+import '../../nav_screen.dart';
 
 class SuggestionScreen extends StatelessWidget{
 

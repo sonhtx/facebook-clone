@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../../constants.dart';
 import '../../../../models/comment/comment.dart';
 import '../../../../models/comment/mark.dart';
 import '../../../../models/comment/poster.dart';
@@ -40,7 +41,7 @@ class ListMarkState extends State<ListMark> {
   Future<void> getlistmark() async {
     try {
       List<MarkData>? marklists =
-      await _commentRepository.getMarkComment("1", index, count);
+      await _commentRepository.getMarkComment(widget.id, index, count);
 
       setState(() {
         for (int i = 0; i < marklists!.length; i++) {
@@ -64,13 +65,9 @@ class ListMarkState extends State<ListMark> {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Column(
-            children: widget.listMarksWidget
-        )
+        child: Column( children: widget.listMarksWidget)
     );
-
   }
-
 }
 
 // Mark
@@ -108,7 +105,7 @@ class MarkWidgetState extends State<MarkWidget> {
       CommentData curComment =  widget.comments[i];
       widget.listCommentsWidget.add(CommentWidget(
         content: curComment.content,
-        created: curComment.created,
+        created: curComment.created.substring(0,10),
         poster: curComment.poster,
       ));
     }
@@ -125,17 +122,27 @@ class MarkWidgetState extends State<MarkWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProfileAvatar(imageUrl: widget.poster.avatar),
-              const SizedBox(width: 8.0),
+              // const SizedBox(width: 8.0),
               Column(
                 children: [
-                  TextWidget(text: widget.poster.name, fontSize: 10, width: 100,),
-                  TextWidget(text: widget.mark_content, fontSize: 10, fontWeight: FontWeight.normal,
-                    width: 100,),
-
-                  TextButton(onPressed: (){
-                    setState(() { isExpanded = !isExpanded; });
-                  },
-                      child: TextWidget(text: '$numComment comments', fontSize: 7, width: 150,)
+                  Container(
+                    color: GREY[300],
+                    child: Column(
+                      children: [
+                        TextWidget(text: widget.poster.name, fontSize: 12, width: 150,),
+                        TextWidget(text: widget.mark_content, fontSize: 12, fontWeight: FontWeight.normal,
+                          width: 150,),
+                      ],
+                    ),
+                  ),
+                  
+                  TextWidget(text: widget.created, fontSize: 12, width: 150,
+                      fontWeight: FontWeight.normal, textColor: GREY,),
+                  TextButton(
+                    child: TextWidget(text: ' ---> $numComment comments', fontSize: 12, width: 150,),
+                    onPressed: (){
+                      setState(() { isExpanded = !isExpanded; });
+                    }
                   ),
                   Visibility(
                     visible: isExpanded,
@@ -182,8 +189,8 @@ class CommentWidget extends StatelessWidget{
                     const SizedBox(width: 8.0),
                     Column(
                         children: [
-                          TextWidget(text: poster.name, fontSize: 10, width: 100,),
-                          TextWidget(text: content, fontSize: 10, fontWeight: FontWeight.normal,width: 100,)
+                          TextWidget(text: poster.name, fontSize: 12, width: 100,),
+                          TextWidget(text: content, fontSize: 12, fontWeight: FontWeight.normal,width: 100,)
                         ]
                     )
                   ]

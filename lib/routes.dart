@@ -1,6 +1,5 @@
 
-import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
-import 'package:anti_fb/ui/homepage/home_screen.dart';
+import 'package:anti_fb/ui/homepage/nav_screen.dart';
 import 'package:anti_fb/ui/homepage/homepage/createpost/createpost_screen.dart';
 import 'package:anti_fb/ui/homepage/menupage/personalpage/personal_page.dart';
 import 'package:anti_fb/ui/homepage/search/history_search_tab.dart';

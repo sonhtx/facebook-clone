@@ -4,7 +4,7 @@ import 'package:anti_fb/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../widgets/IconWidget.dart';
-import '../../home_screen.dart';
+import '../../nav_screen.dart';
 
 class FriendScreen extends StatelessWidget{
 
