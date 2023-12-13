@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../constants.dart';
 import '../../storage.dart';
 
-class ReactionApi {
+class CommentApi {
   late String token;
   late Map<String, String> headers;
 
@@ -34,7 +34,7 @@ class ReactionApi {
       "count" : count,
     };
     final response = await http.post(
-      Uri.parse('$apiUrl/get_post'),
+      Uri.parse('$apiUrl/get_mark_comment'),
       headers: headers,
       body: json.encode(requestBody),
     );
