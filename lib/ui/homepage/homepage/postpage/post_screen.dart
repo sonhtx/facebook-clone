@@ -1,5 +1,6 @@
 
 
+import 'package:anti_fb/widget_dung/imageViewWidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -40,27 +41,29 @@ class PostScreen extends StatelessWidget{
             children: [
               Text(described),
               (images.isNotEmpty)
-                  ? SizedBox(
-                  height: 200 ,
-                  child: GridView.builder(
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:
-                      2, // Adjust the number of images per row as needed
-                    ),
-                    itemCount: images.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: CachedNetworkImage(
-                          imageUrl: images[index].url,
-                          placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                        ),
-                      );
-                    },
-                  ))
+                  ? 
+                  ImageWidget(images: images)
+              // SizedBox(
+              //     height: 200 ,
+              //     child: GridView.builder(
+              //       gridDelegate:
+              //       const SliverGridDelegateWithFixedCrossAxisCount(
+              //         crossAxisCount:
+              //         2, // Adjust the number of images per row as needed
+              //       ),
+              //       itemCount: images.length,
+              //       itemBuilder: (context, index) {
+              //         return ListTile(
+              //           title: CachedNetworkImage(
+              //             imageUrl: images[index].url,
+              //             placeholder: (context, url) =>
+              //             const CircularProgressIndicator(),
+              //             errorWidget: (context, url, error) =>
+              //             const Icon(Icons.error),
+              //           ),
+              //         );
+              //       },
+              //     ))
                   : const SizedBox.shrink(),
               Container(
                   height: 30,
