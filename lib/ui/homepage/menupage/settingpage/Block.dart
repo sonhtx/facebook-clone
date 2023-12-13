@@ -69,14 +69,14 @@ class BlockScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
-                                SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    child: const Icon(
-                                      Icons.add_box_rounded,
-                                      color: FBBLUE,
-                                      size: 40.0,
-                                    )),
+                                Container(
+                                  margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                                  child: const Icon(
+                                    Icons.add_box_rounded,
+                                    color: FBBLUE,
+                                    size: 40.0,
+                                  ),
+                                ),
                                 const Expanded(
                                   child: Text(
                                     "ADD TO BLOCKED LIST",
@@ -231,16 +231,17 @@ class BlockedPeople extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                        child: Image.asset(
-                          imageUrl,
-                          width: 30.0,
-                          height: 30.0,
-                        ),
-                      )),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                      child: Image.asset(
+                        imageUrl,
+                        width: 30.0,
+                        height: 30.0,
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 4.0),
                   Expanded(
                     child: Text(

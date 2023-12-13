@@ -73,6 +73,7 @@ class Security extends StatelessWidget {
                           );
                         },
                         style: TextButton.styleFrom(
+                          padding: const EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 20.0),
                           shape: const BeveledRectangleBorder(
                               borderRadius: BorderRadius.zero),
                         ),
@@ -82,12 +83,14 @@ class Security extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                              const Icon(
-                                Icons.key,
-                                color: Colors.black,
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                                child: const Icon(
+                                  Icons.key,
+                                  color: Colors.black,
+                                ),
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.75,
+                              Expanded(
                                 child: const Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,

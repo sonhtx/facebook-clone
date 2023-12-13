@@ -5,21 +5,31 @@ import 'package:flutter/material.dart';
 import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/widgets/ButtonWidget.dart';
 import 'package:anti_fb/widgets/circle_button.dart';
+import 'package:anti_fb/storage.dart';
 
 class MenuPage extends StatefulWidget {
   final ScrollController scrollController;
+  final String username = "";
   const MenuPage({super.key, required this.scrollController});
 
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
 
-class _MenuPageState extends State<MenuPage>
-    with AutomaticKeepAliveClientMixin {
+class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+  String? _name;
+
+  @override
+  void initState() {
+    super.initState();
+    getName().then((value) => setState(() => _name = value));
+  }
+
   @override
   Widget build(BuildContext context) {
+
     super.build(context);
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -49,7 +59,7 @@ class _MenuPageState extends State<MenuPage>
                 CardItem(
                   width: screenWidth - 20.0,
                   height: 100.0,
-                  label: 'Messi',
+                  label: _name?? "",
                   widget: const CircleAvatar(
                     backgroundImage:
                         AssetImage('assets/images/messi-world-cup.png'),

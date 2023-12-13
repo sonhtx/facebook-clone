@@ -72,6 +72,7 @@ class PersonalDetail extends StatelessWidget {
                           );
                         },
                         style: TextButton.styleFrom(
+                          padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
                           shape: const BeveledRectangleBorder(
                               borderRadius: BorderRadius.zero),
                         ),
