@@ -44,8 +44,7 @@ class PostScreen extends StatelessWidget{
             children: [
               Text(described),
               (images.isNotEmpty)
-                  ? 
-                  ImageWidget(images: images)
+                  ? ImageWidget(images: images)
               // SizedBox(
               //     height: 200 ,
               //     child: GridView.builder(

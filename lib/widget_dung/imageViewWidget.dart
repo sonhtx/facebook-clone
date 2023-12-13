@@ -12,37 +12,7 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        //   SizedBox(
-        //   height:200,
-        //   child: GridView.count(
-        //     physics: const NeverScrollableScrollPhysics() ,
-        //     crossAxisCount: 2,
-        //     children: List.generate(images.length, (index) => Container(
-        //       child: Center(
-        //         child: Container(
-        //           margin: EdgeInsets.all(2.0),
-        //           child: GridTile(
-        //             child: CachedNetworkImage(
-        //               imageUrl: images[index].url,
-        //               imageBuilder: (context, imageProvider) => Container(
-        //                 decoration: BoxDecoration(
-        //                   image: DecorationImage(
-        //                     image: imageProvider,
-        //                     fit: BoxFit.cover,
-        //                   ),
-        //                 ),
-        //               ),
-        //               placeholder: (context, url) => const CircularProgressIndicator(),
-        //               errorWidget: (context, url, error) => const Icon(Icons.error),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     )),
-        //   ),
-        // );
-        SizedBox(
+    return SizedBox(
       child: StaggeredGrid.count(
           crossAxisCount: 2,
           mainAxisSpacing: 2,
@@ -62,14 +32,13 @@ class ImageWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) =>LayoutBuilder(builder: (ctx, constraints){
-                    return
-                      Container(
-                        height: constraints.maxHeight * 0.5,
-                        width: constraints.maxWidth * 0.5,
-                        child: CircularProgressIndicator(),
-                      );
-                  }),
+                  placeholder: (context, url) =>const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
@@ -87,10 +56,12 @@ class ImageWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) =>SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator()
+                  placeholder: (context, url) =>const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
                   ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
@@ -108,14 +79,13 @@ class ImageWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) =>LayoutBuilder(builder: (ctx, constraints){
-                    return
-                      Container(
-                        height: constraints.minHeight * 0.5,
-                        width: constraints.maxWidth * 0.5,
-                        child: CircularProgressIndicator(),
-                      );
-                  }),
+                  placeholder: (context, url) =>const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
@@ -152,7 +122,13 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+                  const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -170,7 +146,13 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+                  const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
@@ -189,7 +171,13 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+                  const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -207,7 +195,13 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+                  const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -225,7 +219,13 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+                  const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -243,7 +243,13 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+                  const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
