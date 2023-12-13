@@ -35,8 +35,8 @@ Future<String?> getJwt() async {
   return await storage.read(key: 'token');
 }
 
-Future<String?> getName() async {
-  return await storage.read(key: 'firstname');
+Future<String?> getUsername() async {
+  return await storage.read(key: 'username');
 }
 
 Future<String?> getCoin(){
