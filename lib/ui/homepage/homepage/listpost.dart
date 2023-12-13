@@ -35,26 +35,35 @@ class _ListPostWidgetState extends State<ListPostWidget> {
   RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", 6, "0", "10");
 
   Future<void> getlistpost() async {
+
+    await Future.delayed(const Duration(seconds: 2));
+
     try {
       List<PostListData>? listPost =
           await _postRepository.getlistpost(requestListPostData);
+    setState(() {
       for (int i = 0; i < listPost!.length; i++) {
         PostListData curPost = listPost[i];
         listPostsWidget.add(PostWidget(
-            curPost.id,
-            curPost.name,
-            curPost.image,
-            curPost.described,
-            curPost.created,
-            curPost.feel,
-            curPost.comment_mark,
-            curPost.is_felt,
-            curPost.author.name,
-            curPost.author.avatar));
+        curPost.id,
+        curPost.name,
+        curPost.image,
+        curPost.described,
+        curPost.created.substring(0, 10),
+        curPost.feel,
+        curPost.comment_mark,
+        curPost.is_felt,
+        curPost.author.name,
+        curPost.author.avatar));
       }
-      final HomeState? homeState =
-          context.findAncestorStateOfType<HomeState>();
-      homeState?.postlist = listPost;
+      if(mounted) {
+        final HomeState? homeState =
+        context.findAncestorStateOfType<HomeState>();
+        homeState?.postlist = listPost;
+      }
+    });
+
+
     } catch (error) {
       print(error);
     }
@@ -65,29 +74,24 @@ class _ListPostWidgetState extends State<ListPostWidget> {
     super.initState();
     _postlists = widget.postlists;
 
-    setState(() {
-      if (_postlists.isEmpty) {
-        getlistpost();
-      } else {
-        for (int i = 0; i < _postlists.length; i++) {
-          PostListData curPost = _postlists[i];
-          listPostsWidget.add(PostWidget(
-              curPost.id,
-              curPost.name,
-              curPost.image,
-              curPost.described,
-              curPost.created,
-              curPost.feel,
-              curPost.comment_mark,
-              curPost.is_felt,
-              curPost.author.name,
-              curPost.author.avatar));
-        }
-      }
-
-    });
-
-
+     if (_postlists.isEmpty) {
+       getlistpost();
+     } else {
+       for (int i = 0; i < _postlists.length; i++) {
+         PostListData curPost = _postlists[i];
+         listPostsWidget.add(PostWidget(
+             curPost.id,
+             curPost.name,
+             curPost.image,
+             curPost.described,
+             curPost.created.substring(0, 10),
+             curPost.feel,
+             curPost.comment_mark,
+             curPost.is_felt,
+             curPost.author.name,
+             curPost.author.avatar));
+       }
+     }
   }
 
   @override
@@ -113,7 +117,7 @@ class PostWidget extends StatelessWidget {
   final String author_name;
   final String author_avatar_url;
 
-  PostWidget(
+  const PostWidget(
       this.id,
       this.name,
       this.images,

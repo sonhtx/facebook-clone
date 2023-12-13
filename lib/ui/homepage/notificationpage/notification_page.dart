@@ -2,8 +2,7 @@ import 'package:anti_fb/ui/homepage/notificationpage/user_notification.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../../../widgets/icon/IconSearchWidget.dart';
-import '../../../widgets/icon/IconSettingWidget.dart';
+import '../../../widgets/IconWidget.dart';
 import 'NotificationWidget.dart';
 
 
@@ -15,14 +14,14 @@ class NotificationPage extends StatelessWidget{
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-          title: NotificationsAppBarTitle(),
+          title: const NotificationsAppBarTitle(),
           actions:  [
             Row(
               children: [
-                IconSettingWidget(),
+                IconWidget(icon: Icons.settings, onPressed: () {},),
                 Padding(
                     padding: const EdgeInsets.only(right: 5), //
-                    child: IconSearchWidget(
+                    child: IconWidget( icon: Icons.search,
                       onPressed: (){},
                     )
                 ),

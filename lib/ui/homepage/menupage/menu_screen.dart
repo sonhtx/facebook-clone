@@ -24,7 +24,7 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
   @override
   void initState() {
     super.initState();
-    getName().then((value) => setState(() => _name = value));
+    getUsername().then((value) => setState(() => _name = value));
   }
 
   @override
