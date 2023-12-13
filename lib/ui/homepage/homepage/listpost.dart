@@ -5,7 +5,6 @@ import 'package:anti_fb/repository/post/post_repo.dart';
 import 'package:anti_fb/ui/homepage/homepage/postpage/post_screen.dart';
 import 'package:anti_fb/ui/homepage/homepage/reaction_button.dart';
 import 'package:anti_fb/widget_dung/imageViewWidget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:readmore/readmore.dart';
@@ -14,7 +13,7 @@ import '../../../constants.dart';
 import '../../../models/post/ImageData.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/profile_avatar.dart';
-import '../home_screen.dart';
+import '../nav_screen.dart';
 
 class ListPostWidget extends StatefulWidget {
   const ListPostWidget({super.key, required this.postlists});

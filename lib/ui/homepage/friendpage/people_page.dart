@@ -7,7 +7,7 @@ import '../../../constants.dart';
 import '../../../models/friend/Friend.dart';
 import '../../../repository/friend/friend_repo.dart';
 import '../../../widgets/IconWidget.dart';
-import '../home_screen.dart';
+import '../nav_screen.dart';
 
 // show people can be friend
 
