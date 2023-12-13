@@ -28,6 +28,18 @@ class PostRepository{
     }
   }
 
+  Future getPost (String id) async {
+    try{
+      final getPostResult = await _postApi.getPost(id);
+      if(getPostResult == null) {
+
+      }
+    }catch (e) {
+      print(e);
+      return null; // Signup failed due to an error
+    }
+  }
+
 
 
 }
