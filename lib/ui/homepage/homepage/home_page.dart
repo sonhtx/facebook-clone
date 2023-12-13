@@ -1,10 +1,9 @@
 
-import 'package:anti_fb/widgets/icon/IconMessageWidget.dart';
-import 'package:anti_fb/widgets/icon/IconSearchWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../models/post/PostListData.dart';
+import '../../../widgets/IconWidget.dart';
 import 'appbar.dart';
 import 'createpostbar.dart';
 import 'listpost.dart';
@@ -33,12 +32,14 @@ class HomePage extends StatelessWidget{
                 alignment: Alignment.centerRight,
                 child: Row(
                   children: [
-                    IconSearchWidget(
+                    IconWidget(
+                      icon: Icons.search,
                       onPressed: () {
                         Navigator.pushNamed(context, '/search');
                       },
                     ),
-                    IconMessageWidget(
+                    IconWidget(
+                      icon: Icons.message,
                       onPressed: () {
 
 

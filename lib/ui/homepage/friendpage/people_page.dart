@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../models/friend/Friend.dart';
 import '../../../repository/friend/friend_repo.dart';
-import '../../../widgets/icon/IconSearchWidget.dart';
+import '../../../widgets/IconWidget.dart';
 import '../home_screen.dart';
 
 // show people can be friend
@@ -26,7 +26,7 @@ class PeoplePage extends StatelessWidget{
             backgroundColor: WHITE,
             elevation: 0.0,
             actions: [
-              IconSearchWidget( onPressed: (){Navigator.pushNamed(context, '/search');},)
+              IconWidget(icon: Icons.search, onPressed: (){Navigator.pushNamed(context, '/search');},)
             ],
           ),
           SliverToBoxAdapter(

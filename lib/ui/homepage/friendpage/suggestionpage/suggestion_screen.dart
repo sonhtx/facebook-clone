@@ -5,7 +5,7 @@ import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/ui/homepage/friendpage/suggestionpage/suggestion_list.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../widgets/icon/IconSearchWidget.dart';
+import '../../../../widgets/IconWidget.dart';
 import '../../home_screen.dart';
 
 class SuggestionScreen extends StatelessWidget{
@@ -26,7 +26,8 @@ class SuggestionScreen extends StatelessWidget{
             homeState?.backfromSuggestion();
           },
         ),
-        actions: [ IconSearchWidget(
+        actions: [ IconWidget(
+          icon: Icons.search,
           onPressed: (){Navigator.pushNamed(context, '/search');},
         ) ],
       ),

@@ -8,6 +8,7 @@ import '../../../../constants.dart';
 import '../../../../models/post/ImageData.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../listpost.dart';
+import 'markUI.dart';
 
 class PostScreen extends StatelessWidget{
   final String id ;
@@ -26,6 +27,8 @@ class PostScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController commentController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: WHITE,
@@ -107,52 +110,34 @@ class PostScreen extends StatelessWidget{
                 thickness: 0.1,
                 color: GREY,
               ),
-
+              // -----------------
+              ListMark(id: id,)
+              // -----------------
             ],
           ),
 
         )
       ),
       bottomNavigationBar: Container(
-        color: GREEN,
+        color: WHITE,
         height: 50,
-        child: const TextWidget(text: '555', fontSize: 12,),
+        child: Row(
+          children: [
+            TextField(controller: commentController,
+              decoration: const InputDecoration(
+                hintText: 'Comment',
+              ),),
+
+          ],
+        )
+
+
       ),
     
     );
   }
 }
 
-// // Mark
-//
-// class ListMark extends StatefulWidget{
-//   ListMark({super.key});
-//
-//   late List<MarkData> marks = [];
-//
-//   @override
-//   State<ListMark> createState() => ListMarkState();
-//
-// }
-//
-// class ListMarkState extends State<ListMark> {
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-//
-// }
-//
-// class MarkWidget extends StatelessWidget{
-//   const MarkWidget({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//
-//     );
-//   }
 
-// }
+
+
