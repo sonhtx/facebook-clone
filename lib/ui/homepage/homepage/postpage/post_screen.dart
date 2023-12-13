@@ -1,7 +1,7 @@
 
 
 import 'package:anti_fb/widget_dung/imageViewWidget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:anti_fb/widgets/IconWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../constants.dart';
@@ -123,11 +123,12 @@ class PostScreen extends StatelessWidget{
         height: 50,
         child: Row(
           children: [
-            TextField(controller: commentController,
-              decoration: const InputDecoration(
-                hintText: 'Comment',
-              ),),
-
+            Expanded(
+              child: TextField(controller: commentController,
+                decoration: const InputDecoration( hintText: 'Comment', ),
+              ),
+            ),
+            IconWidget(icon: Icons.send_rounded, onPressed: (){})
           ],
         )
 
