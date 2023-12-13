@@ -111,7 +111,6 @@ class PostWidget extends StatelessWidget {
   final String comment_mark;
   final String is_felt;
   final String author_name;
-
   final String author_avatar_url;
 
   PostWidget(
@@ -140,11 +139,7 @@ class PostWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _PostHeader(
-                  imageUrl: author_avatar_url,
-                  email: author_name,
-                  timestamp: created,
-                ),
+                PostHeader( imageUrl: author_avatar_url, email: author_name, timestamp: created,),
                 const SizedBox(height: 4.0),
                 // _PostCaption(caption: post.caption,),
                 ReadMoreText(
@@ -198,23 +193,14 @@ class PostWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 10),
                       child: Row(
                         children: [
-                          TextWidget(
-                            text: feel,
-                            textColor: GREY,
-                            fontSize: 12,
-                            width: 12,
-                          ),
+                          TextWidget( text: feel, textColor: GREY, fontSize: 12, width: 12,),
                           Container(
                             padding: const EdgeInsets.all(4.0),
                             decoration: const BoxDecoration(
                               color: FBBLUE,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.thumb_up,
-                              size: 10.0,
-                              color: WHITE,
-                            ),
+                            child: const Icon( Icons.thumb_up, size: 10.0, color: WHITE, ),
                           ),
                           Container(
                             padding: const EdgeInsets.all(4.0),
@@ -222,11 +208,7 @@ class PostWidget extends StatelessWidget {
                               color: RED,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.thumb_down,
-                              size: 10.0,
-                              color: WHITE,
-                            ),
+                            child: const Icon( Icons.thumb_down, size: 10.0, color: WHITE,),
                           ),
                         ],
                       ),
@@ -243,20 +225,22 @@ class PostWidget extends StatelessWidget {
             thickness: 0.1,
             color: GREY,
           ),
-          _PostBottom(id, is_felt)
+          _PostBottom(id: id, name: name, images : images, described: described, created: created,
+              feel: feel, comment_mark: comment_mark, is_felt: is_felt, author_name: author_name,
+              author_avatar_url : author_avatar_url)
         ],
       ),
     );
   }
 }
 
-class _PostHeader extends StatelessWidget {
+class PostHeader extends StatelessWidget {
   final String imageUrl;
   final String email;
   final String timestamp;
 
-  const _PostHeader(
-      {required this.imageUrl, required this.email, required this.timestamp});
+  const PostHeader(
+      {super.key, required this.imageUrl, required this.email, required this.timestamp});
 
   @override
   Widget build(BuildContext context) {
@@ -296,12 +280,21 @@ class _PostHeader extends StatelessWidget {
 
 class _PostBottom extends StatelessWidget {
 
-  const _PostBottom(this.id, this.is_felt);
+  const _PostBottom({required this.id, required this.name, required this.images,
+    required this.described, required this.created, required this.feel,
+    required this.comment_mark, required this.is_felt, required this.author_name,
+    required this.author_avatar_url});
 
   final String id;
+  final String name;
+  final List<ImageData> images;
+  final String described;
+  final String created;
+  final String feel;
+  final String comment_mark;
   final String is_felt;
-
-
+  final String author_name;
+  final String author_avatar_url;
 
   @override
   Widget build(BuildContext context) {
@@ -311,14 +304,18 @@ class _PostBottom extends StatelessWidget {
         Container(
           padding: const EdgeInsets.only(left: 30),
           child: ReactionButton<String>(
-            toggle: false,
             // direction: ReactionsBoxAlignment.rtl,
             onReactionChanged: (Reaction<String>? reaction) {
-
+              if(reaction?.value == 'kudos'){
+                //send api kudos
+              } else {
+                // send api diss
+              }
             },
             reactions: reaction,
-            placeholder:
-              reaction[int.parse(is_felt) + 1],
+            placeholder: notReact,
+            selectedReaction: kudosReact,
+
             // boxColor: Colors.black.withOpacity(0.5),
             boxRadius: 20,
             itemsSpacing: 10,
@@ -332,18 +329,17 @@ class _PostBottom extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PostScreen(id: id,),
+                    builder: (context)
+                    => PostScreen(id: id, name: name, images: images, described: described,
+                        created: created, feel: feel, comment_mark: comment_mark,
+                        is_felt: is_felt, author_name: author_name, author_avatar_url: author_avatar_url),
                   ),
                 );
               },
               child: const Row (
                 children: [
                   Icon(Icons.comment, color: GREY,),
-                  TextWidget(text: 'Mark',
-                    textColor: GREY,
-                    fontSize: 12,
-                    paddingLeft: 5,
-                    width: 40,)
+                  TextWidget(text: 'Mark', textColor: GREY, fontSize: 12, paddingLeft: 5,  width: 40,)
                 ],
               ),
             )
