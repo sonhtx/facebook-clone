@@ -7,11 +7,13 @@ import 'NotificationWidget.dart';
 
 
 class NotificationPage extends StatelessWidget{
-  const NotificationPage({super.key});
+  final ScrollController scrollController;
+  const NotificationPage({super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      controller: scrollController,
       slivers: <Widget>[
         SliverAppBar(
           title: const NotificationsAppBarTitle(),
