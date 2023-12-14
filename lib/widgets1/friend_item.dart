@@ -65,7 +65,7 @@ class FriendItem extends StatelessWidget {
               ), // Adjust the radius for rounded corners
               child: Container(
                 width: 95.0,
-                height: 98.5,
+                height: 115,
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 2.0, // Border width
@@ -84,10 +84,10 @@ class FriendItem extends StatelessWidget {
             Text(
               '$friendName',
               style: const TextStyle(
-                fontSize: 16.0,
+                fontSize: 14.0,
                 fontWeight: FontWeight.bold,
               ),
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ],

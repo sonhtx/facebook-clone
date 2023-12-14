@@ -59,18 +59,11 @@ class _ProfileState extends State<Profile> {
   // Init data use for API calling
   Future<void> fetchData() async {
     // fix this to your actual email
-    email = 'sonacc2@gmail.com';
-    // For testing purpose only, delete after merging
-    String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NjI1NDd9.JNCgbk1p12hd3EMAY8aY6sj0T61zpWp37q7Uxu6XAns';
-    String testId = '339';
-    //await deleteAllSecureStorageData();
-    await storage.write(key: 'token', value: testToken);
-    await storage.write(key: 'id', value: testId);
 
     // get token and userId from storage
     token = (await getJwt())!;
     userId = (await getId())!;
+    email = (await getEmail())!;
 
     UserInfoApi uia = UserInfoApi();
     Map<String, dynamic> userInfo = await uia.getUserInfo(userId);
@@ -375,14 +368,8 @@ class _ProfileState extends State<Profile> {
 
                     // List posts here
 
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          ListPostWidget(
-                            postlists: postlists,
-                          ),
-                        ],
-                      ),
+                    ListPostWidget(
+                      postlists: postlists,
                     ),
                   ],
                 ),
