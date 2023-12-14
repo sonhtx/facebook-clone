@@ -104,7 +104,13 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ),
                   placeholder: (context, url) =>
-                  const CircularProgressIndicator(),
+                  const Center(
+                    child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator()
+                    ),
+                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),

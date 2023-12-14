@@ -32,7 +32,7 @@ class _ListPostWidgetState extends State<ListPostWidget> {
   final PostRepository _postRepository = PostRepository();
 
   static final RequestListPost_VideoData requestListPostData =
-  RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", 6, "0", "10");
+  RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", null, "0", "10");
 
   Future<void> getlistpost() async {
 
@@ -283,7 +283,7 @@ class _PostBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
           padding: const EdgeInsets.only(left: 30),

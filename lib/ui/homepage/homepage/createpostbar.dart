@@ -30,7 +30,10 @@ class CreatePostButton extends StatelessWidget{
                       padding: EdgeInsets.zero,
                     ),
                     onPressed: () { Navigator.pushNamed(context, '/post');},
-                    child: const Text( "What's on your mind?", style: TextStyle( color: BLACK,  fontSize: 14,),),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Text( "What's on your mind?", style: TextStyle( color: BLACK,  fontSize: 14,),),
+                    ),
                   ),
                 ),
               ),
