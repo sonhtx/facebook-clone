@@ -123,7 +123,7 @@ class HomeState extends State<HomeScreen> with TickerProviderStateMixin {
         scrollController: scrollController,
       ),
       PeoplePage(scrollController: scrollController),
-      const NotificationPage(),
+      NotificationPage(scrollController: scrollController),
       MenuPage(scrollController: scrollController),
       const PersonalPage(),
       const SuggestionScreen(),

@@ -89,7 +89,7 @@ class ImageWidget extends StatelessWidget {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               )
-            ] else if(images.length == 2) ...[
+            ] else if(images.length == 3) ...[
               StaggeredGridTile.count(
                 crossAxisCellCount: 1,
                 mainAxisCellCount: 2,
