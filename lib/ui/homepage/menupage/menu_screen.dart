@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'settingpage/setting_screen.dart';
 import 'package:anti_fb/widgets/card_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,10 +21,12 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
   @override
   bool get wantKeepAlive => true;
   String? name = "";
+  String? imageUrl;
   @override
   void initState() {
     super.initState();
-    // getUsername().then((value) => setState(() => _name = value));
+    getUserName().then((value) => setState(() => name = value));
+    getAvatarUrl().then((value) => setState(() => imageUrl = value));
   }
 
   @override
@@ -56,10 +60,14 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                 CardItem(
                   width: screenWidth - 20.0,
                   height: 100.0,
-                  label: "",
-                  widget: const CircleAvatar(
-                    backgroundImage:
-                        AssetImage('assets/images/messi-world-cup.png'),
+                  label: name ?? "",
+                  widget:
+                  (imageUrl !=  null) ?CircleAvatar(
+                    backgroundImage: CachedNetworkImageProvider(imageUrl!),
+                    radius: 35.0,
+                  )
+                  :CircleAvatar(
+                    backgroundImage:  AssetImage('assets/images/messi-world-cup.png'),
                     radius: 35.0,
                   ),
                   onPressed: () {},

@@ -39,6 +39,10 @@ Future<String?> getUserName() async {
   return await storage.read(key: 'username');
 }
 
+Future<String?> getAvatarUrl() async {
+  return await storage.read(key: 'avatar');
+}
+
 Future<String?> getCoin(){
   return storage.read(key: 'coins');
 }
