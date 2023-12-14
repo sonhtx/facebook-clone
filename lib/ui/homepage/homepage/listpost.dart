@@ -32,10 +32,9 @@ class _ListPostWidgetState extends State<ListPostWidget> {
   final PostRepository _postRepository = PostRepository();
 
   static final RequestListPost_VideoData requestListPostData =
-      RequestListPost_VideoData("339", "1", "1", "1.0", "1.0", null, "0", "10");
+      RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", null, "0", "10");
 
   Future<void> getlistpost() async {
-    print("Getting List Post");
     await Future.delayed(const Duration(seconds: 2));
 
     try {
@@ -61,7 +60,6 @@ class _ListPostWidgetState extends State<ListPostWidget> {
               context.findAncestorStateOfType<HomeState>();
           homeState?.postlist = listPost;
         }
-        print(listPost.length);
       });
     } catch (error) {
       print(error);
@@ -95,7 +93,6 @@ class _ListPostWidgetState extends State<ListPostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("Build list posts here");
     return Container(
         color: GREY,
         child: Column(

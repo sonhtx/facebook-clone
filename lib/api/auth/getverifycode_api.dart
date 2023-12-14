@@ -8,7 +8,6 @@ import '../../constants.dart';
 class GetVerifyCodeApi{
   static final Map<String, String> headers = {
     'Content-Type': 'application/json',
-    // Add any additional headers you need
   };
   static Future getVerifyCode(String email) async {
 

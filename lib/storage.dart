@@ -1,13 +1,13 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'models/User.dart';
+import 'models/UserLogin.dart';
 
 
 
 const storage = FlutterSecureStorage();
 
 // Save JWT to secure storage
-Future<void> saveUser(User user) async {
+Future<void> saveUser(UserLogin user) async {
   await storage.write(key: 'id', value: user.id.toString());
   await storage.write(key: 'email', value: user.email );
   await storage.write(key: 'username', value: user.username );
