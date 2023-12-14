@@ -59,18 +59,11 @@ class _ProfileState extends State<Profile> {
   // Init data use for API calling
   Future<void> fetchData() async {
     // fix this to your actual email
-    email = 'sonacc2@gmail.com';
-    // For testing purpose only, delete after merging
-    String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NzA3ODJ9.aYHRZhmvm2XMbGoXsjPveL6AS-whPVn5Les1CtPgt9o';
-    String testId = '339';
-    //await deleteAllSecureStorageData();
-    await storage.write(key: 'token', value: testToken);
-    await storage.write(key: 'id', value: testId);
 
     // get token and userId from storage
     token = (await getJwt())!;
     userId = (await getId())!;
+    email = (await getEmail())!;
 
     UserInfoApi uia = UserInfoApi();
     Map<String, dynamic> userInfo = await uia.getUserInfo(userId);
