@@ -1,5 +1,5 @@
 class RequestListPost_VideoData {
-  final int? user_id;
+  final String? user_id;
   final String in_campaign;
   final String campaign_id;
   final String latitude;

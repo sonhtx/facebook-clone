@@ -1,4 +1,3 @@
-
 import 'package:anti_fb/models/request/ReqSetUserinfo.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,8 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../constants.dart';
 import '../../storage.dart';
 
-class ProfileApi{
-
+class ProfileApi {
   late String token;
 
   late Map<String, String> headers = {};
@@ -44,7 +42,8 @@ class ProfileApi{
         await http.MultipartFile.fromPath(
           'avatar',
           avatar.path,
-          contentType: MediaType('image', 'jpeg'), // Adjust the content type as needed
+          contentType:
+              MediaType('image', 'jpeg'), // Adjust the content type as needed
         ),
       );
     }
@@ -79,7 +78,8 @@ class ProfileApi{
         await http.MultipartFile.fromPath(
           'avatar',
           avatar.path,
-          contentType: MediaType('image', 'jpeg'), // Adjust the content type as needed
+          contentType:
+              MediaType('image', 'jpeg'), // Adjust the content type as needed
         ),
       );
     }
@@ -88,7 +88,8 @@ class ProfileApi{
         await http.MultipartFile.fromPath(
           'cover_image',
           cover_image.path,
-          contentType: MediaType('image', 'jpeg'), // Adjust the content type as needed
+          contentType:
+              MediaType('image', 'jpeg'), // Adjust the content type as needed
         ),
       );
     }
@@ -98,6 +99,4 @@ class ProfileApi{
     final String responseBody = await response.stream.bytesToString();
     print(responseBody);
   }
-
-
 }

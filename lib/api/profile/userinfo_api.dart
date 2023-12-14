@@ -25,18 +25,19 @@ class UserInfoApi {
 
   Future getUserInfo(String user_id) async {
     await _initializeHeaders();
+    print(token + " here is token");
     final Map<String, dynamic> requestBody = {
-      "user_id" : user_id
+      "user_id": user_id,
     };
     final response = await http.post(
       Uri.parse('$apiUrl/get_user_info'),
       headers: headers,
       body: json.encode(requestBody),
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
-
-      return jsonResponse; // get list success
+      Map<String, dynamic> userJson = jsonResponse['data'];
+      return userJson; // get list success
     } else {
       return null; // get list false
     }
