@@ -10,7 +10,6 @@ import '../../constants.dart';
 class SignupApi{
   static final Map<String, String> headers = {
     'Content-Type': 'application/json',
-    // Add any additional headers you need
   };
   static Future signup(SignupData signupData) async {
 

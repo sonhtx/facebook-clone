@@ -60,7 +60,6 @@ class FriendRequestWidget extends StatelessWidget {
                   // Perform the accept action
                   FriendApi friendApi = FriendApi();
                   friendApi.setAcceptFriend(id, "1");
-                  print('Accepted friend request from $username');
                   Navigator.of(context).pop(); // Close the dialog
                   final ListFriendReqWidgetState? listState = context.findAncestorStateOfType<ListFriendReqWidgetState>();
                   listState?.removeItem(id);
@@ -104,7 +103,6 @@ class FriendRequestWidget extends StatelessWidget {
                     id,
                   );
                   showBottomSheetMenu(context);
-                  print('deleted request from $username');
                   Navigator.of(context).pop(); // Close the dialog
                 },
                 child: const Text('Accept'),

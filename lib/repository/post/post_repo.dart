@@ -6,7 +6,6 @@ import '../../models/request/ReqListPost_VideoData.dart';
 class PostRepository {
   final PostApi _postApi = PostApi();
   Future getlistpost(RequestListPost_VideoData requestListPostData) async {
-    print("Inside Post API");
     try {
       final getlistpostResult = await _postApi.getListPost(requestListPostData);
 

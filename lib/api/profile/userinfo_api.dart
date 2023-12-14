@@ -8,15 +8,10 @@ class UserInfoApi {
   late String token;
   late Map<String, String> headers = {};
 
-  UserInfoApi() {
-    // Initialize headers by fetching the token from secure storage
-  }
+  UserInfoApi();
 
   Future<void> _initializeHeaders() async {
-    // Fetch the token from secure storage
-    token = (await getJwt())!; // Replace with your actual code to get the token
-
-    // Update the headers with the fetched token
+    token = (await getJwt())!;
     headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -25,7 +20,6 @@ class UserInfoApi {
 
   Future getUserInfo(String user_id) async {
     await _initializeHeaders();
-    print(token + " here is token");
     final Map<String, dynamic> requestBody = {
       "user_id": user_id,
     };

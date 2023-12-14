@@ -3,8 +3,8 @@
 import 'package:anti_fb/storage.dart';
 
 import '../../api/auth/login_api.dart';
+import '../../models/UserLogin.dart';
 import '../../models/request/ReqLoginData.dart';
-import '../../models/User.dart';
 
 class LoginRepository {
 
@@ -12,7 +12,7 @@ class LoginRepository {
     try {
       final loginResult = await LoginApi.login(loginData);
       if(loginResult != null){
-        User user = User.fromJson(loginResult);
+        UserLogin user = UserLogin.fromJson(loginResult);
         saveUser(user); // save information to storage
         return true;
       } else {

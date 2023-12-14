@@ -125,7 +125,6 @@ class ListFriendReqWidgetState extends State<ListFriendReqWidget> {
             [];
       });
     } catch (e) {
-      print("error fetching friend suggestions");
       print(e);
     }
   }

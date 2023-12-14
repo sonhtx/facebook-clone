@@ -48,7 +48,6 @@ class _FriendListState extends State<FriendList> {
             [];
       });
     } catch (e) {
-      print("error fetching friend suggestions");
       print(e);
     }
   }
