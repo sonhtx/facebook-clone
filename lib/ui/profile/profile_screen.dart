@@ -62,7 +62,7 @@ class _ProfileState extends State<Profile> {
     email = 'sonacc2@gmail.com';
     // For testing purpose only, delete after merging
     String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NjI1NDd9.JNCgbk1p12hd3EMAY8aY6sj0T61zpWp37q7Uxu6XAns';
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NzA3ODJ9.aYHRZhmvm2XMbGoXsjPveL6AS-whPVn5Les1CtPgt9o';
     String testId = '339';
     //await deleteAllSecureStorageData();
     await storage.write(key: 'token', value: testToken);
@@ -375,14 +375,8 @@ class _ProfileState extends State<Profile> {
 
                     // List posts here
 
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          ListPostWidget(
-                            postlists: postlists,
-                          ),
-                        ],
-                      ),
+                    ListPostWidget(
+                      postlists: postlists,
                     ),
                   ],
                 ),
