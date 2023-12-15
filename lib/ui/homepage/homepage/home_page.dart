@@ -23,11 +23,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(
-        email: email,
-        coin: coin,
-        postlists: postlist,
-        scrollController: scrollController,
+      home: Scaffold(
+        body: SafeArea(
+          child: HomePage(
+            email: email,
+            coin: coin,
+            postlists: postlist,
+            scrollController: scrollController,
+          ),
+        ),
       ),
     );
   }

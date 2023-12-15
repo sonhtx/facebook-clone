@@ -1,5 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/services.dart';
+
+import '../../profile/profile_screen.dart';
 import 'settingpage/setting_screen.dart';
 import 'package:anti_fb/widgets/card_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,11 +70,19 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                     backgroundImage: CachedNetworkImageProvider(imageUrl!),
                     radius: 35.0,
                   )
-                  :CircleAvatar(
+                  :const CircleAvatar(
                     backgroundImage:  AssetImage('assets/images/messi-world-cup.png'),
                     radius: 35.0,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                        builder: (context) => const Profile()
+                      )
+                    );
+
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -106,7 +118,7 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => const SettingScreen()),
+                              builder: (context) => SettingScreen(name: name!,)),
                         );
                       },
                     ),
@@ -126,7 +138,9 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                     backgroundColor: BTNBG,
                     borderColor: BG,
                     radius: 8.0,
-                    onPressed: () {}),
+                    onPressed: () {
+                      
+                    }),
                 ButtonWidget(
                     width: screenWidth - 20.0,
                     fontSize: 13.0,
@@ -136,7 +150,9 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                     backgroundColor: BTNBG,
                     borderColor: BG,
                     radius: 8.0,
-                    onPressed: () {}),
+                    onPressed: () {
+                      exit(0);
+                    }),
               ],
             ),
           )
