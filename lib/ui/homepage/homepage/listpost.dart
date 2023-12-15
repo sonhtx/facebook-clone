@@ -161,7 +161,7 @@ class PostWidget extends StatelessWidget {
               ],
             ),
           ),
-
+          const SizedBox(height: 10,),
           // ----------------------------
           (images.isNotEmpty)
               ? ImageWidget(images: images)
@@ -375,7 +375,7 @@ class _PostBottom extends StatelessWidget {
                   textColor: GREY,
                   fontSize: 12,
                   paddingLeft: 5,
-                  width: 40,
+                  width: 50,
                 )
               ],
             ),

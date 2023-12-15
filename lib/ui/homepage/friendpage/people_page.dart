@@ -65,7 +65,7 @@ class PeoplePage extends StatelessWidget{
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextWidget(text: 'Friend requests', fontSize: 16, width: 200, paddingLeft: 15,),
-                      TextWidget(text: 'See all', fontSize: 16, textColor: FBBLUE, width: 60, fontWeight: FontWeight.normal,),
+                      TextWidget(text: 'See all', fontSize: 16, textColor: FBBLUE, width: 80, fontWeight: FontWeight.normal,),
                     ],
                   ),
                 ),
