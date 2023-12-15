@@ -1,4 +1,4 @@
-
+import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
 import 'package:anti_fb/ui/homepage/nav_screen.dart';
 import 'package:anti_fb/ui/homepage/homepage/createpost/createpost_screen.dart';
 import 'package:anti_fb/ui/homepage/menupage/personalpage/personal_page.dart';
@@ -21,9 +21,10 @@ final Map<String, WidgetBuilder> routes = {
   '/history_search': (context) => const HistorySearchTab(),
 
   // '/profile': (context) => ProfileScreen(),
-  // '/friends': (context) => FriendsScreen(),
+  '/friends': (context) => FriendsPage(),
   // '/messages': (context) => MessagesScreen(),
 };
 
 // Optionally, you can define a default route to handle unknown routes
-const String initialRoute = '/login';
+// const String initialRoute = '/login';
+const String initialRoute = '/search';

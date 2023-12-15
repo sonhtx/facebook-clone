@@ -25,10 +25,10 @@ class _SearchTabState extends State<SearchTab> {
   void initState() {
     super.initState();
     widget.searchResultWidgetList = [];
-    getSearchResult();
+    getSavedSearch();
   }
 
-  Future<void> getSearchResult() async {
+  Future<void> getSavedSearch() async {
     try {
       List<SavedSearch>? listSuggest =
           await widget._searchRepository.getSavedSearch('0', '5');
@@ -49,7 +49,30 @@ class _SearchTabState extends State<SearchTab> {
     }
   }
 
-  void handleSearch(String value) {}
+   Future<void> getSearchResult() async {
+    try {
+      List<SavedSearch>? listSuggest =
+          await widget._searchRepository.getSavedSearch('0', '5');
+      setState(() {
+        widget.searchResultWidgetList = listSuggest
+                ?.map((curSuggest) => SearchResultWidget(
+                      curSuggest.id,
+                      curSuggest.keyword,
+                      curSuggest.created,
+                    ))
+                .toList() ??
+            [];
+        print(widget.searchResultWidgetList);
+      });
+    } catch (e) {
+      print("error fetching saved search");
+      print(e);
+    }
+  }
+
+  void handleSearch(String value) {
+    print(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +144,7 @@ class _SearchTabState extends State<SearchTab> {
                         hintText: 'Search Facebook',
                         border: InputBorder.none,
                       ),
-                      onChanged: handleSearch,
+                      onSubmitted: handleSearch,
                     ),
                   ),
                 ],

@@ -1,9 +1,5 @@
 import 'package:anti_fb/api/friend/friend_api.dart';
-import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
 import 'package:flutter/material.dart';
-
-import '../../../constants.dart';
-import '../../../widgets/TextButtonWidget.dart';
 
 class FriendRequestWidget extends StatelessWidget {
   final String id;
@@ -11,32 +7,36 @@ class FriendRequestWidget extends StatelessWidget {
   final String avatar;
   final String created;
 
-  const FriendRequestWidget(this.id, this.username, this.avatar, this.created,
+  final Function(String id) delWhenAcceptOrDelete;
+
+  FriendRequestWidget(this.id, this.username, this.avatar, this.created,
+      this.delWhenAcceptOrDelete,
       {super.key});
+
+  var friendApi = FriendApi();
 
   String calculateTimeDifference(String dateString) {
     DateTime dateTime = DateTime.parse(dateString);
     DateTime now = DateTime.now();
     Duration difference = now.difference(dateTime);
 
-    // Xác định xem có phải là "ngày trước", "tháng trước", hay "năm trước"
     if (difference.inDays == 1) {
-      return '1d';
+      return 'Yesterday';
     } else if (difference.inDays > 1 && difference.inDays <= 7) {
-      return '${difference.inDays} d';
+      return '${difference.inDays} days ago';
     } else if (difference.inDays > 7 && difference.inDays <= 30) {
       int weeks = (difference.inDays / 7).floor();
-      return '$weeks w';
+      return '$weeks weeks ago';
     } else if (difference.inDays > 30 && difference.inDays <= 365) {
       int months = (difference.inDays / 30).floor();
-      return '$months mnth';
+      return '$months months ago';
     } else if (difference.inDays > 365) {
       int years = (difference.inDays / 365).floor();
-      return '$years y';
+      return '$years years ago';
     } else if (difference.inHours > 0) {
-      return '${difference.inHours} hrs';
+      return '${difference.inHours} hours ago';
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} min';
+      return '${difference.inMinutes} minutes ago';
     } else {
       return 'Just now';
     }
@@ -44,36 +44,31 @@ class FriendRequestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     void handleAccept() {
       showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('Confirmation'),
             content: Text(
                 'Do you want to accept the friend request from $username?'),
             actions: <Widget>[
-
               TextButton(
                 onPressed: () {
-                  // Perform the accept action
-                  FriendApi friendApi = FriendApi();
-                  friendApi.setAcceptFriend(id, "1");
-                  print('Accepted friend request from $username');
-                  Navigator.of(context).pop(); // Close the dialog
-                  final ListFriendReqWidgetState? listState = context.findAncestorStateOfType<ListFriendReqWidgetState>();
-                  listState?.removeItem(id);
+                  Navigator.of(ctx).pop(); // Close the dialog
                 },
-                child: const Text('Accept'),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                  final ListFriendReqWidgetState? listState = context.findAncestorStateOfType<ListFriendReqWidgetState>();
-                  listState?.removeItem(id);
+                  // Perform the accept action
+                  Navigator.of(ctx).pop();
+                  friendApi.setAcceptFriend(id, "1");
+                  print('Accepted friend request from $username');
+                  delWhenAcceptOrDelete(id);
+                  // Close the dialog
                 },
-                child: const Text('Cancel'),
+                child: const Text('Accept'),
               ),
             ],
           );
@@ -81,31 +76,34 @@ class FriendRequestWidget extends StatelessWidget {
       );
     }
 
-    void handleDelRequest() {
+    void handleDelRequest(BuildContext context) {
+      print(context);
       showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('Confirmation'),
             content: Text(
-                'Do you want to delete the friend request from $username?'),
+              'Do you want to delete the friend request from $username?',
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(ctx).pop(); // Close the dialog
                 },
                 child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () {
-                  // Perform the accept action
-                  FriendApi friendApi = FriendApi();
-                  friendApi.delRequestFriend(
+                  Navigator.of(ctx).pop(); // Close the dialog
+                  print(context);
+                  friendApi.setAcceptFriend(
                     id,
+                    "0",
                   );
-                  showBottomSheetMenu(context);
+                  delWhenAcceptOrDelete(id);
                   print('deleted request from $username');
-                  Navigator.of(context).pop(); // Close the dialog
+                  showBottomSheetMenu(context);
                 },
                 child: const Text('Accept'),
               ),
@@ -135,7 +133,7 @@ class FriendRequestWidget extends StatelessWidget {
                   Text(
                     username,
                     style: const TextStyle(
-                        fontSize: 14.0, fontWeight: FontWeight.bold),
+                        fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     width: 10,
@@ -149,17 +147,55 @@ class FriendRequestWidget extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
-                children: [
-                  TextButtonWidget(buttonText: 'Confirm', textColor: WHITE, backgroundColor: FBBLUE,
-                      radiusRoundBorder : 5,
-                      onPressed: (){
-                        handleAccept();
-                      }),
-                  TextButtonWidget(buttonText: 'Cancel', textColor: BLACK, backgroundColor: GREY,
-                      radiusRoundBorder : 5, paddingLeft: 10,
-                      onPressed: (){
-                        handleDelRequest();
-                      }),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 35.0, vertical: 5.0),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(5.0)),
+                    child: TextButton(
+                      onPressed: handleAccept,
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Confirm',
+                        style: TextStyle(color: Colors.white, fontSize: 15.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 35.0, vertical: 5.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(5.0)),
+                    child: TextButton(
+                      onPressed: () {
+                        // Handle button press
+                        handleDelRequest(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 35.0, vertical: 10.0),
+                        backgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Delete',
+                        style: TextStyle(color: Colors.black, fontSize: 15.0),
+                      ),
+                    ),
+                  ),
                 ],
               )
             ],
@@ -167,6 +203,13 @@ class FriendRequestWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void handleBlock() {
+    friendApi.setBlock(
+      id,
+    );
+    print('blocked  $username');
   }
 
   void showBottomSheetMenu(BuildContext context) {
@@ -181,57 +224,19 @@ class FriendRequestWidget extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Option 1
-                  Navigator.pop(context);
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(builderContext);
+                  handleBlock();
                 },
-                child: Container(
+                style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(
-                        Icons.person_off_rounded,
-                        size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.black, // Màu của biểu tượng
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Report or give feedback',
-                            style: TextStyle(
-                                fontSize: 14.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'A won\'t be notified',
-                            style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.normal,
-                                color: Color.fromARGB(197, 14, 13, 13)),
-                          ),
-                        ],
-                      ),
-                    ],
+                  backgroundColor: Colors.grey[300], // Màu nền của nút
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
+                  side: BorderSide.none, // Loại bỏ border
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Option 1
-                  Navigator.pop(context);
-                },
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   child: const Row(
@@ -242,9 +247,7 @@ class FriendRequestWidget extends StatelessWidget {
                         size: 22.0, // Kích thước của biểu tượng
                         color: Colors.black, // Màu của biểu tượng
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
+                      SizedBox(width: 20),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,17 +257,17 @@ class FriendRequestWidget extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
                           ),
-                          SizedBox(
-                            height: 5,
-                          ),
+                          SizedBox(height: 5),
                           Text(
                             'A won\'t be able to see you or contact you on Facebook',
                             style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.normal,
-                                color: Color.fromARGB(197, 14, 13, 13)),
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.normal,
+                              color: Color.fromARGB(197, 14, 13, 13),
+                            ),
                           ),
                         ],
                       ),

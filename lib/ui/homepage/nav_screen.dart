@@ -1,11 +1,9 @@
-import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
+import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
 import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import '../../constants.dart';
 import '../../models/post/PostListData.dart';
-import 'friendpage/friendpage/friend_screen.dart';
-import 'friendpage/suggestionpage/suggestion_screen.dart';
 import 'homepage/home_page.dart';
 import 'menupage/personalpage/personal_page.dart';
 import 'notificationpage/notification_page.dart';
@@ -103,6 +101,7 @@ class HomeState extends State<HomeScreen> with TickerProviderStateMixin {
       tabController.animateTo(pageController.page!.round());
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -122,12 +121,12 @@ class HomeState extends State<HomeScreen> with TickerProviderStateMixin {
         postlists: postlist,
         scrollController: scrollController,
       ),
-      PeoplePage(scrollController: scrollController),
+      FriendsPage(),
+      // PeoplePage(scrollController: scrollController),
       NotificationPage(scrollController: scrollController),
       MenuPage(scrollController: scrollController),
       const PersonalPage(),
-      const SuggestionScreen(),
-      const FriendScreen()
+      // const SuggestionScreen(),
     ];
 
     return Scaffold(

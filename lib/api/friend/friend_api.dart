@@ -78,9 +78,10 @@ class FriendApi {
     );
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
+      print("set accept friend api done");
       return jsonResponse;
     } else {
-      return false; // Email not exist
+      return false;
     }
   }
 
@@ -143,11 +144,28 @@ class FriendApi {
     await _initializeHeaders();
     final Map<String, dynamic> requestBody = {"user_id": user_id};
     final response = await http.post(
-      Uri.parse('$apiUrl/set_request_friend'),
+      Uri.parse('$apiUrl/del_request_friend'),
       headers: headers,
       body: json.encode(requestBody),
     );
     if (response.statusCode == 200) {
+      print("set del friend api done");
+      return true;
+    } else {
+      return false; // Email not exist
+    }
+  }
+
+  Future setBlock(String user_id) async {
+    await _initializeHeaders();
+    final Map<String, dynamic> requestBody = {"user_id": user_id};
+    final response = await http.post(
+      Uri.parse('$apiUrl/set_block'),
+      headers: headers,
+      body: json.encode(requestBody),
+    );
+    if (response.statusCode == 200) {
+      print("set block friend api done");
       return true;
     } else {
       return false; // Email not exist
