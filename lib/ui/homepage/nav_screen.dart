@@ -185,7 +185,11 @@ class HomeScreen extends StatefulWidget {
 class HomeState extends State<HomeScreen> {
   final log = Logger('HomeState');
 
-  final ScrollController scrollController = ScrollController();
+  final ScrollController homeScrollController = ScrollController();
+  final ScrollController peopleScrollController = ScrollController();
+  final ScrollController notificationScrollController = ScrollController();
+  final ScrollController menuScrollController = ScrollController();
+
   final GlobalKey<NavigatorState> homeTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> peopleTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> notificationTabNavKey = GlobalKey<NavigatorState>();
@@ -199,15 +203,47 @@ class HomeState extends State<HomeScreen> {
 
   _onTapped(int index) {
     if (_selectedIndex == index) {
-      // firstTabNavKey.currentState?.popUntil((r) => r.isFirst);
-      if (homeTabNavKey.currentState!.canPop()) {
-        homeTabNavKey.currentState?.popUntil((r) => r.isFirst);
-      } else {
-        scrollController.animateTo(
-          0.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 300),
-        );
+      switch(index){
+        case 0:
+          if (homeTabNavKey.currentState!.canPop()) {
+            homeTabNavKey.currentState?.popUntil((r) => r.isFirst);
+          } else {
+            homeScrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          }
+        case 1:
+          if (peopleTabNavKey.currentState!.canPop()) {
+            peopleTabNavKey.currentState?.popUntil((r) => r.isFirst);
+          } else {
+            peopleScrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          }
+        case 2:
+          if (notificationTabNavKey.currentState!.canPop()) {
+            notificationTabNavKey.currentState?.popUntil((r) => r.isFirst);
+          } else {
+            notificationScrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          }
+        default:
+          if (menuTabNavKey.currentState!.canPop()) {
+            menuTabNavKey.currentState?.popUntil((r) => r.isFirst);
+          } else {
+            menuScrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          }
       }
     } else {
       setState(() {
@@ -218,7 +254,10 @@ class HomeState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    scrollController.dispose();
+    homeScrollController.dispose();
+    peopleScrollController.dispose();
+    notificationScrollController.dispose();
+    menuScrollController.dispose();
     super.dispose();
   }
 
@@ -255,25 +294,28 @@ class HomeState extends State<HomeScreen> {
             switch (index) {
               case 0:
                 return CupertinoTabView(
+                  navigatorKey: homeTabNavKey,
                   builder: (context) => HomePage(
                     email: email,
                     coin: coin,
                     postlists: postlist,
-                    scrollController: scrollController,
+                    scrollController: homeScrollController,
                   ),
                 );
               case 1:
                 return CupertinoTabView(
-
-                    builder: (context) => PeoplePage(scrollController: scrollController)
+                    navigatorKey: peopleTabNavKey,
+                    builder: (context) => PeoplePage(scrollController: peopleScrollController)
                 );
               case 2:
                 return CupertinoTabView(
-                  builder: (context) => NotificationPage(scrollController: scrollController),
+                  navigatorKey: notificationTabNavKey,
+                  builder: (context) => NotificationPage(scrollController: notificationScrollController),
                 );
               default:
                 return CupertinoTabView(
-                  builder: (context) => MenuPage(scrollController: scrollController),
+                  navigatorKey: menuTabNavKey,
+                  builder: (context) => MenuPage(scrollController: menuScrollController),
                 );
             }
           }),
