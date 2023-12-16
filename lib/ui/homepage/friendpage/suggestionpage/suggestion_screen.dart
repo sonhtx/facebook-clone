@@ -19,13 +19,13 @@ class SuggestionScreen extends StatelessWidget{
         title: const Text('Suggestions',style: TextStyle(color: BLACK, fontSize: 20, fontWeight: FontWeight.bold,),),
         backgroundColor: WHITE,
         iconTheme: const IconThemeData( color: GREY,),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
-            homeState?.backfromSuggestion();
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     // final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
+        //     // homeState?.backfromSuggestion();
+        //   },
+        // ),
         actions: [ IconWidget(
           icon: Icons.search,
           onPressed: (){Navigator.pushNamed(context, '/search');},

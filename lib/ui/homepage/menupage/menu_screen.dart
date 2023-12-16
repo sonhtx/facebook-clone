@@ -15,17 +15,20 @@ import 'package:anti_fb/storage.dart';
 
 class MenuPage extends StatefulWidget {
   final ScrollController scrollController;
+
   const MenuPage({super.key, required this.scrollController});
 
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
 
-class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin {
+class _MenuPageState extends State<MenuPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   String? name = "";
   String? imageUrl;
+
   @override
   void initState() {
     super.initState();
@@ -65,23 +68,22 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                   width: screenWidth - 20.0,
                   height: 100.0,
                   label: name ?? "",
-                  widget:
-                  (imageUrl !=  null) ?CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(imageUrl!),
-                    radius: 35.0,
-                  )
-                  :const CircleAvatar(
-                    backgroundImage:  AssetImage('assets/images/messi-world-cup.png'),
-                    radius: 35.0,
-                  ),
+                  widget: (imageUrl != "" && imageUrl != null)
+                      ? CircleAvatar(
+                          backgroundImage:
+                              CachedNetworkImageProvider(imageUrl!),
+                          radius: 35.0,
+                        )
+                      : const CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/messi-world-cup.png'),
+                          radius: 35.0,
+                        ),
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                        builder: (context) => const Profile()
-                      )
-                    );
-
+                            builder: (context) => const Profile()));
                   },
                 ),
                 const SizedBox(
@@ -115,11 +117,16 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                         size: 30.0,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => SettingScreen(name: name!,)),
-                        );
+                        Navigator.of(context, rootNavigator: true)
+                            .push(CupertinoPageRoute(
+                                builder: (context) => SettingScreen(
+                                      name: name!,
+                                    )));
+                        // Navigator.push(
+                        //   context,
+                        //   CupertinoPageRoute(
+                        //       builder: (context) => SettingScreen(name: name!,)),
+                        // );
                       },
                     ),
                     image: const Icon(
@@ -138,9 +145,7 @@ class _MenuPageState extends State<MenuPage> with AutomaticKeepAliveClientMixin 
                     backgroundColor: BTNBG,
                     borderColor: BG,
                     radius: 8.0,
-                    onPressed: () {
-                      
-                    }),
+                    onPressed: () {}),
                 ButtonWidget(
                     width: screenWidth - 20.0,
                     fontSize: 13.0,
