@@ -1,6 +1,8 @@
 import 'package:anti_fb/ui/homepage/friendpage/requested_friend_widget.dart';
+import 'package:anti_fb/ui/homepage/friendpage/suggestionpage/suggestion_screen.dart';
 import 'package:anti_fb/widgets/TextButtonWidget.dart';
 import 'package:anti_fb/widgets/TextWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -8,6 +10,7 @@ import '../../../models/friend/Friend.dart';
 import '../../../repository/friend/friend_repo.dart';
 import '../../../widgets/IconWidget.dart';
 import '../nav_screen.dart';
+import 'friendpage/friend_screen.dart';
 
 // show people can be friend
 
@@ -40,16 +43,21 @@ class PeoplePage extends StatelessWidget{
                         children: [
                           TextButtonWidget(buttonText: 'Suggestions', textColor: BLACK, paddingLeft : 10, backgroundColor: GREY.shade100, paddingTop: 0, radiusRoundBorder: 15.0,
                               onPressed: () {
-                                final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
-                                homeState?.gotoSuggestion();
-
+                                // final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
+                                // homeState?.gotoSuggestion();
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(builder: (context) => const SuggestionScreen()));
                               }),
                           TextButtonWidget(buttonText: 'Your friends',textColor: BLACK, paddingLeft : 10, backgroundColor: GREY.shade100, paddingTop: 0, radiusRoundBorder: 15.0,
                               onPressed: (){
                                 // final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
                                 // homeState?.gotoSuggestion();
-                                final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
-                                homeState?.gotoFriend();
+                                // final HomeState? homeState = context.findAncestorStateOfType<HomeState>();
+                                // homeState?.gotoFriend();
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(builder: (context) => const FriendScreen()));
                               })
                         ],
                       ),
