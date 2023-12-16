@@ -25,6 +25,13 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
     getFriendSuggest();
   }
 
+  void delWhenDelSuggestion(String id) {
+    setState(() {
+      widget.suggestedWidgetList.removeWhere((element) => element.id == id);
+      // countFriends = widget.suggestedWidgetList.length.toString();
+    });
+  }
+
   Future<void> getFriendSuggest() async {
     try {
       List<SuggestedFriend>? suggestList =
@@ -38,6 +45,7 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
                       curSuggest.avatar,
                       curSuggest.created,
                       curSuggest.sameFriends,
+                      delWhenDelSuggestion,
                     ))
                 .toList() ??
             [];

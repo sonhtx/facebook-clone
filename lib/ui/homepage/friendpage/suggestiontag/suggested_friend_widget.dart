@@ -7,9 +7,12 @@ class SuggestedFriendWidget extends StatefulWidget {
   final String avatar;
   final String created;
   final String sameFriend;
+  var friendApi = FriendApi();
 
-  const SuggestedFriendWidget(
-      this.id, this.username, this.avatar, this.created, this.sameFriend,
+  final Function(String id) delWhenDelSuggestion;
+
+  SuggestedFriendWidget(this.id, this.username, this.avatar, this.created,
+      this.sameFriend, this.delWhenDelSuggestion,
       {super.key});
 
   @override
@@ -22,6 +25,38 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
   bool isRequested = false;
   @override
   Widget build(BuildContext context) {
+    void handleCancelRequest() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirmation'),
+            content: Text(
+                'Do you want to cancel request friend to ${widget.username}?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                  print('deleted request friend to ${widget.username}');
+                  widget.friendApi.delRequestFriend(widget.id);
+                  setState(() {
+                    isRequested = false;
+                  });
+                },
+                child: const Text('Accept'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     void handleAddFriend() {
       showDialog(
         context: context,
@@ -39,14 +74,13 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
               ),
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pop();
                   setState(() {
                     isRequested = true;
                   });
-                  // Perform the accept action
-                  // FriendApi friendApi = FriendApi();
-                  // friendApi.setAcceptFriend(widget.id, "1");
-                  // print('send a friend request to ${widget.username}');
-                  Navigator.of(context).pop(); // Close the dialog
+                  widget.friendApi.setRequestFriend(widget.id);
+                  print('send request to  ${widget.username}');
+                  // Close the dialog
                 },
                 child: const Text('Accept'),
               ),
@@ -63,7 +97,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
           return AlertDialog(
             title: const Text('Confirmation'),
             content: Text(
-                'Do you want to delete the friend request from ${widget.username}?'),
+                'Do you want to delete suggested friend ${widget.username}?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -73,14 +107,9 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
               ),
               TextButton(
                 onPressed: () {
-                  // Perform the accept action
-                  FriendApi friendApi = FriendApi();
-                  friendApi.delRequestFriend(
-                    widget.id,
-                  );
-                  // showBottomSheetMenu(context);
-                  print('deleted request from ${widget.username}');
                   Navigator.of(context).pop(); // Close the dialog
+                  print('deleted suggestion ${widget.username}');
+                  widget.delWhenDelSuggestion(widget.id);
                 },
                 child: const Text('Accept'),
               ),
@@ -148,9 +177,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
                 borderRadius: BorderRadius.circular(5.0)),
             child: TextButton(
               onPressed: () {
-                // Xử lý khi nút được nhấn
-                // Ví dụ: Gọi hàm để thêm bạn bè
-                // addFriend();
+                handleCancelRequest();
               },
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(

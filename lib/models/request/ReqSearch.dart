@@ -1,8 +1,6 @@
-
 class ReqSearch {
-
   final String keyword;
-  final String user_id;
+  final String? user_id;
   final String index;
   final String count;
 
@@ -10,10 +8,10 @@ class ReqSearch {
 
   Map<String, dynamic> toJson() {
     return {
-      "keyword" : keyword,
-      "user_id" : user_id,
-      "index" : index,
-      "count" : count,
+      "keyword": keyword,
+      "user_id": null,
+      "index": index,
+      "count": count,
     };
   }
 }

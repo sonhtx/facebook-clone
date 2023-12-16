@@ -18,8 +18,6 @@ final Map<String, WidgetBuilder> routes = {
 
   '/search': (context) => SearchTab(),
   '/personal': (context) => const PersonalPage(),
-  '/history_search': (context) => const HistorySearchTab(),
-
   // '/profile': (context) => ProfileScreen(),
   '/friends': (context) => FriendsPage(),
   // '/messages': (context) => MessagesScreen(),
@@ -27,4 +25,4 @@ final Map<String, WidgetBuilder> routes = {
 
 // Optionally, you can define a default route to handle unknown routes
 // const String initialRoute = '/login';
-const String initialRoute = '/search';
+const String initialRoute = '/login';

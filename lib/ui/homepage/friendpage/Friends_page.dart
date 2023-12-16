@@ -116,6 +116,7 @@ class _FriendsPageState extends State<FriendsPage> {
         ),
       );
     }
+ 
 
     return Scaffold(
       appBar: AppBar(

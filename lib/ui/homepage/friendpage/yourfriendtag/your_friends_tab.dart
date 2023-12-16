@@ -1,6 +1,7 @@
 import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/models/friend/UserFriend.dart';
 import 'package:anti_fb/repository/friend/friend_repo.dart';
+import 'package:anti_fb/storage.dart';
 import 'package:anti_fb/ui/homepage/friendpage/yourfriendtag/user_friend_widget.dart';
 import 'package:anti_fb/widgets/icon/IconSearchWidget.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +29,19 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
     getFriendSuggest();
   }
 
+  void delWhenBlockOrUnfriend(String id) {
+    setState(() {
+      widget.userWidgetList.removeWhere((element) => element.id == id);
+      countFriends = widget.userWidgetList.length.toString();
+      userWidgetListDisplay = widget.userWidgetList;
+    });
+  }
+
   Future<void> getFriendSuggest() async {
     try {
+      String userId = (await getId())!;
       List<dynamic> result =
-          await widget._friendRepository.getUserFriend('0', '5', '157');
+          await widget._friendRepository.getUserFriend('0', '5', userId);
 
       List<UserFriend>? listSuggest = result[0];
       countFriends = result[1];
@@ -42,7 +52,8 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                     curSuggest.username,
                     curSuggest.avatar,
                     curSuggest.created,
-                    curSuggest.same_friends))
+                    curSuggest.same_friends,
+                    delWhenBlockOrUnfriend))
                 .toList() ??
             [];
 

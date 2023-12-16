@@ -1,5 +1,9 @@
+import 'package:anti_fb/models/post/PostListSearchData.dart';
+import 'package:anti_fb/models/request/ReqSearch.dart';
 import 'package:anti_fb/models/search/SavedSearch.dart';
 import 'package:anti_fb/repository/search/search_repo.dart';
+import 'package:anti_fb/ui/homepage/search/history_search_tab.dart';
+import 'package:anti_fb/ui/homepage/search/search_result_tab.dart';
 import 'package:anti_fb/ui/homepage/search/search_result_widget.dart';
 import 'package:anti_fb/widgets/ButtonWidget.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +14,7 @@ class SearchTab extends StatefulWidget {
   SearchTab({super.key});
 
   final SearchRepository _searchRepository = SearchRepository();
-  late List<SearchResultWidget> searchResultWidgetList;
+  late List<SavedSearchWidget> savedSearchWidgetList;
 
   @override
   State<StatefulWidget> createState() {
@@ -24,7 +28,7 @@ class _SearchTabState extends State<SearchTab> {
   @override
   void initState() {
     super.initState();
-    widget.searchResultWidgetList = [];
+    widget.savedSearchWidgetList = [];
     getSavedSearch();
   }
 
@@ -33,36 +37,15 @@ class _SearchTabState extends State<SearchTab> {
       List<SavedSearch>? listSuggest =
           await widget._searchRepository.getSavedSearch('0', '5');
       setState(() {
-        widget.searchResultWidgetList = listSuggest
-                ?.map((curSuggest) => SearchResultWidget(
+        widget.savedSearchWidgetList = listSuggest
+                ?.map((curSuggest) => SavedSearchWidget(
                       curSuggest.id,
                       curSuggest.keyword,
                       curSuggest.created,
                     ))
                 .toList() ??
             [];
-        print(widget.searchResultWidgetList);
-      });
-    } catch (e) {
-      print("error fetching saved search");
-      print(e);
-    }
-  }
-
-   Future<void> getSearchResult() async {
-    try {
-      List<SavedSearch>? listSuggest =
-          await widget._searchRepository.getSavedSearch('0', '5');
-      setState(() {
-        widget.searchResultWidgetList = listSuggest
-                ?.map((curSuggest) => SearchResultWidget(
-                      curSuggest.id,
-                      curSuggest.keyword,
-                      curSuggest.created,
-                    ))
-                .toList() ??
-            [];
-        print(widget.searchResultWidgetList);
+        print(widget.savedSearchWidgetList);
       });
     } catch (e) {
       print("error fetching saved search");
@@ -72,6 +55,8 @@ class _SearchTabState extends State<SearchTab> {
 
   void handleSearch(String value) {
     print(value);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (ctx) => SearchResultTab(value)));
   }
 
   @override
@@ -98,11 +83,11 @@ class _SearchTabState extends State<SearchTab> {
         ],
       ),
     );
-    if (widget.searchResultWidgetList.isNotEmpty) {
+    if (widget.savedSearchWidgetList.isNotEmpty) {
       content = Column(
         children: [
-          for (int i = 0; i < widget.searchResultWidgetList.length; i++)
-            widget.searchResultWidgetList[i],
+          for (int i = 0; i < widget.savedSearchWidgetList.length; i++)
+            widget.savedSearchWidgetList[i],
         ],
       );
     }
@@ -161,7 +146,8 @@ class _SearchTabState extends State<SearchTab> {
                     textColor: BLACK,
                     backgroundColor: WHITE,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/history_search');
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => HistorySearchTab()));
                     },
                     paddingTop: 0,
                     width: 100,

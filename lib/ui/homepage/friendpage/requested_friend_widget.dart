@@ -231,7 +231,7 @@ class FriendRequestWidget extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.grey[300], // Màu nền của nút
+                  backgroundColor: Colors.white, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),

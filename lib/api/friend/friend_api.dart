@@ -149,7 +149,7 @@ class FriendApi {
       body: json.encode(requestBody),
     );
     if (response.statusCode == 200) {
-      print("set del friend api done");
+      print("set del request friend api done");
       return true;
     } else {
       return false; // Email not exist

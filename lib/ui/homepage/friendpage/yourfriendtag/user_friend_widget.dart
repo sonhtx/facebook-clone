@@ -9,9 +9,13 @@ class UserFriendWidget extends StatelessWidget {
   final String created;
   final String sameFriends;
 
-  const UserFriendWidget(
-      this.id, this.username, this.avatar, this.created, this.sameFriends,
+  final Function(String id) delWhenBlockOrUnfriend;
+
+  UserFriendWidget(this.id, this.username, this.avatar, this.created,
+      this.sameFriends, this.delWhenBlockOrUnfriend,
       {super.key});
+
+  var friendApi = FriendApi();
 
   String formatDate(String dateString) {
     DateTime date = DateTime.parse(dateString);
@@ -65,6 +69,18 @@ class UserFriendWidget extends StatelessWidget {
     );
   }
 
+  void handleBlock() {
+    friendApi.setBlock(id);
+    delWhenBlockOrUnfriend(id);
+    print('blocked  $username');
+  }
+
+  void handleUnfriend() {
+    friendApi.unFriend(id);
+    delWhenBlockOrUnfriend(id);
+    print('unfried  $username');
+  }
+
   void showBottomSheetMenu(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -78,11 +94,19 @@ class UserFriendWidget extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Option 1
-                  Navigator.pop(context);
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(builderContext);
+                  // handleBlock();
                 },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(8.0),
+                  backgroundColor: Colors.white, // Màu nền của nút
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  side: BorderSide.none, // Loại bỏ border
+                ),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -102,12 +126,14 @@ class UserFriendWidget extends StatelessWidget {
                               Text(
                                 username,
                                 style: const TextStyle(
+                                    color: Colors.black,
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 formatDate(created),
                                 style: const TextStyle(
+                                    color: Colors.black,
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.normal),
                               ),
@@ -120,11 +146,19 @@ class UserFriendWidget extends StatelessWidget {
                 ),
               ),
               const Divider(height: 30.0),
-              GestureDetector(
-                onTap: () {
-                  // Handle Option 1
-                  Navigator.pop(context);
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(builderContext);
+                  // handleBlock();
                 },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(8.0),
+                  backgroundColor: Colors.white, // Màu nền của nút
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  side: BorderSide.none, // Loại bỏ border
+                ),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -141,50 +175,9 @@ class UserFriendWidget extends StatelessWidget {
                       Text(
                         'Message $username',
                         style: const TextStyle(
-                            fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Option 1
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.chat_outlined,
-                        size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.black, // Màu của biểu tượng
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Unfollow $username',
-                            style: const TextStyle(
-                                fontSize: 14.0, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          const Text(
-                            'Stop seeing posts but stay friends',
-                            style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.normal,
-                                color: Color.fromARGB(197, 14, 13, 13)),
-                          ),
-                        ],
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -193,11 +186,19 @@ class UserFriendWidget extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Option 1
-                  Navigator.pop(context);
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(builderContext);
+                  handleBlock();
                 },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(8.0),
+                  backgroundColor: Colors.white, // Màu nền của nút
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  side: BorderSide.none, // Loại bỏ border
+                ),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -218,7 +219,9 @@ class UserFriendWidget extends StatelessWidget {
                           Text(
                             'Block $username',
                             style: const TextStyle(
-                                fontSize: 14.0, fontWeight: FontWeight.bold),
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 5,
@@ -239,11 +242,19 @@ class UserFriendWidget extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              GestureDetector(
-                onTap: () {
-                  // Handle Option 1
-                  Navigator.pop(context);
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(builderContext);
+                  handleUnfriend();
                 },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(8.0),
+                  backgroundColor: Colors.white, // Màu nền của nút
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  side: BorderSide.none, // Loại bỏ border
+                ),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
