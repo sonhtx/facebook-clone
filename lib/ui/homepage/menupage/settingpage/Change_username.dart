@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:anti_fb/constants.dart';
 
 class ChangeUsername extends StatelessWidget {
-  const ChangeUsername({super.key});
+  final String name;
+  const ChangeUsername({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +21,11 @@ class ChangeUsername extends StatelessWidget {
           margin: const EdgeInsets.all(8.0),
           color: Colors.white,
           width: MediaQuery.of(context).size.width,
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Align(
+                const Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Name",
@@ -32,8 +33,8 @@ class ChangeUsername extends StatelessWidget {
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
                 ),
-                Divider(),
-                ChangeUsernameForm(),
+                const Divider(),
+                ChangeUsernameForm(name: name,),
               ],
             ),
           ),
@@ -44,40 +45,24 @@ class ChangeUsername extends StatelessWidget {
 }
 
 class ChangeUsernameForm extends StatelessWidget {
-  const ChangeUsernameForm({super.key});
+  final String name;
+  const ChangeUsernameForm({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController firstNameController = TextEditingController();
-    TextEditingController middleNameController = TextEditingController();
-    TextEditingController lastNameController = TextEditingController();
+    TextEditingController userNameController = TextEditingController(text: name);
+
 
     return Column(
       children: [
         const Align(
           alignment: Alignment.topLeft,
           child: Text(
-            "First Name",
+            "Username",
             style: TextStyle(fontSize: 15.0),
           ),
         ),
-        TextFieldWidget(controller: firstNameController),
-        const Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            "Middle Name",
-            style: TextStyle(fontSize: 15.0),
-          ),
-        ),
-        TextFieldWidget(controller: middleNameController),
-        const Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            "Last Name",
-            style: TextStyle(fontSize: 15.0),
-          ),
-        ),
-        TextFieldWidget(controller: lastNameController),
+        TextFieldWidget(controller: userNameController),
         const SizedBox(height: 8.0),
         Container(
           margin: const EdgeInsets.all(1.0),

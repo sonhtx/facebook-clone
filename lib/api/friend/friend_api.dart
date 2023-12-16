@@ -8,23 +8,13 @@ class FriendApi {
   late String token;
   late Map<String, String> headers = {};
 
-  FriendApi() {
-    // Initialize headers by fetching the token from secure storage
-    // _initializeHeaders();
-  }
+  FriendApi();
 
   Future<void> _initializeHeaders() async {
-    // Fetch the token from secure storage
     token = (await getJwt())!;
-
-    // Update the headers with the fetched token
-    // print(token);
-
     headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
-      //'Authorization':
-      //    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIyNzU0MDJ9.HksJr9Xt3devEU_mSv0fYcVw_0PRYt9vn-59BL2NsRo',
     };
   }
 
@@ -42,10 +32,8 @@ class FriendApi {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      print("get request oke");
       return jsonResponse;
     } else {
-      print("get request fail");
       return false; // Email not exist
     }
   }

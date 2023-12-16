@@ -11,15 +11,10 @@ class CommentApi {
   late String token;
   late Map<String, String> headers;
 
-  ReactionApi() {
-    // Initialize headers by fetching the token from secure storage
-  }
+  CommentApi();
 
   Future<void> _initializeHeaders() async {
-    // Fetch the token from secure storage
     token = (await getJwt())!; // Replace with your actual code to get the token
-
-    // Update the headers with the fetched token
     headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',

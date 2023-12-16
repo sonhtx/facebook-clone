@@ -48,7 +48,6 @@ class _SearchTabState extends State<SearchTab> {
         print(widget.savedSearchWidgetList);
       });
     } catch (e) {
-      print("error fetching saved search");
       print(e);
     }
   }

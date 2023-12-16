@@ -10,14 +10,10 @@ class PostApi {
   late String token;
   late Map<String, String> headers = {};
 
-  PostApi() {
-    // Initialize headers by fetching the token from secure storage
-    // _initializeHeaders();
-  }
+  PostApi();
 
   Future<void> _initializeHeaders() async {
-    // Fetch the token from secure storage
-    token = (await getJwt())!; // Replace with your actual code to get the token
+    token = (await getJwt())!;
     headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -50,10 +46,8 @@ class PostApi {
       headers: headers,
       body: jsonData,
     );
-
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-
       return jsonResponse; // get list success
     } else {
       return null; // get list false
