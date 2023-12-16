@@ -1,3 +1,5 @@
+import 'package:anti_fb/models/post/PostListSearchData.dart';
+import 'package:anti_fb/models/request/ReqSearch.dart';
 import 'package:anti_fb/models/search/SavedSearch.dart';
 
 import '../../api/search/search_api.dart';
@@ -21,6 +23,27 @@ class SearchRepository {
       } else {
         return false; // Signup failed
       }
+    } catch (e) {
+      print(e);
+      return null; // Signup failed due to an error
+    }
+  }
+
+  Future getSearchResult(ReqSearch reqSearch) async {
+    try {
+      final getlistpostResult = await _searchApi.search(reqSearch);
+
+      if (getlistpostResult == null) {
+        return false;
+      }
+
+      List<PostListSearchData> listpost = [];
+      List<dynamic> listpostraw = getlistpostResult['data'];
+      for (dynamic x in listpostraw) {
+        PostListSearchData post = PostListSearchData.fromJson(x);
+        listpost.add(post);
+      }
+      return listpost;
     } catch (e) {
       print(e);
       return null; // Signup failed due to an error

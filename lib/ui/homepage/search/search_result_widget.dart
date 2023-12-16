@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SearchResultWidget extends StatefulWidget {
+class SavedSearchWidget extends StatefulWidget {
   final String id;
   final String created;
   final String keyword;
 
-  const SearchResultWidget(this.id, this.keyword, this.created, {super.key});
+  const SavedSearchWidget(this.id, this.keyword, this.created, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -13,7 +13,7 @@ class SearchResultWidget extends StatefulWidget {
   }
 }
 
-class _SearchResultWidget extends State<SearchResultWidget> {
+class _SearchResultWidget extends State<SavedSearchWidget> {
   bool isRequested = false;
   @override
   Widget build(BuildContext context) {
