@@ -9,7 +9,7 @@ class SuggestedFriendsTab extends StatefulWidget {
   SuggestedFriendsTab({super.key});
 
   final FriendRepository _friendRepository = FriendRepository();
-  late List<SuggestedFriendWidget> suggestedWidgetList;
+  
 
   @override
   State<StatefulWidget> createState() {
@@ -18,17 +18,17 @@ class SuggestedFriendsTab extends StatefulWidget {
 }
 
 class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
+  List<SuggestedFriendWidget> suggestedWidgetList = [];
   @override
   void initState() {
     super.initState();
-    widget.suggestedWidgetList = [];
     getFriendSuggest();
   }
 
   void delWhenDelSuggestion(String id) {
     setState(() {
-      widget.suggestedWidgetList.removeWhere((element) => element.id == id);
-      // countFriends = widget.suggestedWidgetList.length.toString();
+      suggestedWidgetList.removeWhere((element) => element.id == id);
+      // countFriends = suggestedWidgetList.length.toString();
     });
   }
 
@@ -38,7 +38,7 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
           await widget._friendRepository.getfriendsuggestion('0', '5');
 
       setState(() {
-        widget.suggestedWidgetList = suggestList
+        suggestedWidgetList = suggestList
                 ?.map((curSuggest) => SuggestedFriendWidget(
                       curSuggest.id,
                       curSuggest.username,
@@ -80,11 +80,11 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
         ],
       ),
     );
-    if (widget.suggestedWidgetList.isNotEmpty) {
+    if (suggestedWidgetList.isNotEmpty) {
       content = Column(
         children: [
-          for (int i = 0; i < widget.suggestedWidgetList.length; i++)
-            widget.suggestedWidgetList[i],
+          for (int i = 0; i < suggestedWidgetList.length; i++)
+            suggestedWidgetList[i],
         ],
       );
     }
