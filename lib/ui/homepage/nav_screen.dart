@@ -1,3 +1,4 @@
+import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
 import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
 import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -308,7 +309,8 @@ class HomeState extends State<HomeScreen> {
               case 1:
                 return CupertinoTabView(
                     navigatorKey: peopleTabNavKey,
-                    builder: (context) => PeoplePage(scrollController: peopleScrollController)
+                    // builder: (context) => PeoplePage(scrollController: peopleScrollController)
+                    builder: (context) => FriendsPage()
                 );
               case 2:
                 return CupertinoTabView(
