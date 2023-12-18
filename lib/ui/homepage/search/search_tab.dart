@@ -14,7 +14,7 @@ class SearchTab extends StatefulWidget {
   SearchTab({super.key});
 
   final SearchRepository _searchRepository = SearchRepository();
-  late List<SavedSearchWidget> savedSearchWidgetList;
+  
 
   @override
   State<StatefulWidget> createState() {
@@ -24,11 +24,10 @@ class SearchTab extends StatefulWidget {
 
 class _SearchTabState extends State<SearchTab> {
   TextEditingController controller = TextEditingController();
-
+List<SavedSearchWidget> savedSearchWidgetList = [];
   @override
   void initState() {
     super.initState();
-    widget.savedSearchWidgetList = [];
     getSavedSearch();
   }
 
@@ -37,7 +36,7 @@ class _SearchTabState extends State<SearchTab> {
       List<SavedSearch>? listSuggest =
           await widget._searchRepository.getSavedSearch('0', '5');
       setState(() {
-        widget.savedSearchWidgetList = listSuggest
+        savedSearchWidgetList = listSuggest
                 ?.map((curSuggest) => SavedSearchWidget(
                       curSuggest.id,
                       curSuggest.keyword,
@@ -45,7 +44,7 @@ class _SearchTabState extends State<SearchTab> {
                     ))
                 .toList() ??
             [];
-        print(widget.savedSearchWidgetList);
+        print(savedSearchWidgetList);
       });
     } catch (e) {
       print(e);
@@ -82,11 +81,11 @@ class _SearchTabState extends State<SearchTab> {
         ],
       ),
     );
-    if (widget.savedSearchWidgetList.isNotEmpty) {
+    if (savedSearchWidgetList.isNotEmpty) {
       content = Column(
         children: [
-          for (int i = 0; i < widget.savedSearchWidgetList.length; i++)
-            widget.savedSearchWidgetList[i],
+          for (int i = 0; i < savedSearchWidgetList.length; i++)
+            savedSearchWidgetList[i],
         ],
       );
     }
@@ -97,7 +96,7 @@ class _SearchTabState extends State<SearchTab> {
       // ),
       body: SingleChildScrollView(
         child: Container(
-          // Center is a layout widget. It takes a single child and positions it
+          // Center is a layout  It takes a single child and positions it
           // in the middle of the parent.
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(

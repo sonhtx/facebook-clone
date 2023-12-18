@@ -1,5 +1,4 @@
 import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
-import 'package:anti_fb/ui/homepage/friendpage/people_page.dart';
 import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -261,7 +260,6 @@ class HomeState extends State<HomeScreen> {
     peopleScrollController.dispose();
     notificationScrollController.dispose();
     menuScrollController.dispose();
-
     super.dispose();
   }
 
