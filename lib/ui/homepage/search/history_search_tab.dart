@@ -1,3 +1,4 @@
+import 'package:anti_fb/api/search/search_api.dart';
 import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/models/search/SavedSearch.dart';
 import 'package:anti_fb/repository/search/search_repo.dart';
@@ -9,7 +10,6 @@ class HistorySearchTab extends StatefulWidget {
   HistorySearchTab({super.key});
 
   final SearchRepository _searchRepository = SearchRepository();
- 
 
   @override
   State<StatefulWidget> createState() {
@@ -18,7 +18,7 @@ class HistorySearchTab extends StatefulWidget {
 }
 
 class _HistorySearchTabState extends State<HistorySearchTab> {
-   List<GroupByDateWidget> groupByDateWidget = [];
+  List<GroupByDateWidget> groupByDateWidget = [];
   @override
   void initState() {
     super.initState();
@@ -29,6 +29,14 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
     setState(() {
       groupByDateWidget.removeWhere((element) => element.date == date);
     });
+  }
+
+  void handleClearAll() {
+    setState(() {
+      groupByDateWidget = [];
+    });
+    SearchApi searchApi = SearchApi();
+    searchApi.delSavedSearch("0", "1");
   }
 
   String convertDateString(String dateString) {
@@ -152,15 +160,28 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
               const SizedBox(
                 height: 10,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Clear all',
+                  TextButton(
+                    onPressed: () {
+                      handleClearAll();
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white, // Màu chữ của nút
+                      padding: EdgeInsets.zero, // Bỏ padding
+                      minimumSize: Size(0, 0), // Bỏ kích thước tối thiểu
+                      alignment: Alignment.center, // Canh giữa văn bản
+                    ),
+                    child: const Text(
+                      'Clear all',
                       style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue)),
+                          color: Colors.blue),
+                    ),
+                  ),
                 ],
               ),
               content,
