@@ -1,4 +1,5 @@
 
+import 'package:anti_fb/models/friend/SuggestedFriend.dart';
 import 'package:anti_fb/ui/homepage/friendpage/requested_friend_widget.dart';
 import 'package:anti_fb/ui/homepage/friendpage/suggestionpage/suggestion_screen.dart';
 import 'package:anti_fb/widgets/TextButtonWidget.dart';
@@ -7,13 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../../../models/friend/Friend.dart';
 import '../../../repository/friend/friend_repo.dart';
 import '../../../widgets/IconWidget.dart';
 import '../nav_screen.dart';
 import 'friendpage/friend_screen.dart';
 
-// show people can be friend
+
+/*
 
 class PeoplePage extends StatelessWidget{
   const PeoplePage({super.key, required this.scrollController});
@@ -109,9 +110,10 @@ class ListFriendReqWidgetState extends State<ListFriendReqWidget> {
     getFriendSuggest();
   }
 
-  void removeItem(String id){
+  void delWhenAcceptOrDelete(String id) {
     setState(() {
-      widget.requestWidgetList.removeWhere((obj) => obj.id == id);
+      widget.requestWidgetList.removeWhere((element) => element.id == id);
+      countRequest = widget.requestWidgetList.length.toString();
     });
   }
 
@@ -120,7 +122,7 @@ class ListFriendReqWidgetState extends State<ListFriendReqWidget> {
       List<dynamic> result =
       await widget._friendRepository.getRequestedFriend('0', '5');
 
-      List<Friend>? listSuggest = result[0];
+      List<SuggestedFriend>? listSuggest = result[0];
       countRequest = result[1];
       setState(() {
         widget.requestWidgetList = listSuggest
@@ -129,6 +131,8 @@ class ListFriendReqWidgetState extends State<ListFriendReqWidget> {
           curSuggest.username,
           curSuggest.avatar,
           curSuggest.created,
+          delWhenAcceptOrDelete,
+          
         ))
             .toList() ??
             [];
@@ -180,7 +184,7 @@ class ListFriendReqWidgetState extends State<ListFriendReqWidget> {
 
 
 
-
+*/
 
 
 
