@@ -53,8 +53,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-        controller: scrollController, slivers: <Widget>[
+    return CustomScrollView(controller: scrollController, slivers: <Widget>[
       SliverAppBar(
         title: HomeAppBarTitle(coin),
         centerTitle: false,
