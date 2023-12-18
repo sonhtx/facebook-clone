@@ -15,7 +15,6 @@ class SearchResultTab extends StatefulWidget {
   SearchResultTab(this.keyword, {super.key});
 
   final SearchRepository _searchRepository = SearchRepository();
-  late List<PostWidget> postScreenList;
 
   @override
   State<StatefulWidget> createState() {
@@ -25,11 +24,11 @@ class SearchResultTab extends StatefulWidget {
 
 class _SearchResultTabState extends State<SearchResultTab> {
   TextEditingController controller = TextEditingController();
+  List<PostWidget> postScreenList = [];
 
   @override
   void initState() {
     super.initState();
-    widget.postScreenList = [];
     controller.text = widget.keyword;
     getSearchResult(widget.keyword);
   }
@@ -40,7 +39,7 @@ class _SearchResultTabState extends State<SearchResultTab> {
           ._searchRepository
           .getSearchResult(ReqSearch(keyword, null, "0", "10"));
       setState(() {
-        widget.postScreenList = searchResultList
+        postScreenList = searchResultList
                 ?.map((current) => PostWidget(
                     current.id,
                     current.name,
@@ -54,7 +53,7 @@ class _SearchResultTabState extends State<SearchResultTab> {
                     current.author.avatar))
                 .toList() ??
             [];
-        print(widget.postScreenList);
+        print(postScreenList);
       });
     } catch (e) {
       print("error fetching saved search");
@@ -91,11 +90,10 @@ class _SearchResultTabState extends State<SearchResultTab> {
         ],
       ),
     );
-    if (widget.postScreenList.isNotEmpty) {
+    if (postScreenList.isNotEmpty) {
       content = Column(
         children: [
-          for (int i = 0; i < widget.postScreenList.length; i++)
-            widget.postScreenList[i],
+          for (int i = 0; i < postScreenList.length; i++) postScreenList[i],
         ],
       );
     }

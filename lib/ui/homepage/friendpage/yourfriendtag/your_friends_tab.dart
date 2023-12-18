@@ -10,7 +10,6 @@ class YourFriendsTab extends StatefulWidget {
   YourFriendsTab({super.key});
 
   final FriendRepository _friendRepository = FriendRepository();
-  late List<UserFriendWidget> userWidgetList;
 
   @override
   State<StatefulWidget> createState() {
@@ -21,19 +20,25 @@ class YourFriendsTab extends StatefulWidget {
 class _YourFriendsTabState extends State<YourFriendsTab> {
   String countFriends = "0";
   List<UserFriendWidget> userWidgetListDisplay = [];
+  List<UserFriendWidget> userWidgetList = [];
+
 
   @override
   void initState() {
     super.initState();
-    widget.userWidgetList = [];
     getFriendSuggest();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void delWhenBlockOrUnfriend(String id) {
     setState(() {
-      widget.userWidgetList.removeWhere((element) => element.id == id);
-      countFriends = widget.userWidgetList.length.toString();
-      userWidgetListDisplay = widget.userWidgetList;
+      userWidgetList.removeWhere((element) => element.id == id);
+      countFriends = userWidgetList.length.toString();
+      userWidgetListDisplay = userWidgetList;
     });
   }
 
@@ -46,7 +51,7 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
       List<UserFriend>? listSuggest = result[0];
       countFriends = result[1];
       setState(() {
-        widget.userWidgetList = listSuggest
+        userWidgetList = listSuggest
                 ?.map((curSuggest) => UserFriendWidget(
                     curSuggest.id,
                     curSuggest.username,
@@ -57,7 +62,7 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                 .toList() ??
             [];
 
-        userWidgetListDisplay = widget.userWidgetList;
+        userWidgetListDisplay = userWidgetList;
       });
     } catch (e) {
       print("error fetching user friends");
@@ -83,7 +88,7 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
 
   void sortDefaultUserWightList() {
     setState(() {
-      userWidgetListDisplay = widget.userWidgetList;
+      userWidgetListDisplay = userWidgetList;
     });
   }
 

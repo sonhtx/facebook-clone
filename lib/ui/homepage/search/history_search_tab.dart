@@ -9,7 +9,7 @@ class HistorySearchTab extends StatefulWidget {
   HistorySearchTab({super.key});
 
   final SearchRepository _searchRepository = SearchRepository();
-  late List<GroupByDateWidget> groupByDateWidget;
+ 
 
   @override
   State<StatefulWidget> createState() {
@@ -18,16 +18,16 @@ class HistorySearchTab extends StatefulWidget {
 }
 
 class _HistorySearchTabState extends State<HistorySearchTab> {
+   List<GroupByDateWidget> groupByDateWidget = [];
   @override
   void initState() {
     super.initState();
-    widget.groupByDateWidget = [];
     getSavedSearch();
   }
 
   void delWhenGroupNull(String date) {
     setState(() {
-      widget.groupByDateWidget.removeWhere((element) => element.date == date);
+      groupByDateWidget.removeWhere((element) => element.date == date);
     });
   }
 
@@ -64,7 +64,7 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
           SavedSearch current = savedSearchList[i];
           if (date != convertDateString(current.created)) {
             if (date != "") {
-              widget.groupByDateWidget.add(GroupByDateWidget(
+              groupByDateWidget.add(GroupByDateWidget(
                   date, historySearchGroupList, delWhenGroupNull));
               historySearchGroupList = [];
             }
@@ -75,7 +75,7 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
           date = convertDateString(current.created);
           historySearchGroupList.add(current);
         }
-        widget.groupByDateWidget.add(
+        groupByDateWidget.add(
             GroupByDateWidget(date, historySearchGroupList, delWhenGroupNull));
       });
     } catch (e) {
@@ -108,11 +108,11 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
         ],
       ),
     );
-    if (widget.groupByDateWidget.isNotEmpty) {
+    if (groupByDateWidget.isNotEmpty) {
       content = Column(
         children: [
-          for (int i = 0; i < widget.groupByDateWidget.length; i++)
-            widget.groupByDateWidget[i],
+          for (int i = 0; i < groupByDateWidget.length; i++)
+            groupByDateWidget[i],
         ],
       );
     }

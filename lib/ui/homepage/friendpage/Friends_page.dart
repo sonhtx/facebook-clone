@@ -18,7 +18,6 @@ class FriendsPage extends StatefulWidget {
   FriendsPage({super.key});
 
   final FriendRepository _friendRepository = FriendRepository();
-  late List<FriendRequestWidget> requestWidgetList;
 
   @override
   State<StatefulWidget> createState() {
@@ -32,14 +31,15 @@ class _FriendsPageState extends State<FriendsPage> {
   @override
   void initState() {
     super.initState();
-    widget.requestWidgetList = [];
     getFriendSuggest();
   }
 
+  List<FriendRequestWidget> requestWidgetList = [];
+
   void delWhenAcceptOrDelete(String id) {
     setState(() {
-      widget.requestWidgetList.removeWhere((element) => element.id == id);
-      countRequest = widget.requestWidgetList.length.toString();
+      requestWidgetList.removeWhere((element) => element.id == id);
+      countRequest = requestWidgetList.length.toString();
     });
   }
 
@@ -51,7 +51,7 @@ class _FriendsPageState extends State<FriendsPage> {
       List<RequestedFriend>? listSuggest = result[0];
       countRequest = result[1];
       setState(() {
-        widget.requestWidgetList = listSuggest
+        requestWidgetList = listSuggest
                 ?.map((curSuggest) => FriendRequestWidget(
                       curSuggest.id,
                       curSuggest.username,
@@ -92,11 +92,11 @@ class _FriendsPageState extends State<FriendsPage> {
         ],
       ),
     );
-    if (widget.requestWidgetList.isNotEmpty) {
+    if (requestWidgetList.isNotEmpty) {
       content = Column(
         children: [
-          for (int i = 0; i < widget.requestWidgetList.length; i++)
-            widget.requestWidgetList[i],
+          for (int i = 0; i < requestWidgetList.length; i++)
+            requestWidgetList[i],
         ],
       );
     }
@@ -116,7 +116,6 @@ class _FriendsPageState extends State<FriendsPage> {
         ),
       );
     }
- 
 
     return Scaffold(
       appBar: AppBar(
