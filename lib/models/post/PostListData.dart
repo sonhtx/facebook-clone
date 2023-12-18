@@ -3,7 +3,7 @@
 import 'package:anti_fb/models/post/AuthorData.dart';
 import 'ImageData.dart';
 
-class PostListData {
+class   PostListData {
   final String id;
   final String name;
   final List<ImageData> image;

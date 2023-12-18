@@ -1,3 +1,4 @@
+
 import 'package:anti_fb/ui/homepage/friendpage/requested_friend_widget.dart';
 import 'package:anti_fb/ui/homepage/friendpage/suggestionpage/suggestion_screen.dart';
 import 'package:anti_fb/widgets/TextButtonWidget.dart';
@@ -170,10 +171,10 @@ class ListFriendReqWidgetState extends State<ListFriendReqWidget> {
       );
     }
     return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: widget.requestWidgetList,
-      ));
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: widget.requestWidgetList,
+        ));
   }
 }
 

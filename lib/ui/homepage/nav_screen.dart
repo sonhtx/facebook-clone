@@ -245,6 +245,8 @@ class HomeState extends State<HomeScreen> {
             );
           }
       }
+      // firstTabNavKey.currentState?.popUntil((r) => r.isFirst);
+
     } else {
       setState(() {
         _selectedIndex = index;
@@ -258,6 +260,7 @@ class HomeState extends State<HomeScreen> {
     peopleScrollController.dispose();
     notificationScrollController.dispose();
     menuScrollController.dispose();
+
     super.dispose();
   }
 
