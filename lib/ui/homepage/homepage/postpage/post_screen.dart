@@ -41,9 +41,13 @@ class PostScreen extends StatelessWidget{
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Column(
             children: [
-              Align(alignment: Alignment.topLeft,
-                  child: Text(described)),
 
+              Padding(
+                padding: const EdgeInsets.only(top:10),
+                child: Align(alignment: Alignment.topLeft,
+                    child: Text(described)),
+              ),
+              const SizedBox(height: 10,),
               (images.isNotEmpty)
                   ? ImageWidget(images: images)
                    : const SizedBox.shrink(),

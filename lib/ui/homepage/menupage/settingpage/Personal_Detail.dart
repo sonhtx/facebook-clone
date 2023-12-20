@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:anti_fb/constants.dart';
 
 class PersonalDetail extends StatelessWidget {
-  const PersonalDetail({super.key});
+  final String name;
+  const PersonalDetail({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class PersonalDetail extends StatelessWidget {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => const ChangeUsername()),
+                                builder: (context) => ChangeUsername(name: name)),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -84,12 +85,12 @@ class PersonalDetail extends StatelessWidget {
                             children: <Widget>[
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.85,
-                                child: const Column(
+                                child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Name",
                                       style: TextStyle(
                                           fontSize: 15.0,
@@ -97,8 +98,8 @@ class PersonalDetail extends StatelessWidget {
                                           color: Colors.black),
                                     ),
                                     Text(
-                                      "Viet Dung",
-                                      style: TextStyle(
+                                      name,
+                                      style: const TextStyle(
                                           fontSize: 13.0, color: Colors.grey),
                                     )
                                   ],

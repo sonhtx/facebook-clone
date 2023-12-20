@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:anti_fb/constants.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+  final String name;
+  const SettingScreen({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class SettingScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => const PersonalDetail()),
+                              builder: (context) => PersonalDetail(name: name!,)),
                         );
                       },
                       style: TextButton.styleFrom(

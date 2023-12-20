@@ -10,7 +10,6 @@ import '../../models/request/ReqLoginData.dart';
 class LoginApi{
   static final Map<String, String> headers = {
     'Content-Type': 'application/json',
-    // Add any additional headers you need
   };
   static Future login(LoginData loginData) async {
 

@@ -20,6 +20,7 @@ class SearchApi {
     // Update the headers with the fetched token
     headers = {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
       //'Authorization':
       //    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU3LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDIyODg2NjF9.0ZiK-pyb2vDTmDsMH4WIJU2WyXEwQjm-BKZ4WNa4aNo',
     };
@@ -45,6 +46,7 @@ class SearchApi {
 
   Future getSavedSearch(String index, String count) async {
     await _initializeHeaders();
+    print(headers);
     final Map<String, dynamic> requestBody = {"index": index, "count": count};
     final response = await http.post(
       Uri.parse('$apiUrl/get_saved_search'),

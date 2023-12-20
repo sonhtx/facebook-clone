@@ -5,6 +5,7 @@ import 'package:anti_fb/repository/post/post_repo.dart';
 import 'package:anti_fb/ui/homepage/homepage/postpage/post_screen.dart';
 import 'package:anti_fb/ui/homepage/homepage/reaction_button.dart';
 import 'package:anti_fb/widget_dung/imageViewWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:readmore/readmore.dart';
@@ -13,6 +14,7 @@ import '../../../constants.dart';
 import '../../../models/post/ImageData.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/profile_avatar.dart';
+import '../menupage/settingpage/setting_screen.dart';
 import '../nav_screen.dart';
 
 class ListPostWidget extends StatefulWidget {
@@ -32,10 +34,9 @@ class _ListPostWidgetState extends State<ListPostWidget> {
   final PostRepository _postRepository = PostRepository();
 
   static final RequestListPost_VideoData requestListPostData =
-      RequestListPost_VideoData("339", "1", "1", "1.0", "1.0", null, "0", "10");
+      RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", null, "0", "10");
 
   Future<void> getlistpost() async {
-    print("Getting List Post");
     await Future.delayed(const Duration(seconds: 2));
 
     try {
@@ -61,7 +62,6 @@ class _ListPostWidgetState extends State<ListPostWidget> {
               context.findAncestorStateOfType<HomeState>();
           homeState?.postlist = listPost;
         }
-        print(listPost.length);
       });
     } catch (error) {
       print(error);
@@ -95,7 +95,6 @@ class _ListPostWidgetState extends State<ListPostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("Build list posts here");
     return Container(
         color: GREY,
         child: Column(
@@ -164,7 +163,7 @@ class PostWidget extends StatelessWidget {
               ],
             ),
           ),
-
+          const SizedBox(height: 10,),
           // ----------------------------
           (images.isNotEmpty)
               ? ImageWidget(images: images)
@@ -350,22 +349,33 @@ class _PostBottom extends StatelessWidget {
           padding: const EdgeInsets.only(right: 10),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PostScreen(
-                      id: id,
-                      name: name,
-                      images: images,
-                      described: described,
-                      created: created,
-                      feel: feel,
-                      comment_mark: comment_mark,
-                      is_felt: is_felt,
-                      author_name: author_name,
-                      author_avatar_url: author_avatar_url),
-                ),
-              );
+              Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (context) => PostScreen(
+                  id: id,
+                  name: name,
+                  images: images,
+                  described: described,
+                  created: created,
+                  feel: feel,
+                  comment_mark: comment_mark,
+                  is_felt: is_felt,
+                  author_name: author_name,
+                  author_avatar_url: author_avatar_url)));
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => PostScreen(
+              //         id: id,
+              //         name: name,
+              //         images: images,
+              //         described: described,
+              //         created: created,
+              //         feel: feel,
+              //         comment_mark: comment_mark,
+              //         is_felt: is_felt,
+              //         author_name: author_name,
+              //         author_avatar_url: author_avatar_url),
+              //   ),
+              // );
             },
             child: const Row(
               children: [
@@ -378,7 +388,7 @@ class _PostBottom extends StatelessWidget {
                   textColor: GREY,
                   fontSize: 12,
                   paddingLeft: 5,
-                  width: 40,
+                  width: 50,
                 )
               ],
             ),
