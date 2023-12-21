@@ -3,12 +3,9 @@ import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import '../../constants.dart';
+import '../../models/Notification/NotificationData.dart';
 import '../../models/post/PostListData.dart';
-import 'friendpage/friendpage/friend_screen.dart';
-import 'friendpage/suggestionpage/suggestion_screen.dart';
 import 'homepage/home_page.dart';
-import 'menupage/personalpage/personal_page.dart';
 import 'notificationpage/notification_page.dart';
 
 // class HomeScreen extends StatefulWidget {
@@ -200,7 +197,7 @@ class HomeState extends State<HomeScreen> {
   late String coin = '';
   late String email = '';
   late List<PostListData> postlist = [];
-
+  late List<NotificationData> notificationLists = [];
   _onTapped(int index) {
     if (_selectedIndex == index) {
       switch(index){
@@ -271,7 +268,6 @@ class HomeState extends State<HomeScreen> {
             activeColor: CupertinoColors.systemBlue,
             onTap: (index) {
               _onTapped(index);
-              print('Clicked Tab $index');
             },
             items: const [
               BottomNavigationBarItem(
@@ -313,7 +309,7 @@ class HomeState extends State<HomeScreen> {
               case 2:
                 return CupertinoTabView(
                   navigatorKey: notificationTabNavKey,
-                  builder: (context) => NotificationPage(scrollController: notificationScrollController),
+                  builder: (context) => NotificationPage(scrollController: notificationScrollController, notificationLists: notificationLists),
                 );
               default:
                 return CupertinoTabView(

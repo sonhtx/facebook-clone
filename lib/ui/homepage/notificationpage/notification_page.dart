@@ -1,48 +1,105 @@
-import 'package:anti_fb/ui/homepage/notificationpage/user_notification.dart';
+import 'package:anti_fb/models/request/ReqListNotification.dart';
+import 'package:anti_fb/repository/notification/notification_repo.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../../../models/Notification/NotificationData.dart';
 import '../../../widgets/IconWidget.dart';
+import '../nav_screen.dart';
 import 'NotificationWidget.dart';
 
 
-class NotificationPage extends StatelessWidget{
+class NotificationPage extends StatefulWidget{
+
+  final List<NotificationData> notificationLists;
   final ScrollController scrollController;
-  const NotificationPage({super.key, required this.scrollController});
+  const NotificationPage({super.key, required this.scrollController, required this.notificationLists});
 
   @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: scrollController,
-      slivers: <Widget>[
-        SliverAppBar(
-          title: const NotificationsAppBarTitle(),
-          actions:  [
-            Row(
-              children: [
-                IconWidget(icon: Icons.settings, onPressed: () {},),
-                Padding(
-                    padding: const EdgeInsets.only(right: 5), //
-                    child: IconWidget( icon: Icons.search,
-                      onPressed: (){},
-                    )
-                ),
-              ],
-            ),
-          ],
-          backgroundColor: WHITE,
-          floating: true,
-        ),
-        SliverList(
-            delegate: SliverChildListDelegate( [
-              for(UserNotification notification in notifications) NotificationWidget(notification: notification)
-            ]
-            )
-        ),
-      ]
-    );
+  State<NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  
+  late List<NotificationData> _notificationLists = [];
+  
+  late List<Widget> listNotificationWidget = [];
+  
+  final NotificationRepository _notificationRepository = NotificationRepository();
+  
+  static final RequestListNotification requestListNotification = RequestListNotification("0", "30");
+
+  Future<void> getListNotification() async{
+    await Future.delayed(const Duration(seconds: 2));
+
+    try{
+      List<NotificationData>? listNotification = await _notificationRepository.getListNotification(requestListNotification);
+
+      setState(() {
+        if(listNotification != null){
+          print(listNotification.length);
+          _notificationLists = listNotification;
+        }else{
+        }
+
+        if(mounted){
+          final HomeState? homeState =
+          context.findAncestorStateOfType<HomeState>();
+          homeState?.notificationLists = _notificationLists;
+        }
+      });
+    }catch(error){
+      print(error);
+    }
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationLists = widget.notificationLists;
+    if(_notificationLists.isEmpty){
+      getListNotification();
+    }
+  }
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          controller: widget.scrollController,
+          slivers: <Widget>[
+            SliverAppBar(
+              title: const NotificationsAppBarTitle(),
+              actions:  [
+                Row(
+                  children: [
+                    IconWidget(icon: Icons.settings, onPressed: () {},),
+                    Padding(
+                        padding: const EdgeInsets.only(right: 5), //
+                        child: IconWidget( icon: Icons.search,
+                          onPressed: (){},
+                        )
+                    ),
+                  ],
+                ),
+              ],
+              backgroundColor: WHITE,
+              floating: true,
+            ),
+            SliverList(
+                delegate: SliverChildListDelegate( [
+                  for(NotificationData notification in _notificationLists) NotificationWidget(notification: notification)
+                ]
+                )
+            ),
+          ]
+        ),
+      ),
+    );
+  }
 }
 
 class NotificationsAppBarTitle extends StatelessWidget {

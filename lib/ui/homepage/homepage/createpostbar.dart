@@ -1,4 +1,6 @@
 // create post bar
+import 'package:anti_fb/ui/homepage/homepage/createpost/createpost_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
@@ -29,7 +31,9 @@ class CreatePostButton extends StatelessWidget{
                       alignment: AlignmentDirectional.centerStart, // Align the button to the left side of the container
                       padding: EdgeInsets.zero,
                     ),
-                    onPressed: () { Navigator.pushNamed(context, '/post');},
+                    onPressed: () { Navigator.of(context, rootNavigator: true)
+                        .push(CupertinoPageRoute(
+                        builder: (context) => CreatePostScreen()));},
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: const Text( "What's on your mind?", style: TextStyle( color: BLACK,  fontSize: 14,),),
