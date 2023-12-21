@@ -2,6 +2,8 @@ import 'package:anti_fb/models/Notification/NotificationData.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
+
 class NotificationWidget extends StatelessWidget {
   final NotificationData notification;
 
@@ -10,6 +12,7 @@ class NotificationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: (notification.read == 0) ? NOTREADNOTI : Colors.white,
       width: MediaQuery.of(context).size.width,
       height: 100.0,
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -17,7 +20,7 @@ class NotificationWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            margin: const EdgeInsets.fromLTRB(10.0, 0.0, 20.0, 0.0),
             child: (notification.avatar != "" && notification.avatar != null)
                 ? CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(notification.avatar!),
@@ -39,16 +42,11 @@ class NotificationWidget extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     width: double.maxFinite,
-                    child: Text(notification.post!.described,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        maxLines: 3,
-                        style: const TextStyle(
-                            fontSize: 13.0, fontWeight: FontWeight.bold)),
+                    child: Described(notification: notification)
                   ),
                   Text(notification.created,
                       style:
-                      const TextStyle(fontSize: 12.0, color: Colors.grey)),
+                      const TextStyle(fontSize: 10.0, color: Colors.grey)),
                 ],
               ),
             ),
@@ -103,11 +101,7 @@ class NotificationWidget extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Center(
-                            child: Text(notification.post!.described,
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: true,
-                                maxLines: 2,
-                                style: const TextStyle(fontSize: 13.0)),
+                            child: Described(notification: notification)
                           ),
                         ),
                       ),
@@ -149,5 +143,62 @@ class NotificationWidget extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class Described extends StatelessWidget {
+  final NotificationData notification;
+  const Described({super.key, required this.notification});
+
+  @override
+  Widget build(BuildContext context) {
+    int type = int.parse(notification.type);
+    return RichText(
+      overflow: TextOverflow.ellipsis,
+      softWrap: true,
+      maxLines: 3,
+      text: TextSpan(
+          text: notification.user!.username,
+          style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0),
+          children: [
+            TextSpan(
+              text:showContent(type),
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+              fontWeight: FontWeight.normal),
+            )
+          ]),
+    );
+  }
+
+  String showContent(int type){
+    switch(type){
+      case 1:
+        return " sent you a friend request";
+      case 2:
+        return " accepted your friend request";
+      case 3:
+        if(notification.post?.status == ""){
+          return " added a post: ${notification.post?.described}";
+        }else{
+          return " is feeling ${notification.post?.status}: ${notification.post?.described}";
+        }
+      case 4:
+        return " updated post";
+      case 5:
+        return " ${notification.feel!.type} your post";
+      case 6:
+        return " marked your post: ${notification.mark!.mark_content}";
+      case 7:
+        return " commented your mark: ${notification.mark!.mark_content}";
+      case 8:
+        return " added a video";
+      default:
+        return " commented your post";
+    }
   }
 }

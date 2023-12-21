@@ -27,7 +27,7 @@ class _NotificationPageState extends State<NotificationPage> {
   
   final NotificationRepository _notificationRepository = NotificationRepository();
   
-  static final RequestListNotification requestListNotification = RequestListNotification("0", "10");
+  static final RequestListNotification requestListNotification = RequestListNotification("0", "30");
 
   Future<void> getListNotification() async{
     await Future.delayed(const Duration(seconds: 2));
