@@ -472,6 +472,7 @@ class _FriendProfileState extends State<FriendProfile> {
 
                     ListPostWidget(
                       postlists: postlists,
+                      id: widget.userId,
                     ),
                   ],
                 ),
