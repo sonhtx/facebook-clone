@@ -6,7 +6,6 @@ import '../../../models/post/PostListData.dart';
 import '../../../widgets/IconWidget.dart';
 import '../search/search_tab.dart';
 import 'appbar.dart';
-import 'createpost/createpost_screen.dart';
 import 'createpostbar.dart';
 import 'listpost.dart';
 
@@ -26,43 +25,47 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(controller: scrollController, slivers: <Widget>[
-      SliverAppBar(
-        title: HomeAppBarTitle(coin),
-        centerTitle: false,
-        backgroundColor: WHITE,
-        floating: true,
-        actions: [
-          Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                children: [
-                  IconWidget(
-                    icon: Icons.search,
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true)
-                          .push(CupertinoPageRoute(
-                          builder: (context) => SearchTab()));
-                    },
-                  ),
-                  IconWidget(
-                    icon: Icons.message,
-                    onPressed: () {},
-                  )
-                ],
-              )),
-        ],
-      ),
-      const SliverToBoxAdapter(child: CreatePostButton()),
-      SliverList(
-        delegate: SliverChildListDelegate(
-          [
-            ListPostWidget(
-              postlists: postlists,
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(controller: scrollController, slivers: <Widget>[
+          SliverAppBar(
+            title: HomeAppBarTitle(coin),
+            centerTitle: false,
+            backgroundColor: WHITE,
+            floating: true,
+            actions: [
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    children: [
+                      IconWidget(
+                        icon: Icons.search,
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .push(CupertinoPageRoute(
+                              builder: (context) => SearchTab()));
+                        },
+                      ),
+                      IconWidget(
+                        icon: Icons.message,
+                        onPressed: () {},
+                      )
+                    ],
+                  )),
+            ],
+          ),
+          const SliverToBoxAdapter(child: CreatePostButton()),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                ListPostWidget(
+                  postlists: postlists,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ]),
       ),
-    ]);
+    );
   }
 }

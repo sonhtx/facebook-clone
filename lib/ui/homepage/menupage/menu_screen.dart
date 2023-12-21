@@ -27,7 +27,7 @@ class _MenuPageState extends State<MenuPage>
   @override
   bool get wantKeepAlive => true;
   String? name = "";
-  String? imageUrl;
+  String? imageUrl = "";
 
   @override
   void initState() {
