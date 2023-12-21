@@ -3,7 +3,7 @@
 import 'package:anti_fb/models/post/AuthorData.dart';
 import 'ImageData.dart';
 
-class   PostListData {
+class PostListData {
   final String id;
   final String name;
   final List<ImageData> image;
@@ -49,7 +49,6 @@ class   PostListData {
       banned : json['banned'] as String,
       state : json['state'] as String,
       author: author
-
     );
   }
 

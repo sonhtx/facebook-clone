@@ -4,6 +4,7 @@ const CYAN = Colors.cyan;
 const GREEN = Colors.green;
 const BLUE = Colors.blue;
 const FBBLUE = Color(0xFF1777F2);
+const NOTREADNOTI = Color(0xffe6ffff);
 const ONLINE = Color(0xFF4BCB1F);
 const YELLOW = Colors.yellow;
 const ORANGE = Colors.orange;
