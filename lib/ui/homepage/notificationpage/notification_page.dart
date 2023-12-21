@@ -12,34 +12,38 @@ class NotificationPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: scrollController,
-      slivers: <Widget>[
-        SliverAppBar(
-          title: const NotificationsAppBarTitle(),
-          actions:  [
-            Row(
-              children: [
-                IconWidget(icon: Icons.settings, onPressed: () {},),
-                Padding(
-                    padding: const EdgeInsets.only(right: 5), //
-                    child: IconWidget( icon: Icons.search,
-                      onPressed: (){},
-                    )
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          controller: scrollController,
+          slivers: <Widget>[
+            SliverAppBar(
+              title: const NotificationsAppBarTitle(),
+              actions:  [
+                Row(
+                  children: [
+                    IconWidget(icon: Icons.settings, onPressed: () {},),
+                    Padding(
+                        padding: const EdgeInsets.only(right: 5), //
+                        child: IconWidget( icon: Icons.search,
+                          onPressed: (){},
+                        )
+                    ),
+                  ],
                 ),
               ],
+              backgroundColor: WHITE,
+              floating: true,
             ),
-          ],
-          backgroundColor: WHITE,
-          floating: true,
+            SliverList(
+                delegate: SliverChildListDelegate( [
+                  for(UserNotification notification in notifications) NotificationWidget(notification: notification)
+                ]
+                )
+            ),
+          ]
         ),
-        SliverList(
-            delegate: SliverChildListDelegate( [
-              for(UserNotification notification in notifications) NotificationWidget(notification: notification)
-            ]
-            )
-        ),
-      ]
+      ),
     );
   }
 

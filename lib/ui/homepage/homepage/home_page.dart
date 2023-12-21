@@ -1,41 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../models/post/PostListData.dart';
 import '../../../widgets/IconWidget.dart';
+import '../search/search_tab.dart';
 import 'appbar.dart';
+import 'createpost/createpost_screen.dart';
 import 'createpostbar.dart';
 import 'listpost.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  late String coin = '';
-  late String email = '';
-  late List<PostListData> postlist = [];
-  final ScrollController scrollController = ScrollController();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: SafeArea(
-          child: HomePage(
-            email: email,
-            coin: coin,
-            postlists: postlist,
-            scrollController: scrollController,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class HomePage extends StatelessWidget {
   const HomePage(
@@ -67,7 +40,9 @@ class HomePage extends StatelessWidget {
                   IconWidget(
                     icon: Icons.search,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/search');
+                      Navigator.of(context, rootNavigator: true)
+                          .push(CupertinoPageRoute(
+                          builder: (context) => SearchTab()));
                     },
                   ),
                   IconWidget(
