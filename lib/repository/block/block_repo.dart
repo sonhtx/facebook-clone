@@ -10,7 +10,7 @@ class BlockRepo{
     try{
       final getListBlockedResult = await blockApi.getListBlock(requestListBlock.index, requestListBlock.count);
       if(getListBlockedResult == null){
-        return false;
+        return null;
       }
 
       List<UserBlocked> listBlocked = [];
@@ -20,7 +20,7 @@ class BlockRepo{
         UserBlocked userBlocked = UserBlocked.fromJson(x);
         listBlocked.add(userBlocked);
       }
-      print(listBlocked.length);
+      print(getListBlockedResult);
       return listBlocked;
     }
     catch(e){

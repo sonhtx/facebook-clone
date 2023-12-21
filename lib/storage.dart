@@ -17,6 +17,7 @@ Future<void> saveUser(UserLogin user) async {
   await storage.write(key: 'coins', value: user.coins.toString());
 }
 
+
 // void saveUser(User user){
 //   storage.write(key: 'id', value: user.id);
 //   storage.write(key: 'email', value: user.email );
