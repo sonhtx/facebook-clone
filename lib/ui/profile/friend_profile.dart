@@ -4,6 +4,7 @@ import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:anti_fb/models/post/PostListData.dart';
 import 'package:anti_fb/ui/homepage/homepage/listpost.dart';
 import 'package:anti_fb/widgets1/friends_grid.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '/models/info.dart';
 import 'package:anti_fb/constants.dart';
@@ -12,24 +13,43 @@ import 'package:anti_fb/api/profile/profile_api.dart';
 import 'package:anti_fb/api/profile/userinfo_api.dart';
 import 'package:anti_fb/models/User.dart';
 import 'package:anti_fb/widgets1/friend_grid_view.dart';
+import 'package:anti_fb/widgets1/custom_button.dart';
 import 'dart:math';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
-
-  @override
-  State<Profile> createState() => _ProfileState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _ProfileState extends State<Profile> {
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FriendProfile(userId: "338"),
+    );
+  }
+}
+
+class FriendProfile extends StatefulWidget {
+  const FriendProfile({required this.userId, Key? key}) : super(key: key);
+
+  final String userId;
+
+  @override
+  State<FriendProfile> createState() => _FriendProfileState();
+}
+
+class _FriendProfileState extends State<FriendProfile> {
   late String email;
   late String token;
-  late String userId;
   late User user;
   late List<Info> info;
   late String friendsCount;
   late FriendsGrid friendsGrid;
   List<PostListData> postlists = [];
+  int buttonCase = 1;
 
   Widget infoTemplate(infoItem, context) {
     return Row(
@@ -62,16 +82,16 @@ class _ProfileState extends State<Profile> {
     email = 'sonacc2@gmail.com';
     // For testing purpose only, delete after merging
     String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NzA3ODJ9.aYHRZhmvm2XMbGoXsjPveL6AS-whPVn5Les1CtPgt9o';
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDMxMjk5OTF9.CZIIPwAH-qLCWej_OzXD4UIkbKMeHA8g6lDK8aOiZ98';
     String testId = '339';
     //await deleteAllSecureStorageData();
     // await storage.write(key: 'token', value: testToken);
     // await storage.write(key: 'id', value: testId);
     // await storage.write(key: 'email', value: email);
+    String userId = widget.userId;
 
     // get token and userId from storage
     token = (await getJwt())!;
-    userId = (await getId())!;
     email = (await getEmail())!;
 
     UserInfoApi uia = UserInfoApi();
@@ -142,7 +162,7 @@ class _ProfileState extends State<Profile> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While the future is still running, show a loading indicator
           print("Waiting..");
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           // If there's an error, display an error message
           print("Error: ${snapshot.error}");
@@ -151,6 +171,68 @@ class _ProfileState extends State<Profile> {
           // When the future is complete, use the result to build the widget
           // String data = snapshot.data as String;
           print("Finished");
+
+          Widget button;
+
+          // Handle button
+          switch (buttonCase) {
+            // Add friend
+            case 1:
+              button = CustomButton(
+                text: 'Add friend',
+                icon: Icons.person_add,
+                onPressed: () {
+                  setState(() {
+                    // Send friend Request
+                    buttonCase = 2;
+                  });
+                  // Handle button press
+                  print('Button pressed!');
+                },
+                color: FBBLUE, // Set the button color here
+              );
+              break;
+            // Friend request sent
+            case 2:
+              button = CustomButton(
+                text: 'Cancel Request',
+                icon: Icons.cancel,
+                onPressed: () {
+                  setState(() {});
+                  // Cancel friend request sent
+                  buttonCase = 1;
+                  print('Button pressed!');
+                },
+                color: FBBLUE, // Set the button color here
+              );
+              break;
+            // Already friend
+            case 3:
+              button = CustomButton(
+                text: 'Friends',
+                icon: Icons.done_outlined,
+                onPressed: () {
+                  setState(() {});
+                  // Handle button press
+                  print('Button pressed!');
+                },
+                color: FBBLUE, // Set the button color here
+              );
+              break;
+            default:
+              // Default case or handle other cases
+              button = CustomButton(
+                text: 'Add friend',
+                icon: Icons.person_add,
+                onPressed: () {
+                  setState(() {});
+                  // Handle button press
+                  print('Button pressed!');
+                },
+                color: FBBLUE, // Set the button color here
+              );
+          }
+
           return Scaffold(
             body: SingleChildScrollView(
               child: Container(
@@ -186,9 +268,10 @@ class _ProfileState extends State<Profile> {
                             backgroundColor: Colors.white,
                             child: CircleAvatar(
                               radius: 70.0,
-                              backgroundImage: NetworkImage(
-                                user.avatar,
-                              ),
+                              backgroundImage: user.avatar == ''
+                                  ? const AssetImage(defaultAvatar)
+                                      as ImageProvider<Object>?
+                                  : CachedNetworkImageProvider(user.avatar),
                             ),
                           ),
                         ),
@@ -296,6 +379,36 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        button,
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Handle Unfriend here
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red[800],
+                          ),
+                          child: const Row(
+                            children: [
+                              Icon(Icons.remove_circle),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text('Unfriend')
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
+
                     endline,
                     boundary,
                     endline,
@@ -306,26 +419,6 @@ class _ProfileState extends State<Profile> {
                           .map<Widget>(
                               (infoList) => infoTemplate(infoList, context))
                           .toList(),
-                    ),
-
-                    // Edit details button
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // To edit profile
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 209, 247, 254),
-                          ),
-                          child: const Text(
-                            'Edit public details',
-                            style: TextStyle(color: FBBLUE),
-                          ),
-                        ),
-                      ),
                     ),
 
                     // Friend here
