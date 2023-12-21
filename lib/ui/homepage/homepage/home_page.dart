@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 ListPostWidget(
-                  postlists: postlists,
+                  postlists: postlists, id: null,
                 ),
               ],
             ),
