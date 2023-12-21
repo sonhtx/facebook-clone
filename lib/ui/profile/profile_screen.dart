@@ -369,7 +369,7 @@ class _ProfileState extends State<Profile> {
                     // List posts here
 
                     ListPostWidget(
-                      postlists: postlists,
+                      postlists: postlists, id: userId
                     ),
                   ],
                 ),

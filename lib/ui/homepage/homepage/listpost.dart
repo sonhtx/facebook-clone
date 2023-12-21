@@ -14,13 +14,13 @@ import '../../../constants.dart';
 import '../../../models/post/ImageData.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/profile_avatar.dart';
-import '../menupage/settingpage/setting_screen.dart';
 import '../nav_screen.dart';
 
 class ListPostWidget extends StatefulWidget {
-  const ListPostWidget({super.key, required this.postlists});
+  const ListPostWidget({super.key, required this.postlists,required this.id});
 
   final List<PostListData> postlists;
+  final String? id;
 
   @override
   State<ListPostWidget> createState() => _ListPostWidgetState();
@@ -28,20 +28,18 @@ class ListPostWidget extends StatefulWidget {
 
 class _ListPostWidgetState extends State<ListPostWidget> {
   late List<PostListData> _postlists;
+  late final String? _id ;
 
   late List<Widget> listPostsWidget = [];
 
   final PostRepository _postRepository = PostRepository();
 
-  static final RequestListPost_VideoData requestListPostData =
-      RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", null, "0", "10");
-
-  Future<void> getlistpost() async {
+  Future<void> getlistpost(RequestListPost_VideoData request) async {
     await Future.delayed(const Duration(seconds: 2));
 
     try {
       List<PostListData>? listPost =
-          await _postRepository.getlistpost(requestListPostData);
+          await _postRepository.getlistpost(request);
       setState(() {
         for (int i = 0; i < listPost!.length; i++) {
           PostListData curPost = listPost[i];
@@ -72,9 +70,13 @@ class _ListPostWidgetState extends State<ListPostWidget> {
   void initState() {
     super.initState();
     _postlists = widget.postlists;
+    _id = widget.id;
+
+    final RequestListPost_VideoData requestListPostData =
+    RequestListPost_VideoData(_id, "1", "1", "1.0", "1.0", null, "0", "10");
 
     if (_postlists.isEmpty) {
-      getlistpost();
+      getlistpost(requestListPostData);
     } else {
       for (int i = 0; i < _postlists.length; i++) {
         PostListData curPost = _postlists[i];
