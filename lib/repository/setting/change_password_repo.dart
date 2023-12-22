@@ -2,7 +2,6 @@
 import 'package:anti_fb/storage.dart';
 
 import '../../api/setting/change_password_api.dart';
-import '../../models/post/ChangePassword.dart';
 import '../../models/request/ReqPasswordChange.dart';
 
 class ChangePasswordRepository{

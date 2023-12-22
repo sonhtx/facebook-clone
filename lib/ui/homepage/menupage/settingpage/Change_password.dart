@@ -51,7 +51,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     error = "";
   }
 
