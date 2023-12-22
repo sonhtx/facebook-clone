@@ -37,7 +37,6 @@ class _NotificationPageState extends State<NotificationPage> {
 
       setState(() {
         if(listNotification != null){
-          print(listNotification.length);
           _notificationLists = listNotification;
         }else{
         }

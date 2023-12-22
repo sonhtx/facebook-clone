@@ -49,11 +49,13 @@ class ChangePasswordForm extends StatelessWidget {
           hintText: "Current Password",
           obscureText: true,
         ),
+        const SizedBox(height: 15.0),
         TextFieldWidget(
           controller: newPasswordController,
           hintText: "New Password",
           obscureText: true,
         ),
+        const SizedBox(height: 15.0),
         TextFieldWidget(
           controller: newPasswordAgainController,
           hintText: "New Password Again  ",

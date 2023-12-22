@@ -1,10 +1,57 @@
 import 'dart:ui';
+import 'package:anti_fb/models/request/ReqListBlocked.dart';
+import 'package:anti_fb/repository/block/block_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:anti_fb/constants.dart';
 
-class BlockScreen extends StatelessWidget {
+import '../../../../models/block/UserBlocked.dart';
+
+class BlockScreen extends StatefulWidget {
   const BlockScreen({super.key});
+
+  @override
+  State<BlockScreen> createState() => _BlockScreenState();
+}
+
+class _BlockScreenState extends State<BlockScreen> {
+  late List<UserBlocked> _userBlocked =[];
+
+  late List<Widget> listUserBlockedWidget = [];
+
+  final BlockRepo _blockRepo = BlockRepo();
+
+  static final RequestListBlock requestListBlock = RequestListBlock("1", "10");
+
+  Future<void> getListBlock() async{
+    await Future.delayed(const Duration(seconds: 2));
+
+    try{
+      List<UserBlocked>? listBlocked = await _blockRepo.getListBlocked(requestListBlock);
+
+      setState(() {
+        if(listBlocked != null){
+          _userBlocked = listBlocked;
+          for(int i=0;i<listBlocked.length;i++){
+
+            listUserBlockedWidget.add(BlockedPeople(
+                imageUrl: _userBlocked[i].avatar,
+                userName: _userBlocked[i].name
+            ));
+          }
+        }
+      });
+    }
+    catch(error){
+      print(error);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getListBlock();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,17 +144,12 @@ class BlockScreen extends StatelessWidget {
                           child: SingleChildScrollView(
                             child: Column(
                                 mainAxisSize: MainAxisSize.max,
-                                children: List.generate(
-                                    7,
-                                    (index) => const BlockedPeople(
-                                        imageUrl:
-                                            'assets/images/messi-world-cup.png',
-                                        userName: 'Messi'))),
+                                children: listUserBlockedWidget
                           ),
                         ),
                       ),
                     )
-                  ],
+                    )],
                 ),
               ),
             )
@@ -235,11 +277,18 @@ class BlockedPeople extends StatelessWidget {
                     margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                     child: ImageFiltered(
                       imageFilter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                      child: Image.asset(
-                        imageUrl,
+                      child: (imageUrl == "") ?
+                      Image.asset(
+                        'assets/images/messi-world-cup.png',
                         width: 30.0,
                         height: 30.0,
-                      ),
+                      ):
+                        Image.network(
+                            imageUrl,
+                          width: 30.0,
+                          height: 30.0,
+                        )
+                      ,
                     ),
                   ),
                   const SizedBox(height: 4.0),

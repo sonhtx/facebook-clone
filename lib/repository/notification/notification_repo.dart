@@ -8,7 +8,6 @@ class NotificationRepository{
     try{
       final getListNotificationResult = await _notificationApi.getListNotification(requestListNotification);
       if(getListNotificationResult == null){
-        print("getListNotificationResult == null");
         return false;
       }
 

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:anti_fb/repository/auth/logout_repo.dart';
+import 'package:anti_fb/ui/login/login_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 
@@ -145,7 +147,21 @@ class _MenuPageState extends State<MenuPage>
                     backgroundColor: BTNBG,
                     borderColor: BG,
                     radius: 8.0,
-                    onPressed: () {}),
+                    onPressed: () async {
+                      LogoutRepository logoutRepo = LogoutRepository();
+                      final logoutStatus = await logoutRepo.logout();
+                      if (context.mounted) {
+                        if (logoutStatus) {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    const LoginScreen()),
+                            ModalRoute.withName('/'),
+                          );
+                        }
+                      }
+                    }),
                 ButtonWidget(
                     width: screenWidth - 20.0,
                     fontSize: 13.0,
