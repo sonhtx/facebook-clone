@@ -1,3 +1,5 @@
+import 'package:anti_fb/models/request/ReqPasswordChange.dart';
+import 'package:anti_fb/repository/setting/change_password_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,14 +35,54 @@ class ChangePassword extends StatelessWidget {
   }
 }
 
-class ChangePasswordForm extends StatelessWidget {
+class ChangePasswordForm extends StatefulWidget {
   const ChangePasswordForm({super.key});
 
   @override
+  State<ChangePasswordForm> createState() => _ChangePasswordFormState();
+}
+
+class _ChangePasswordFormState extends State<ChangePasswordForm> {
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController newPasswordAgainController = TextEditingController();
+  late String error;
+  // bool? status;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    error = "";
+  }
+
+  bool CheckPasswordEmpty(){
+    return currentPasswordController.text.isEmpty || newPasswordController.text.isEmpty || newPasswordAgainController.text.isEmpty;
+  }
+
+  bool CheckReEnterPassword(){
+    return newPasswordAgainController.text != newPasswordController.text;
+  }
+
+  Future setResult(bool status) async{
+    if(status){
+      showDialog(
+          context: context,
+          builder: (context) {
+            Future.delayed(const Duration(seconds: 10), () {
+              Navigator.of(context).pop(true);
+            });
+            return AlertDialog(
+              title: Text('Change password successfully'),
+            );
+          });
+      Navigator.pop(context);
+    }else{
+
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController currentPasswordController = TextEditingController();
-    TextEditingController newPasswordController = TextEditingController();
-    TextEditingController newPasswordAgainController = TextEditingController();
 
     return Column(
       children: [
@@ -58,17 +100,55 @@ class ChangePasswordForm extends StatelessWidget {
         const SizedBox(height: 15.0),
         TextFieldWidget(
           controller: newPasswordAgainController,
-          hintText: "New Password Again  ",
+          hintText: "Re-type new password  ",
           obscureText: true,
         ),
-        const SizedBox(height: 15.0),
+        const SizedBox(height: 5.0),
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: Text(
+            error,
+            style: const TextStyle(
+              color: Colors.red
+            ),
+          ),
+        ),
+        const SizedBox(height: 10.0),
         ButtonWidget(
           buttonText: "Save",
           paddingTop: 10.0,
           textColor: Colors.white,
           backgroundColor: FBBLUE,
-          onPressed: () {
-            Navigator.pop(context);
+          onPressed: () async {
+            FocusManager.instance.primaryFocus?.unfocus();
+            if(CheckPasswordEmpty()){
+              setState(() {
+                error = "Password must not empty";
+              });
+            }else if(CheckReEnterPassword()){
+              setState(() {
+                error = "New password does not match";
+              });
+            }else{
+              ReqChangePassword reqChangePassword = ReqChangePassword(currentPasswordController.text, newPasswordAgainController.text);
+              ChangePasswordRepository changePasswordRepo = ChangePasswordRepository();
+              changePasswordRepo.changePassword(reqChangePassword)
+                  .then((status) {
+                if(status){
+                  const snackBar = SnackBar(
+                    content: Text('Change password successfully'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.pop(context);
+                }else{
+                  setState(() {
+                    error = "Password is not correct";
+                  });
+                }
+              }).catchError((error) {
+              });
+            }
+
           },
           radius: 10.0,
           fontSize: 15.0,

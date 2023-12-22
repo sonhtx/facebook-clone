@@ -20,7 +20,6 @@ class BlockRepo{
         UserBlocked userBlocked = UserBlocked.fromJson(x);
         listBlocked.add(userBlocked);
       }
-      print(getListBlockedResult);
       return listBlocked;
     }
     catch(e){
