@@ -1,4 +1,6 @@
 // List of posts
+import 'dart:ui';
+
 import 'package:anti_fb/models/post/PostListData.dart';
 import 'package:anti_fb/models/request/ReqListPost_VideoData.dart';
 import 'package:anti_fb/repository/post/post_repo.dart';
@@ -14,32 +16,32 @@ import '../../../constants.dart';
 import '../../../models/post/ImageData.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/profile_avatar.dart';
-import '../nav_screen.dart';
 
 class ListPostWidget extends StatefulWidget {
-  const ListPostWidget({super.key, required this.postlists,required this.id});
+  const ListPostWidget({super.key, required this.id});
 
-  final List<PostListData> postlists;
   final String? id;
 
   @override
-  State<ListPostWidget> createState() => _ListPostWidgetState();
+  State<ListPostWidget> createState() => ListPostWidgetState();
 }
 
-class _ListPostWidgetState extends State<ListPostWidget> {
-  late List<PostListData> _postlists;
-  late final String? _id ;
+class ListPostWidgetState extends State<ListPostWidget> {
 
   late List<Widget> listPostsWidget = [];
 
+  late final String? _id ;
+  late String _index;
+  late bool isLoading ;
+
   final PostRepository _postRepository = PostRepository();
+  final ScrollController _scrollController = ScrollController();
 
   Future<void> getlistpost(RequestListPost_VideoData request) async {
     await Future.delayed(const Duration(seconds: 2));
-
     try {
       List<PostListData>? listPost =
-          await _postRepository.getlistpost(request);
+      await _postRepository.getlistpost(request);
       setState(() {
         for (int i = 0; i < listPost!.length; i++) {
           PostListData curPost = listPost[i];
@@ -55,11 +57,6 @@ class _ListPostWidgetState extends State<ListPostWidget> {
               curPost.author.name,
               curPost.author.avatar));
         }
-        if (mounted) {
-          final HomeState? homeState =
-              context.findAncestorStateOfType<HomeState>();
-          homeState?.postlist = listPost;
-        }
       });
     } catch (error) {
       print(error);
@@ -69,39 +66,86 @@ class _ListPostWidgetState extends State<ListPostWidget> {
   @override
   void initState() {
     super.initState();
-    _postlists = widget.postlists;
     _id = widget.id;
+    _index = "0";
+
+    _scrollController.addListener(_scrollListener);
+
+    isLoading = false;
 
     final RequestListPost_VideoData requestListPostData =
-    RequestListPost_VideoData(_id, "1", "1", "1.0", "1.0", null, "0", "10");
+    RequestListPost_VideoData(_id, "1", "1", "1.0", "1.0", null, _index, "10");
 
-    if (_postlists.isEmpty) {
-      getlistpost(requestListPostData);
-    } else {
-      for (int i = 0; i < _postlists.length; i++) {
-        PostListData curPost = _postlists[i];
-        listPostsWidget.add(PostWidget(
-            curPost.id,
-            curPost.name,
-            curPost.image,
-            curPost.described,
-            curPost.created.substring(0, 10),
-            curPost.feel,
-            curPost.comment_mark,
-            curPost.is_felt,
-            curPost.author.name,
-            curPost.author.avatar));
+    getlistpost(requestListPostData);
+  }
+
+
+  Future<void> getMorePost() async {
+    try{
+      listPostsWidget.add(Container(
+        height: 20,
+        color: GREEN,
+          child: const Text("new post"),
+      ));
+      _index = (int.parse(_index) + 10).toString();
+
+      final RequestListPost_VideoData request =
+      RequestListPost_VideoData(_id, "1", "1", "1.0", "1.0", null, _index, "10");
+      List<PostListData>? listPost =
+      await _postRepository.getlistpost(request);
+      setState(() {
+        for (int i = 0; i < listPost!.length; i++) {
+          PostListData curPost = listPost[i];
+          listPostsWidget.add(PostWidget(
+              curPost.id,
+              curPost.name,
+              curPost.image,
+              curPost.described,
+              curPost.created.substring(0, 10),
+              curPost.feel,
+              curPost.comment_mark,
+              curPost.is_felt,
+              curPost.author.name,
+              curPost.author.avatar));
+        }
+      });
+      setState(() {
+        isLoading = false;
+      });
+    } catch(error){
+      print(error);
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
+      setState(() {
+        isLoading = true;
+      });
+      if(isLoading){
+        getMorePost();
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: GREY,
-        child: Column(
-          children: listPostsWidget,
-        ));
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: listPostsWidget.length,
+        itemBuilder: (context, index) {
+          return listPostsWidget[index];
+        }
+      )
+    );
   }
 }
 

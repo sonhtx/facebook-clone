@@ -3,8 +3,6 @@ import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import '../../models/Notification/NotificationData.dart';
-import '../../models/post/PostListData.dart';
 import 'homepage/home_page.dart';
 import 'notificationpage/notification_page.dart';
 
@@ -196,8 +194,6 @@ class HomeState extends State<HomeScreen> {
 
   late String coin = '';
   late String email = '';
-  late List<PostListData> postlist = [];
-  late List<NotificationData> notificationLists = [];
   _onTapped(int index) {
     if (_selectedIndex == index) {
       switch(index){
@@ -296,7 +292,6 @@ class HomeState extends State<HomeScreen> {
                   builder: (context) => HomePage(
                     email: email,
                     coin: coin,
-                    postlists: postlist,
                     scrollController: homeScrollController,
                   ),
                 );
@@ -309,7 +304,7 @@ class HomeState extends State<HomeScreen> {
               case 2:
                 return CupertinoTabView(
                   navigatorKey: notificationTabNavKey,
-                  builder: (context) => NotificationPage(scrollController: notificationScrollController, notificationLists: notificationLists),
+                  builder: (context) => NotificationPage(scrollController: notificationScrollController),
                 );
               default:
                 return CupertinoTabView(
