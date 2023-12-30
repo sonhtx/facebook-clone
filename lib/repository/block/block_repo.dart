@@ -27,6 +27,19 @@ class BlockRepo{
     }
   }
 
+  Future setBlock(String id) async{
+    try{
+      final unBlockResult = await blockApi.setBlock(id);
+      if(unBlockResult == null){
+        return null;
+      }
+      return true;
+    }catch(e){
+      print(e);
+      return null;
+    }
+  }
+
   Future unBlock(String id) async{
     try{
       final unBlockResult = await blockApi.unBlock(id);

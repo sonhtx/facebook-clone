@@ -38,9 +38,10 @@ class HomePage extends StatelessWidget {
                       IconWidget(
                         icon: Icons.search,
                         onPressed: () {
-                          Navigator.of(context, rootNavigator: true)
-                              .push(CupertinoPageRoute(
-                              builder: (context) => SearchTab()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchTab()));
                         },
                       ),
                       IconWidget(
