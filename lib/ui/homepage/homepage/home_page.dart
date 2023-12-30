@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import '../../../models/post/PostListData.dart';
 import '../../../widgets/IconWidget.dart';
 import '../search/search_tab.dart';
 import 'appbar.dart';
@@ -14,12 +13,10 @@ class HomePage extends StatelessWidget {
       {super.key,
       required this.coin,
       required this.email,
-      required this.postlists,
       required this.scrollController});
 
   final String coin;
   final String email;
-  final List<PostListData> postlists;
 
   final ScrollController scrollController;
 
@@ -58,9 +55,7 @@ class HomePage extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                ListPostWidget(
-                  postlists: postlists, id: null,
-                ),
+                ListPostWidget( id: null,),
               ],
             ),
           ),

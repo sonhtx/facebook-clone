@@ -5,15 +5,13 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../models/Notification/NotificationData.dart';
 import '../../../widgets/IconWidget.dart';
-import '../nav_screen.dart';
 import 'NotificationWidget.dart';
 
 
 class NotificationPage extends StatefulWidget{
 
-  final List<NotificationData> notificationLists;
   final ScrollController scrollController;
-  const NotificationPage({super.key, required this.scrollController, required this.notificationLists});
+  const NotificationPage({super.key, required this.scrollController});
 
   @override
   State<NotificationPage> createState() => _NotificationPageState();
@@ -39,12 +37,7 @@ class _NotificationPageState extends State<NotificationPage> {
         if(listNotification != null){
           _notificationLists = listNotification;
         }else{
-        }
 
-        if(mounted){
-          final HomeState? homeState =
-          context.findAncestorStateOfType<HomeState>();
-          homeState?.notificationLists = _notificationLists;
         }
       });
     }catch(error){
@@ -56,7 +49,6 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
     super.initState();
-    _notificationLists = widget.notificationLists;
     if(_notificationLists.isEmpty){
       getListNotification();
     }
