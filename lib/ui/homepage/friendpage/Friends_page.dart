@@ -46,20 +46,21 @@ class _FriendsPageState extends State<FriendsPage> {
   Future<void> getFriendSuggest() async {
     try {
       List<dynamic> result =
-          await widget._friendRepository.getRequestedFriend('0', '5');
+      await widget._friendRepository.getRequestedFriend('0', '5');
 
       List<RequestedFriend>? listSuggest = result[0];
       countRequest = result[1];
       setState(() {
         requestWidgetList = listSuggest
-                ?.map((curSuggest) => FriendRequestWidget(
-                      curSuggest.id,
-                      curSuggest.username,
-                      curSuggest.avatar,
-                      curSuggest.created,
-                      delWhenAcceptOrDelete,
-                    ))
-                .toList() ??
+            ?.map((curSuggest) =>
+            FriendRequestWidget(
+              curSuggest.id,
+              curSuggest.username,
+              curSuggest.avatar,
+              curSuggest.created,
+              delWhenAcceptOrDelete,
+            ))
+            .toList() ??
             [];
       });
     } catch (e) {
@@ -205,7 +206,7 @@ class _FriendsPageState extends State<FriendsPage> {
               children: [
                 const Text('Friend Requests',
                     style:
-                        TextStyle(fontSize: 21.0, fontWeight: FontWeight.bold)),
+                    TextStyle(fontSize: 21.0, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 10.0),
 
                 //count of friend requests

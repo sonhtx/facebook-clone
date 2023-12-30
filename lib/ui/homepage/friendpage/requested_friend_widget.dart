@@ -122,7 +122,7 @@ class FriendRequestWidget extends StatelessWidget {
             backgroundImage: NetworkImage(avatar),
             radius: 40.0,
           ),
-          const SizedBox(width: 20.0),
+          const SizedBox(width: 10.0),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
