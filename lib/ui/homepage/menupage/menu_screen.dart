@@ -147,21 +147,76 @@ class _MenuPageState extends State<MenuPage>
                     backgroundColor: BTNBG,
                     borderColor: BG,
                     radius: 8.0,
-                    onPressed: () async {
-                      LogoutRepository logoutRepo = LogoutRepository();
-                      final logoutStatus = await logoutRepo.logout();
-                      if (context.mounted) {
-                        if (logoutStatus) {
-                          Navigator.of(context, rootNavigator: true)
-                              .pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const LoginScreen()),
-                            ModalRoute.withName('/'),
-                          );
-                        }
-                      }
-                    }),
+                    onPressed: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => Dialog(
+                          insetPadding: const EdgeInsets.all(20.0),
+                          surfaceTintColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(0.0), // Set the radius here
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Log out of your account?",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.normal, fontSize: 15.0),
+                                  ),
+                                ),
+                                const SizedBox(height: 10.0),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                        onPressed: (){
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          "CANCEL",
+                                          style: TextStyle(
+                                              fontSize: 15.0, color: Colors.black),
+                                        )),
+                                    TextButton(
+                                        style: TextButton.styleFrom(
+                                          shape: const BeveledRectangleBorder(
+                                              borderRadius: BorderRadius.zero),
+                                        ),
+                                        onPressed: () async {
+                                          LogoutRepository logoutRepo = LogoutRepository();
+                                          final logoutStatus = await logoutRepo.logout();
+                                          if (context.mounted) {
+                                            if (logoutStatus) {
+                                              Navigator.of(context, rootNavigator: true)
+                                                  .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext context) =>
+                                                        const LoginScreen()),
+                                                ModalRoute.withName('/'),
+                                              );
+                                            }
+                                          }
+                                        },
+                                        child: const Text(
+                                          "LOG OUT",
+                                          style: TextStyle(
+                                              fontSize: 15.0, color: Colors.red),
+                                        ))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )),
+
+                    ),
                 ButtonWidget(
                     width: screenWidth - 20.0,
                     fontSize: 13.0,
