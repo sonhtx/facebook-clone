@@ -21,6 +21,9 @@ class _DetailNotificationState extends State<DetailNotification> {
   late String example;
   late bool state;
 
+  bool flag = false;
+  int count = 0;
+
   String boolToString(bool state){
     if(state == true){
       return "1";
@@ -196,98 +199,115 @@ class _DetailNotificationState extends State<DetailNotification> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, flag);
+        return true;
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
-        title: const Text("Notification Settings"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 4.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.white,
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      description,
-                      style: const TextStyle(fontSize: 15.0, color: Colors.black),
-                    ),
-                  )),
-            ),
-            Example(example: example),
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.95,
-              child: const Divider(
-                color: Colors.black,
-                thickness: 0.5,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: const Text("Notification Settings"),
+          leading: BackButton(
+            onPressed: (){
+              Navigator.pop(context, flag);
+            },
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 4.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.white,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        description,
+                        style: const TextStyle(fontSize: 15.0, color: Colors.black),
+                      ),
+                    )),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.white,
-                  child: const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Where you receive these notifications",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                        fontWeight: FontWeight.bold
+              Example(example: example),
+              SizedBox(
+                width: MediaQuery.of(context).size.width*0.95,
+                child: const Divider(
+                  color: Colors.black,
+                  thickness: 0.5,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.white,
+                    child: const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Where you receive these notifications",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      child: const Icon(
+                        Icons.notification_add,
+                        color: Colors.black,
+                      )
+                    ),
+                    const SizedBox(height: 4.0),
+                    const Expanded(
+                      child: Text(
+                        "Push",
+                        style: TextStyle(
+                            fontSize: 17.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal),
                       ),
                     ),
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                    child: const Icon(
-                      Icons.notification_add,
-                      color: Colors.black,
+                    Switch(
+                        value: state,
+                        onChanged: (bool value)  async {
+                          setState(() {
+                            state = value;
+                            setRequest(widget.type, boolToString(value));
+                            count +=1;
+                            if(count %2 ==0){
+                              flag = false;
+                            }else{
+                              flag = true;
+                            }
+                          });
+                          final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
+                        }
                     )
-                  ),
-                  const SizedBox(height: 4.0),
-                  const Expanded(
-                    child: Text(
-                      "Push",
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  Switch(
-                      value: state,
-                      onChanged: (bool value)  async {
-                        setState(() {
-                          state = value;
-                          setRequest(widget.type, boolToString(value));
-                        });
-                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
-                      }
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.95,
-              child: const Divider(
-                color: Colors.black,
-                thickness: 0.5,
+              SizedBox(
+                width: MediaQuery.of(context).size.width*0.95,
+                child: const Divider(
+                  color: Colors.black,
+                  thickness: 0.5,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ) ;
