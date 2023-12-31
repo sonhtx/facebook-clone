@@ -49,13 +49,24 @@ class PostScreenState extends State<PostScreen> {
     // List<Reaction> reactionValues = Reaction.values;
     // Reaction selectedReaction = reactionValues[int.parse(post.is_felt) + 1];
 
+    Widget content = const Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text( 'Uh no ... nothing here!',),
+          SizedBox( height: 16,),
+          Text( 'Try selecting a different catogory',),
+        ],
+      ),
+    );
+
     return FutureBuilder(
       future: getPost(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-        return Text('Error: ${snapshot.error}');
+        return content;
       } else {
       return Scaffold(
         appBar: AppBar(
@@ -169,25 +180,6 @@ class PostScreenState extends State<PostScreen> {
   }
 }
 
-void showNotification(BuildContext context, String title, String text) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialogWidget(title: title, text: text);
-    },
-  );
-}
-
-void showMarkInput(BuildContext context, String id, String rateStatus) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return MarkInputWidget(id: id, rateStatus: rateStatus,);
-    },
-  );
-}
-
-
 // Set Mark Button
 
 class _SetMarkButtonWidget extends StatelessWidget{
@@ -196,7 +188,6 @@ class _SetMarkButtonWidget extends StatelessWidget{
   final String id;
   final String can_mark;
   final String can_rate;
-
 
   @override
   Widget build(BuildContext context) {
@@ -235,6 +226,23 @@ class _SetMarkButtonWidget extends StatelessWidget{
   }
 
 }
+void showNotification(BuildContext context, String title, String text) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialogWidget(title: title, text: text);
+    },
+  );
+}
+
+void showMarkInput(BuildContext context, String id, String rateStatus) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return MarkInputWidget(id: id, rateStatus: rateStatus,);
+    },
+  );
+}
 
 String rateStatus(String can_rate){
   switch(can_rate){
@@ -253,40 +261,3 @@ String rateStatus(String can_rate){
   }
   return "Can rate";
 }
-
-// Set Rate Button
-
-
-
-// Comment field
-class BottomTextField extends StatelessWidget{
-  BottomTextField({super.key, required this.id, required this.can_mark, required this.can_rate});
-  final String id;
-  final String can_mark;
-  final String can_rate;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextButtonWidget(
-          buttonText: 'Set Mark', textColor: WHITE, backgroundColor: FBBLUE,
-          onPressed: (){
-
-
-          },
-        ),
-        TextButtonWidget(
-          buttonText: 'Set Rate', textColor: WHITE,
-          backgroundColor: GREEN, borderColor: GREEN,
-          onPressed: (){
-
-
-          },
-        ),
-      ],
-    );
-  }
-}
-
-

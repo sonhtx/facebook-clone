@@ -42,20 +42,23 @@ class CommentApi {
     }
   }
 
-  Future setMarkComment(ReqSetMarkCmtData req) async{
+  Future setMarkComment(ReqSetMarkCmtData req, bool type) async{
     await _initializeHeaders();
-    final String jsonData = jsonEncode(req.toJson());
+    final String jsonData;
+    if(type){
+      jsonData = jsonEncode(req.toJson2());
+    } else {
+      jsonData = jsonEncode(req.toJson1());
+    }
     final response = await http.post(
       Uri.parse('$apiUrl/set_mark_comment'),
       headers: headers,
       body: jsonData,
     );
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-
-      return jsonResponse; // get list success
+      return true;
     } else {
-      return null; // get list false
+      return false;
     }
   }
 

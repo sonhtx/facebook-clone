@@ -1,3 +1,4 @@
+import 'package:anti_fb/models/request/ReqSetMarkComment.dart';
 import 'package:anti_fb/widgets/TextFieldWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,9 @@ class ListMarkState extends State<ListMark> {
         for (int i = 0; i < marklists!.length; i++) {
           MarkData curMark = marklists[i];
           widget.listMarksWidget.add(MarkWidget(
-            id: curMark.id,
+            your_id: widget.id,
+            post_id: widget.id,
+            mark_id: curMark.id,
             mark_content: curMark.mark_content,
             type_of_mark: curMark.type_of_mark,
             created: curMark.created.substring(0, 10),
@@ -70,7 +73,9 @@ class ListMarkState extends State<ListMark> {
 
 // Mark
 class MarkWidget extends StatefulWidget {
-  final String id;
+  final String your_id;
+  final String post_id;
+  final String mark_id;
   final String mark_content;
   final String type_of_mark;
   final String created;
@@ -81,22 +86,26 @@ class MarkWidget extends StatefulWidget {
 
   MarkWidget(
       {super.key,
-      required this.id,
-      required this.mark_content,
-      required this.type_of_mark,
-      required this.created,
-      required this.poster,
-      required this.comments});
+        required this.your_id,
+        required this.post_id,
+        required this.mark_id,
+        required this.mark_content,
+        required this.type_of_mark,
+        required this.created,
+        required this.poster,
+        required this.comments});
 
   @override
   State<MarkWidget> createState() => MarkWidgetState();
 }
+
 
 class MarkWidgetState extends State<MarkWidget> {
   late bool isExpanded;
 
   late int numComment;
   TextEditingController commentController = TextEditingController();
+  final CommentRepository _commentRepository = CommentRepository();
 
   @override
   void initState() {
@@ -132,31 +141,24 @@ class MarkWidgetState extends State<MarkWidget> {
                     child: Column(
                       children: [
                         TextWidget(
-                          text: widget.poster.name,
-                          fontSize: 14,
-                          width: 150,
+                          text: widget.poster.name, fontSize: 14, width: 200,
                         ),
                         TextWidget(
-                          text: widget.mark_content,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          width: 150,
+                          text: widget.mark_content, fontSize: 14, fontWeight: FontWeight.normal,
+                          width: 200,
                         ),
                       ],
                     ),
                   ),
                   TextWidget(
-                    text: widget.created,
-                    fontSize: 14,
-                    width: 150,
-                    fontWeight: FontWeight.normal,
+                    text: widget.created, fontSize: 14, width: 200, fontWeight: FontWeight.normal,
                     textColor: GREY,
                   ),
                   TextButton(
                       child: TextWidget(
                         text: ' ---> $numComment comments',
                         fontSize: 14,
-                        width: 150,
+                        width: 200,
                       ),
                       onPressed: () {
                         setState(() {
@@ -171,7 +173,7 @@ class MarkWidgetState extends State<MarkWidget> {
                     ),
                   ),
                   SizedBox(
-                    width: 150,
+                    width: 200,
                     child: Row(
                       children: [
                         Expanded(
@@ -183,7 +185,21 @@ class MarkWidgetState extends State<MarkWidget> {
                         IconWidget(
                           icon: Icons.send_rounded,
                           color: BLUE,
-                          onPressed: () {})
+                          onPressed: () {
+                            String content = commentController.text;
+                            ReqSetMarkCmtData req = ReqSetMarkCmtData.withMarkId(widget.post_id,
+                                content, "0", "10", widget.mark_id, '0');
+                          _commentRepository.setMarkComment(req, false);
+                          setState(() {
+                            numComment++;
+                            widget.listCommentsWidget.add(CommentWidget(
+                              content: content,
+                              created: "now",
+                              poster: PosterData(id: widget.your_id,name: 'you', avatar: defaultAvatar, ),
+                            ));
+                          });
+
+                          })
                       ],
                     )
                   ),

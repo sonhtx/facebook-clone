@@ -6,19 +6,31 @@ class ReqSetMarkCmtData {
   final String content;
   final String index;
   final String count;
-  final String mark_id;
+  late String mark_id;
   final String type;
 
-  ReqSetMarkCmtData(
+  ReqSetMarkCmtData.withMarkId(
       this.id, this.content, this.index, this.count, this.mark_id, this.type);
 
-  Map<String, dynamic> toJson() {
+  ReqSetMarkCmtData.withoutMarkId(
+      this.id, this.content, this.index, this.count,  this.type);
+
+  Map<String, dynamic> toJson1() {
     return {
       "id" : id,
       "content" : content,
       "index" : index,
       "count" : count,
       "mark_id" : mark_id,
+      "type" : type
+    };
+  }
+  Map<String, dynamic> toJson2() {
+    return {
+      "id" : id,
+      "content" : content,
+      "index" : index,
+      "count" : count,
       "type" : type
     };
   }
