@@ -6,7 +6,6 @@ class NotificationRepository{
   final NotificationApi _notificationApi = NotificationApi();
   Future getListNotification(RequestListNotification requestListNotification) async{
     try{
-      print(requestListNotification.toString());
       final getListNotificationResult = await _notificationApi.getListNotification(requestListNotification);
       if(getListNotificationResult == null){
         return false;

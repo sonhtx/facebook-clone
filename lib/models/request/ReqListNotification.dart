@@ -8,7 +8,7 @@ class RequestListNotification {
 
   @override
   String toString() {
-    return "index: ${index}, count: ${count} ";
+    return "index: $index, count: $count ";
   }
 
   Map<String, dynamic> toJson() {
