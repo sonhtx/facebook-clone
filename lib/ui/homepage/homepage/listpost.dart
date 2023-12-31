@@ -273,17 +273,7 @@ class PostWidget extends StatelessWidget {
             thickness: 0.1,
             color: GREY,
           ),
-          _PostBottom(
-              id: id,
-              name: name,
-              images: images,
-              described: described,
-              created: created,
-              feel: feel,
-              comment_mark: comment_mark,
-              is_felt: is_felt,
-              author_name: author_name,
-              author_avatar_url: author_avatar_url)
+          _PostBottom( id: id, is_felt: is_felt,)
         ],
       ),
     );
@@ -348,26 +338,10 @@ class PostHeader extends StatelessWidget {
 class _PostBottom extends StatelessWidget {
   const _PostBottom(
       {required this.id,
-      required this.name,
-      required this.images,
-      required this.described,
-      required this.created,
-      required this.feel,
-      required this.comment_mark,
-      required this.is_felt,
-      required this.author_name,
-      required this.author_avatar_url});
+      required this.is_felt,});
 
   final String id;
-  final String name;
-  final List<ImageData> images;
-  final String described;
-  final String created;
-  final String feel;
-  final String comment_mark;
   final String is_felt;
-  final String author_name;
-  final String author_avatar_url;
 
   static final CommentApi _commentApi = CommentApi();
 
@@ -404,16 +378,7 @@ class _PostBottom extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (context) => PostScreen(
-                  id: id,
-                  name: name,
-                  images: images,
-                  described: described,
-                  created: created,
-                  feel: feel,
-                  comment_mark: comment_mark,
-                  is_felt: is_felt,
-                  author_name: author_name,
-                  author_avatar_url: author_avatar_url)));
+                  id: id,)));
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(

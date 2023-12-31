@@ -3,6 +3,7 @@
 import 'package:anti_fb/models/comment/mark.dart';
 
 import '../../api/post/comment_api.dart';
+import '../../models/request/ReqSetMarkComment.dart';
 
 class CommentRepository{
   final CommentApi _commentApi = CommentApi();
@@ -25,6 +26,27 @@ class CommentRepository{
     } catch(e){
       return false;
     }
-
   }
+
+  Future setMarkComment(ReqSetMarkCmtData req) async {
+    try{
+      final setMarkComment = await _commentApi.setMarkComment(req);
+      // if(getMarkComment == null){
+      //   return false;
+      // } else {
+      //   List<MarkData> marks = [];
+      //
+      //   List<dynamic> listMarkRaw = getMarkComment['data'];
+      //   for (dynamic x in listMarkRaw){
+      //     MarkData mark = MarkData.fromJson(x);
+      //     marks.add(mark);
+      //   }
+      //   return marks;
+      // }
+    } catch(e){
+      return false;
+    }
+  }
+
+
 }
