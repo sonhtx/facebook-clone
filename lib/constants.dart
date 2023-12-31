@@ -27,3 +27,30 @@ const apiUrl = "https://it4788.catan.io.vn";
 // "https://08dc-2001-ee0-4a77-2bf0-8593-5c3e-c34f-60ed.ngrok-free.app";
 
 const defaultAvatar = "assets/images/default-avatar.jpg";
+
+String calculateTimeDifference(String dateString) {
+  DateTime dateTime = DateTime.parse(dateString);
+  DateTime now = DateTime.now();
+  Duration difference = now.difference(dateTime);
+
+  if (difference.inDays == 1) {
+    return 'Yesterday';
+  } else if (difference.inDays > 1 && difference.inDays <= 7) {
+    return '${difference.inDays} days ago';
+  } else if (difference.inDays > 7 && difference.inDays <= 30) {
+    int weeks = (difference.inDays / 7).floor();
+    return '$weeks weeks ago';
+  } else if (difference.inDays > 30 && difference.inDays <= 365) {
+    int months = (difference.inDays / 30).floor();
+    return '$months months ago';
+  } else if (difference.inDays > 365) {
+    int years = (difference.inDays / 365).floor();
+    return '$years years ago';
+  } else if (difference.inHours > 0) {
+    return '${difference.inHours} hours ago';
+  } else if (difference.inMinutes > 0) {
+    return '${difference.inMinutes} minutes ago';
+  } else {
+    return 'Just now';
+  }
+}
