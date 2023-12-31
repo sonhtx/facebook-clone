@@ -1,10 +1,12 @@
 import 'package:anti_fb/models/Notification/NotificationData.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../friendpage/Friends_page.dart';
 import '../friendpage/yourfriendtag/your_friends_tab.dart';
+import '../homepage/postpage/post_screen.dart';
 
 class NotificationWidget extends StatelessWidget {
   final NotificationData notification;
@@ -17,13 +19,12 @@ class NotificationWidget extends StatelessWidget {
     int group = int.parse(notification.group);
     return GestureDetector(
       onTap: (){
-        print(type);
         if(type == 3){
           print(notification.post?.id);
         }
         if(group == 1){
             switch(type){
-              case 1: 
+              case 1:
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>FriendsPage())
@@ -33,6 +34,11 @@ class NotificationWidget extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) =>YourFriendsTab())
                 );
+              default:
+                if(notification.post != null){
+                  Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (context) => PostScreen(
+                    id: notification.post!.id,)));
+                }
           }
         }
       },
@@ -69,7 +75,8 @@ class NotificationWidget extends StatelessWidget {
                       width: double.maxFinite,
                       child: Described(notification: notification)
                     ),
-                    Text(notification.created,
+                    Text(
+                        calculateTimeDifference(notification.created),
                         style:
                         const TextStyle(fontSize: 10.0, color: Colors.grey)),
                   ],
