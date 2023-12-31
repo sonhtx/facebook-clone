@@ -10,6 +10,8 @@ class TextFieldWidget extends StatelessWidget {
   final double paddingLeft;
   final String hintText;
   final bool obscureText;
+  final double fontSize;
+  final double radiusRoundBorder;
 
   final TextEditingController controller;
 
@@ -23,7 +25,9 @@ class TextFieldWidget extends StatelessWidget {
       this.paddingLeft = 0,
       required this.controller,
       this.hintText = '',
-      this.obscureText = false});
+      this.obscureText = false,
+      this.radiusRoundBorder = 10,
+      this.fontSize = 13.0});
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +48,14 @@ class TextFieldWidget extends StatelessWidget {
           hintStyle: TextStyle(
               color: GREY.shade400,
               fontWeight: FontWeight.normal,
-              fontSize: 13.0 // Adjust the color to make it more bland
+              fontSize: fontSize // Adjust the color to make it more bland
               ),
           labelStyle: const TextStyle(fontSize: 14.0),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0), // Adjust t
+            borderRadius: BorderRadius.circular(radiusRoundBorder), // Adjust t
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(radiusRoundBorder),
             borderSide: const BorderSide(
               color: FBBLUE,
               width:

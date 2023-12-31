@@ -98,52 +98,64 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: CustomScrollView(controller: widget.scrollController, slivers: <Widget>[
-          SliverAppBar(
-            title: HomeAppBarTitle(widget.coin),
-            centerTitle: false,
-            backgroundColor: WHITE,
-            floating: true,
-            actions: [
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    children: [
-                      IconWidget(
-                        icon: Icons.search,
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SearchTab()));
-                        },
-                      ),
-                      IconWidget( icon: Icons.message, onPressed: () {},)
-                    ],
-                  )),
-            ],
-          ),
-          const SliverToBoxAdapter(child: CreatePostButton()),
-
-          PagedSliverList<int, PostListData>(
-            pagingController: _pagingController,
-            builderDelegate: PagedChildBuilderDelegate<PostListData>(
-                animateTransitions: true,
-                itemBuilder: (context, item, index) => PostWidget(
-                  item.id,
-                  item.name,
-                  item.image,
-                  item.described,
-                  item.created,
-                  item.feel,
-                  item.comment_mark,
-                  item.is_felt,
-                  item.author.name,
-                  item.author.avatar
-                )
+        body: RefreshIndicator(
+          onRefresh: () {
+          setState(() {
+            index = 0;
+            requestListPostData = RequestListPost_VideoData(null, "1", "1", "1.0", "1.0",
+                null, index.toString(), "10");
+          });
+            return Future.sync(
+              ()=>_pagingController.refresh(),
+            );
+          } ,
+        child : CustomScrollView(controller: widget.scrollController, slivers: <Widget>[
+            SliverAppBar(
+              title: HomeAppBarTitle(widget.coin),
+              centerTitle: false,
+              backgroundColor: WHITE,
+              floating: true,
+              actions: [
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      children: [
+                        IconWidget(
+                          icon: Icons.search,
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchTab()));
+                          },
+                        ),
+                        IconWidget( icon: Icons.message, onPressed: () {},)
+                      ],
+                    )),
+              ],
             ),
-          ),
-        ]),
+            const SliverToBoxAdapter(child: CreatePostButton()),
+
+            PagedSliverList<int, PostListData>(
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<PostListData>(
+                  animateTransitions: true,
+                  itemBuilder: (context, item, index) => PostWidget(
+                    item.id,
+                    item.name,
+                    item.image,
+                    item.described,
+                    item.created.substring(0, 10),
+                    item.feel,
+                    item.comment_mark,
+                    item.is_felt,
+                    item.author.name,
+                    item.author.avatar
+                  )
+              ),
+            ),
+          ]),
+        )
       ),
     );
   }

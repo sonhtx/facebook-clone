@@ -4,27 +4,27 @@ import 'package:anti_fb/models/post/AuthorData.dart';
 
 class PostData{
   final String id;
-  final String? name;
-  final String? created;
-  final String? described;
-  final String? modified;
-  final String? fake;
-  final String? trust;
-  final String? kudos;
-  final String? disappointed;
-  final String? is_felt;
-  final String? is_marked;
-  final List<ImageData>? images;
+  final String name;
+  final String created;
+  final String described;
+  final String modified;
+  final String fake;
+  final String trust;
+  final String kudos;
+  final String disappointed;
+  final String is_felt;
+  final String is_marked;
+  final List<ImageData> images;
   final AuthorData? author;
   final CategoryData? category;
-  final String? state;
-  final String? is_blocked;
-  final String? can_edit;
-  final String? banned;
-  final String? can_mark;
-  final String? can_rate;
-  final String? url;
-  final String? messages;
+  final String state;
+  final String is_blocked;
+  final String can_edit;
+  final String banned;
+  final String can_mark;
+  final String can_rate;
+  final String url;
+  final String messages;
 
   PostData({
       required this.id,
