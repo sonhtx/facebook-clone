@@ -56,4 +56,23 @@ class BlockApi {
       return null; // get list false
     }
   }
+
+  Future unBlock(String id) async {
+    await _initializeHeaders();
+    final Map<String, String> requestBody = {
+      "user_id" : id
+    };
+    final response = await http.post(
+      Uri.parse('$apiUrl/unblock'),
+      headers: headers,
+      body: json.encode(requestBody),
+    );
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+
+      return jsonResponse; // get list success
+    } else {
+      return null; // get list false
+    }
+  }
 }

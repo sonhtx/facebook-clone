@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:anti_fb/constants.dart';
 
 class NotificationSetting extends StatelessWidget {
   const NotificationSetting({super.key});
@@ -8,37 +6,42 @@ class NotificationSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BG,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text("Notification Setting"),
+        title: const Text("Notification Settings"),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 4.0),
-            Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: const Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Blocked People",
-                        style: TextStyle(fontSize: 20.0),
-                      ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 4.0),
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white,
+                  child: const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Facebook may still send you important notifications about your account and content outside of your preferred notification settings",
+                      style: TextStyle(fontSize: 15.0, color: Colors.black),
                     ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Manage your information",
-                        style: TextStyle(fontSize: 13.0, color: Colors.grey),
-                      ),
-                    ),
-                  ],
-                ))
-          ],
+                  )),
+              const SizedBox(height: 10.0),
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "What Notifications You Receive",
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              
+            ],
+          ),
         ),
       ),
     );

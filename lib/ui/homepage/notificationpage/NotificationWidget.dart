@@ -3,6 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../friendpage/Friends_page.dart';
+import '../friendpage/yourfriendtag/your_friends_tab.dart';
 
 class NotificationWidget extends StatelessWidget {
   final NotificationData notification;
@@ -11,63 +13,87 @@ class NotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: (notification.read == 0) ? NOTREADNOTI : Colors.white,
-      width: MediaQuery.of(context).size.width,
-      height: 100.0,
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.fromLTRB(10.0, 0.0, 20.0, 0.0),
-            child: (notification.avatar != "" && notification.avatar != null)
-                ? CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(notification.avatar!),
-              radius: 35.0,
-            )
-                : const CircleAvatar(
-              backgroundImage:
-              AssetImage('assets/images/messi-world-cup.png'),
-              radius: 35.0,
-            ),
-          ),
-          // const SizedBox(width: 15.0),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Described(notification: notification)
-                  ),
-                  Text(notification.created,
-                      style:
-                      const TextStyle(fontSize: 10.0, color: Colors.grey)),
-                ],
+    int type = int.parse(notification.type);
+    int group = int.parse(notification.group);
+    return GestureDetector(
+      onTap: (){
+        print(type);
+        if(type == 3){
+          print(notification.post?.id);
+        }
+        if(group == 1){
+            switch(type){
+              case 1: 
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>FriendsPage())
+                );
+              case 2:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>YourFriendsTab())
+                );
+          }
+        }
+      },
+      child: Container(
+        color: (notification.read == 0) ? NOTREADNOTI : Colors.white,
+        width: MediaQuery.of(context).size.width,
+        height: 100.0,
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.fromLTRB(10.0, 0.0, 20.0, 0.0),
+              child: (notification.avatar != "" && notification.avatar != null)
+                  ? CircleAvatar(
+                backgroundImage: CachedNetworkImageProvider(notification.avatar!),
+                radius: 35.0,
+              )
+                  : const CircleAvatar(
+                backgroundImage:
+                AssetImage('assets/images/messi-world-cup.png'),
+                radius: 35.0,
               ),
             ),
-          ),
-          SizedBox(
-            // width: MediaQuery.of(context).size.width * .10,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                // Icon(Icons.more_horiz),
-                IconButton(
-                    onPressed: (){
-                      optionBottomSheet(context);
-                    },
-                    icon: const Icon(
-                      Icons.more_horiz,)),
-                const Text(''),
-              ],
+            // const SizedBox(width: 15.0),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Described(notification: notification)
+                    ),
+                    Text(notification.created,
+                        style:
+                        const TextStyle(fontSize: 10.0, color: Colors.grey)),
+                  ],
+                ),
+              ),
             ),
-          )
-        ],
+            SizedBox(
+              // width: MediaQuery.of(context).size.width * .10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  // Icon(Icons.more_horiz),
+                  IconButton(
+                      onPressed: (){
+                        optionBottomSheet(context);
+                      },
+                      icon: const Icon(
+                        Icons.more_horiz,)),
+                  const Text(''),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

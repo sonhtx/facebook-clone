@@ -11,9 +11,9 @@ import 'listpost.dart';
 class HomePage extends StatelessWidget {
   const HomePage(
       {super.key,
-      required this.coin,
-      required this.email,
-      required this.scrollController});
+        required this.coin,
+        required this.email,
+        required this.scrollController});
 
   final String coin;
   final String email;
@@ -38,9 +38,10 @@ class HomePage extends StatelessWidget {
                       IconWidget(
                         icon: Icons.search,
                         onPressed: () {
-                          Navigator.of(context, rootNavigator: true)
-                              .push(CupertinoPageRoute(
-                              builder: (context) => SearchTab()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchTab()));
                         },
                       ),
                       IconWidget(

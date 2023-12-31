@@ -12,7 +12,6 @@ class BlockRepo{
       if(getListBlockedResult == null){
         return null;
       }
-
       List<UserBlocked> listBlocked = [];
       List<dynamic> listBlockedRaw = getListBlockedResult['data'];
 
@@ -23,6 +22,32 @@ class BlockRepo{
       return listBlocked;
     }
     catch(e){
+      print(e);
+      return null;
+    }
+  }
+
+  Future setBlock(String id) async{
+    try{
+      final unBlockResult = await blockApi.setBlock(id);
+      if(unBlockResult == null){
+        return null;
+      }
+      return true;
+    }catch(e){
+      print(e);
+      return null;
+    }
+  }
+
+  Future unBlock(String id) async{
+    try{
+      final unBlockResult = await blockApi.unBlock(id);
+      if(unBlockResult == null){
+        return null;
+      }
+      return true;
+    }catch(e){
       print(e);
       return null;
     }
