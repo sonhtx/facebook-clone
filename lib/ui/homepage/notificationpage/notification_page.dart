@@ -26,42 +26,12 @@ class _NotificationPageState extends State<NotificationPage> {
   final PagingController<int, NotificationData> _pagingController =
   PagingController(firstPageKey: 1);
 
-  
-  // late List<NotificationData> _notificationLists = [];
-  //
-  // late List<Widget> listNotificationWidget = [];
-  //
+
   final NotificationRepository _notificationRepository = NotificationRepository();
   //
   int init = 0;
   late RequestListNotification requestListNotification = RequestListNotification(init.toString(), "10");
-  //
-  // Future<void> getListNotification() async{
-  //   await Future.delayed(const Duration(seconds: 2));
-  //
-  //   try{
-  //     List<NotificationData>? listNotification = await _notificationRepository.getListNotification(requestListNotification);
-  //
-  //     setState(() {
-  //       if(listNotification != null){
-  //         _notificationLists = listNotification;
-  //       }else{
-  //
-  //       }
-  //     });
-  //   }catch(error){
-  //     print(error);
-  //   }
-  // }
-  //
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   if(_notificationLists.isEmpty){
-  //     getListNotification();
-  //   }
-  // }
+
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {

@@ -1,17 +1,46 @@
 import 'package:anti_fb/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../models/request/ReqSetNotification.dart';
+import '../../../../../repository/setting/setting_repo.dart';
+
 class PushDetail extends StatefulWidget {
-  const PushDetail({super.key});
+  final RequestSetNotification requestSetNotification;
+  final bool notification_on;
+  final bool vibrate_on;
+  final bool sound_on;
+  final bool led_on;
+  const PushDetail({super.key, required this.notification_on, required this.vibrate_on, required this.sound_on, required this.led_on, required this.requestSetNotification});
 
   @override
   State<PushDetail> createState() => _PushDetailState();
 }
 
 class _PushDetailState extends State<PushDetail> {
-  bool light = true;
+  late bool _notification_on;
+  late bool _vibrate_on;
+  late bool _sound_on;
+  late bool _led_on;
+  late RequestSetNotification requestSetNotification;
+  final SettingRepository _settingRepository = SettingRepository();
 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _notification_on = widget.notification_on;
+    _vibrate_on = widget.vibrate_on;
+    _sound_on = widget.sound_on;
+    _led_on = widget.led_on;
+    requestSetNotification = widget.requestSetNotification;
+  }
+  String boolToString(bool state){
+    if(state == true){
+      return "1";
+    }else{
+      return "0";
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,11 +87,25 @@ class _PushDetailState extends State<PushDetail> {
                     ),
                   ),
                   Switch(
-                      value: light,
-                      onChanged: (bool value){
+                      value: !_notification_on,
+                      onChanged: (bool value) async {
                         setState(() {
-                          light = value;
+                          _notification_on = !value;
                         });
+                        requestSetNotification  = RequestSetNotification(
+                            requestSetNotification.like_comment,
+                            requestSetNotification.from_friends,
+                            requestSetNotification.requested_friend,
+                            requestSetNotification.suggested_friend,
+                            requestSetNotification.birthday,
+                            requestSetNotification.video,
+                            requestSetNotification.report,
+                            requestSetNotification.sound_on,
+                            boolToString(_notification_on),
+                            requestSetNotification.vibrant_on,
+                            requestSetNotification.led_on
+                        );
+                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
                       }
                   )
                 ],
@@ -102,11 +145,25 @@ class _PushDetailState extends State<PushDetail> {
                     ),
                   ),
                   Switch(
-                      value: light,
-                      onChanged: (bool value){
+                      value: _vibrate_on,
+                      onChanged: (bool value) async {
                         setState(() {
-                          light = value;
+                          _vibrate_on = value;
                         });
+                        requestSetNotification  = RequestSetNotification(
+                            requestSetNotification.like_comment,
+                            requestSetNotification.from_friends,
+                            requestSetNotification.requested_friend,
+                            requestSetNotification.suggested_friend,
+                            requestSetNotification.birthday,
+                            requestSetNotification.video,
+                            requestSetNotification.report,
+                            requestSetNotification.sound_on,
+                            requestSetNotification.notification_on,
+                            boolToString(_vibrate_on),
+                            requestSetNotification.led_on
+                        );
+                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
                       }
                   )
                 ],
@@ -132,7 +189,7 @@ class _PushDetailState extends State<PushDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Phong LED",
+                          "Phone LED",
                           style: TextStyle(
                               fontSize: 17.0, color: Colors.black),
                         ),
@@ -146,11 +203,25 @@ class _PushDetailState extends State<PushDetail> {
                     ),
                   ),
                   Switch(
-                      value: light,
-                      onChanged: (bool value){
+                      value: _led_on,
+                      onChanged: (bool value) async {
                         setState(() {
-                          light = value;
+                          _led_on = value;
                         });
+                        requestSetNotification  = RequestSetNotification(
+                            requestSetNotification.like_comment,
+                            requestSetNotification.from_friends,
+                            requestSetNotification.requested_friend,
+                            requestSetNotification.suggested_friend,
+                            requestSetNotification.birthday,
+                            requestSetNotification.video,
+                            requestSetNotification.report,
+                            requestSetNotification.sound_on,
+                            requestSetNotification.notification_on,
+                            requestSetNotification.vibrant_on,
+                            boolToString(_led_on)
+                        );
+                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
                       }
                   )
                 ],
@@ -190,11 +261,25 @@ class _PushDetailState extends State<PushDetail> {
                     ),
                   ),
                   Switch(
-                      value: light,
-                      onChanged: (bool value){
+                      value: _sound_on,
+                      onChanged: (bool value) async {
                         setState(() {
-                          light = value;
+                          _sound_on = value;
                         });
+                        requestSetNotification  = RequestSetNotification(
+                            requestSetNotification.like_comment,
+                            requestSetNotification.from_friends,
+                            requestSetNotification.requested_friend,
+                            requestSetNotification.suggested_friend,
+                            requestSetNotification.birthday,
+                            requestSetNotification.video,
+                            requestSetNotification.report,
+                            boolToString(_sound_on),
+                            requestSetNotification.notification_on,
+                            requestSetNotification.vibrant_on,
+                            requestSetNotification.led_on
+                        );
+                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
                       }
                   )
                 ],
