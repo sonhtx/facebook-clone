@@ -5,16 +5,17 @@ import 'package:anti_fb/models/post/PostListData.dart';
 import 'package:anti_fb/models/request/ReqListPost_VideoData.dart';
 import 'package:anti_fb/repository/post/post_repo.dart';
 import 'package:anti_fb/ui/homepage/homepage/postpage/post_screen.dart';
-import 'package:anti_fb/ui/homepage/homepage/reaction_button.dart';
 import 'package:anti_fb/widget_dung/imageViewWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:readmore/readmore.dart';
 
+import '../../../api/post/comment_api.dart';
 import '../../../constants.dart';
 import '../../../models/post/ImageData.dart';
+import '../../../repository/post/comment_repo.dart';
 import '../../../widgets/TextWidget.dart';
+import '../../../widgets/custom_react_widget.dart';
 import '../../../widgets/profile_avatar.dart';
 
 class ListPostWidget extends StatefulWidget {
@@ -125,9 +126,10 @@ class ListPostWidgetState extends State<ListPostWidget> {
 
   void _scrollListener() {
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
+      if(!isLoading){
       setState(() {
         isLoading = true;
-      });
+      });}
       if(isLoading){
         getMorePost();
       }
@@ -367,29 +369,35 @@ class _PostBottom extends StatelessWidget {
   final String author_name;
   final String author_avatar_url;
 
+  static final CommentApi _commentApi = CommentApi();
+
   @override
   Widget build(BuildContext context) {
+    List<Reaction> reactionValues = Reaction.values;
+    Reaction selectedReaction = reactionValues[int.parse(is_felt) + 1];
+
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       Container(
         padding: const EdgeInsets.only(left: 30),
-        child: ReactionButton<String>(
-          // direction: ReactionsBoxAlignment.rtl,
-          onReactionChanged: (Reaction<String>? reaction) {
-            if (reaction?.value == 'kudos') {
-              //send api kudos
-            } else {
-              // send api diss
-            }
-          },
-          reactions: reaction,
-          placeholder: notReact,
-          selectedReaction: kudosReact,
+        child: Row(
+          children: [
+            ReactionButton(
+              initialReaction: selectedReaction,
+              onReactionChanged: (reaction) {
+                if(reaction.name == 'none'){
+                  _commentApi.deleteFeel(id);
+                } else if(reaction.name == 'kudos'){
+                  _commentApi.feel(id, '0');
+                } else {
+                  _commentApi.feel(id, '1');
+                }
+              },
+            ),
+            const TextWidget( text: 'Like', textColor: GREY, fontSize: 12, paddingLeft: 5, width: 50,
+            )
+          ]
+        )
 
-          // boxColor: Colors.black.withOpacity(0.5),
-          boxRadius: 20,
-          itemsSpacing: 10,
-          itemSize: const Size(40, 40),
-        ),
       ),
       Container(
           padding: const EdgeInsets.only(right: 10),
@@ -429,13 +437,7 @@ class _PostBottom extends StatelessWidget {
                   Icons.comment,
                   color: GREY,
                 ),
-                TextWidget(
-                  text: 'Mark',
-                  textColor: GREY,
-                  fontSize: 12,
-                  paddingLeft: 5,
-                  width: 50,
-                )
+                TextWidget( text: 'Mark', textColor: GREY, fontSize: 12, paddingLeft: 5, width: 50,)
               ],
             ),
           )),

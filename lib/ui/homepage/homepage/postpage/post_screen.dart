@@ -1,15 +1,13 @@
 
-
 import 'package:anti_fb/widget_dung/imageViewWidget.dart';
 import 'package:anti_fb/widgets/IconWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 
 import '../../../../constants.dart';
 import '../../../../models/post/ImageData.dart';
 import '../../../../widgets/TextWidget.dart';
+import '../../../../widgets/custom_react_widget.dart';
 import '../listpost.dart';
-import '../reaction_button.dart';
 import 'markUI.dart';
 
 class PostScreen extends StatelessWidget{
@@ -97,23 +95,11 @@ class PostScreen extends StatelessWidget{
               ),
               Container(
                 padding: const EdgeInsets.only(left: 10, top:5, bottom: 5),
-                child: ReactionButton<String>(
-                  // direction: ReactionsBoxAlignment.rtl,
-                  onReactionChanged: (Reaction<String>? reaction) {
-                    if (reaction?.value == 'kudos') {
-                      //send api kudos
-                    } else {
-                      // send api diss
-                    }
+                child: ReactionButton(
+                  initialReaction: Reaction.none,
+                  onReactionChanged: (reaction) {
+                    print(reaction.name);
                   },
-                  reactions: reaction,
-                  placeholder: notReact,
-                  selectedReaction: kudosReact,
-
-                  // boxColor: Colors.black.withOpacity(0.5),
-                  boxRadius: 20,
-                  itemsSpacing: 10,
-                  itemSize: const Size(40, 40),
                 ),
               ),
               // -----------------
