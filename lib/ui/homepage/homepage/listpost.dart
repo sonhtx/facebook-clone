@@ -13,7 +13,6 @@ import 'package:readmore/readmore.dart';
 import '../../../api/post/comment_api.dart';
 import '../../../constants.dart';
 import '../../../models/post/ImageData.dart';
-import '../../../repository/post/comment_repo.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/custom_react_widget.dart';
 import '../../../widgets/profile_avatar.dart';
@@ -229,33 +228,24 @@ class PostWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           TextWidget(
-                            text: feel,
-                            textColor: GREY,
-                            fontSize: 12,
-                            width: 12,
+                            text: feel, textColor: GREY, fontSize: 12, width: 12,
                           ),
                           Container(
                             padding: const EdgeInsets.all(4.0),
                             decoration: const BoxDecoration(
-                              color: FBBLUE,
-                              shape: BoxShape.circle,
+                              color: FBBLUE, shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.thumb_up,
-                              size: 10.0,
-                              color: WHITE,
+                              Icons.thumb_up, size: 10.0, color: WHITE,
                             ),
                           ),
                           Container(
                             padding: const EdgeInsets.all(4.0),
                             decoration: const BoxDecoration(
-                              color: RED,
-                              shape: BoxShape.circle,
+                              color: RED, shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.thumb_down,
-                              size: 10.0,
-                              color: WHITE,
+                              Icons.thumb_down, size: 10.0, color: WHITE,
                             ),
                           ),
                         ],
@@ -270,7 +260,7 @@ class PostWidget extends StatelessWidget {
                     )
                   ])),
           const Divider(
-            thickness: 0.1,
+            thickness: 0.05,
             color: GREY,
           ),
           _PostBottom( id: id, is_felt: is_felt,)
