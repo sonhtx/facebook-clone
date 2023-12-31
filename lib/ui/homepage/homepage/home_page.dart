@@ -11,9 +11,9 @@ import 'listpost.dart';
 class HomePage extends StatelessWidget {
   const HomePage(
       {super.key,
-      required this.coin,
-      required this.email,
-      required this.scrollController});
+        required this.coin,
+        required this.email,
+        required this.scrollController});
 
   final String coin;
   final String email;

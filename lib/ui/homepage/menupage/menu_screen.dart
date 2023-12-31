@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 
 import '../../profile/profile_screen.dart';
+import '../search/search_tab.dart';
 import 'settingpage/setting_screen.dart';
 import 'package:anti_fb/widgets/card_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,7 +59,12 @@ class _MenuPageState extends State<MenuPage>
               pinned: true,
               actions: [
                 CircleButton(
-                    icon: Icons.search, iconSize: 30.0, onPressed: () {}),
+                    icon: Icons.search, iconSize: 30.0, onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SearchTab()));
+                },),
               ]),
           SliverToBoxAdapter(
             child: Column(
