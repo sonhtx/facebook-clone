@@ -1,3 +1,4 @@
+import 'package:anti_fb/models/request/ReqSetNotification.dart';
 import 'package:anti_fb/models/setting/PushSettingsData.dart';
 import 'package:anti_fb/repository/setting/setting_repo.dart';
 import 'package:anti_fb/ui/homepage/menupage/settingpage/Notification/Push_Detail.dart';
@@ -18,6 +19,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
 
   final SettingRepository _settingRepository = SettingRepository();
   late PushSettingsData pushSettingsData;
+  late RequestSetNotification requestSetNotification;
 
   @override
   void initState() {
@@ -30,6 +32,19 @@ class _NotificationSettingState extends State<NotificationSetting> {
       PushSettingsData _pushSettingsData = await _settingRepository.getPushSettings();
       if(_pushSettingsData != null){
         pushSettingsData = _pushSettingsData;
+        requestSetNotification = RequestSetNotification(
+            pushSettingsData.like_comment,
+            pushSettingsData.from_friends,
+            pushSettingsData.requested_friend,
+            pushSettingsData.suggested_friend,
+            pushSettingsData.birthday,
+            pushSettingsData.video,
+            pushSettingsData.report,
+            pushSettingsData.sound_on,
+            pushSettingsData.notification_on,
+            pushSettingsData.vibrant_on,
+            pushSettingsData.led_on
+        );
       }else{
       }
     }catch(e){
@@ -118,7 +133,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 1,light: state(pushSettingsData.like_comment),)),
+                                builder: (context) => DetailNotification(type: 1,state: state(pushSettingsData.like_comment), requestSetNotification: requestSetNotification,)),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -174,7 +189,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 2,light: state(pushSettingsData.like_comment),),
+                                builder: (context) => DetailNotification(type: 2,state: state(pushSettingsData.from_friends), requestSetNotification: requestSetNotification),
                           ));
                         },
                         style: TextButton.styleFrom(
@@ -230,7 +245,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 3,light: state(pushSettingsData.like_comment),),
+                                builder: (context) => DetailNotification(type: 3,state: state(pushSettingsData.requested_friend), requestSetNotification: requestSetNotification),
                           ));
                         },
                         style: TextButton.styleFrom(
@@ -286,7 +301,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) =>DetailNotification(type: 4,light: state(pushSettingsData.like_comment),),
+                                builder: (context) =>DetailNotification(type: 4,state: state(pushSettingsData.suggested_friend), requestSetNotification: requestSetNotification),
                           ));
                         },
                         style: TextButton.styleFrom(
@@ -342,7 +357,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 5,light: state(pushSettingsData.like_comment),),
+                                builder: (context) => DetailNotification(type: 5,state: state(pushSettingsData.birthday), requestSetNotification: requestSetNotification),
                           ));
                         },
                         style: TextButton.styleFrom(
@@ -398,7 +413,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 6,light: state(pushSettingsData.like_comment),),
+                                builder: (context) => DetailNotification(type: 6,state: state(pushSettingsData.video), requestSetNotification: requestSetNotification),
                           ));
                         },
                         style: TextButton.styleFrom(
@@ -454,7 +469,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 7,light: state(pushSettingsData.report),)),
+                                builder: (context) => DetailNotification(type: 7,state: state(pushSettingsData.report), requestSetNotification: requestSetNotification)),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -517,7 +532,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                                builder: (context) => const PushDetail()),
+                                builder: (context) => PushDetail(
+                                  notification_on: state(pushSettingsData.notification_on),
+                                  vibrate_on: state(pushSettingsData.vibrant_on),
+                                  sound_on: state(pushSettingsData.sound_on),
+                                  led_on: state(pushSettingsData.led_on),
+                                  requestSetNotification: requestSetNotification,
+                                )),
                           );
                         },
                         style: TextButton.styleFrom(

@@ -1,5 +1,6 @@
 
 import 'package:anti_fb/api/setting/setting_api.dart';
+import 'package:anti_fb/models/request/ReqSetNotification.dart';
 import 'package:anti_fb/models/setting/PushSettingsData.dart';
 
 class SettingRepository {
@@ -16,6 +17,19 @@ class SettingRepository {
       PushSettingsData pushSetting = PushSettingsData.fromJson(pushSettingRaw);
 
       return pushSetting;
+    }catch(e){
+      print(e);
+      return null;
+    }
+  }
+
+  Future setPushNotification(RequestSetNotification requestSetNotification)async{
+    try{
+      print(requestSetNotification.toString());
+      final setPushNotificationResult = await _settingApi.setPushSettings(requestSetNotification);
+      if(setPushNotificationResult == null){
+        return null;
+      }
     }catch(e){
       print(e);
       return null;

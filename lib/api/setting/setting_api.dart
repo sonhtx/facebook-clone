@@ -7,6 +7,8 @@ import 'package:anti_fb/storage.dart';
 import '../../constants.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/request/ReqSetNotification.dart';
+
 class SettingApi {
 
   late String token;
@@ -76,7 +78,7 @@ class SettingApi {
     }
   }
 
-  Future setPushSettings (ReqSetPushNotify req) async {
+  Future setPushSettings (RequestSetNotification req) async {
     await _initializeHeaders();
 
     final String jsonData = jsonEncode(req.toJson());
