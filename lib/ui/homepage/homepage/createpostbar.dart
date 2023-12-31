@@ -33,10 +33,10 @@ class CreatePostButton extends StatelessWidget{
                     ),
                     onPressed: () { Navigator.of(context, rootNavigator: true)
                         .push(CupertinoPageRoute(
-                        builder: (context) => CreatePostScreen()));},
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: const Text( "What's on your mind?", style: TextStyle( color: BLACK,  fontSize: 14,),),
+                        builder: (context) => const CreatePostScreen()));},
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text( "What's on your mind?", style: TextStyle( color: BLACK,  fontSize: 14,),),
                     ),
                   ),
                 ),

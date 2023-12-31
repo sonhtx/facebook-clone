@@ -42,7 +42,7 @@ class HomeAppBarTitleState extends State<HomeAppBarTitle>{
                     border: Border.all( color: TRANSPARENT,),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: TextWidget(text: "Coin", fontSize: 16, textColor: YELLOW,paddingLeft: 5,)
+                  child: const TextWidget(text: "Coin", fontSize: 16, textColor: YELLOW,paddingLeft: 5,)
                 // padding: const EdgeInsets.only(left: 100),
               )
           ),
