@@ -369,22 +369,6 @@ class _PostBottom extends StatelessWidget {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (context) => PostScreen(
                   id: id,)));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => PostScreen(
-              //         id: id,
-              //         name: name,
-              //         images: images,
-              //         described: described,
-              //         created: created,
-              //         feel: feel,
-              //         comment_mark: comment_mark,
-              //         is_felt: is_felt,
-              //         author_name: author_name,
-              //         author_avatar_url: author_avatar_url),
-              //   ),
-              // );
             },
             child: const Row(
               children: [

@@ -28,21 +28,14 @@ class CommentRepository{
     }
   }
 
-  Future setMarkComment(ReqSetMarkCmtData req) async {
+  Future<bool> setMarkComment(ReqSetMarkCmtData req, bool type) async {
     try{
-      final setMarkComment = await _commentApi.setMarkComment(req);
-      // if(getMarkComment == null){
-      //   return false;
-      // } else {
-      //   List<MarkData> marks = [];
-      //
-      //   List<dynamic> listMarkRaw = getMarkComment['data'];
-      //   for (dynamic x in listMarkRaw){
-      //     MarkData mark = MarkData.fromJson(x);
-      //     marks.add(mark);
-      //   }
-      //   return marks;
-      // }
+      final setMarkComment = await _commentApi.setMarkComment(req, type);
+      if(setMarkComment ){
+        return true;
+      } else {
+        return false;
+      }
     } catch(e){
       return false;
     }
