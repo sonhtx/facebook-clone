@@ -32,10 +32,10 @@ class _HomePageState extends State<HomePage> {
   int index = 0;
   static const _pageSize = 8;
 
+  final PostRepository _postRepository = PostRepository();
+
   final PagingController<int, PostListData> _pagingController =
   PagingController(firstPageKey: 1);
-
-  final PostRepository _postRepository = PostRepository();
 
   late RequestListPost_VideoData requestListPostData =
   RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", null, "0", "10");
@@ -87,13 +87,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-
-
   @override
   void dispose() {
     _pagingController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

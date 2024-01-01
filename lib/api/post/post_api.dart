@@ -38,9 +38,9 @@ class PostApi {
     }
   }
 
-  Future getListPost(RequestListPost_VideoData requestListPostData) async {
+  Future getListPost(RequestListPost_VideoData req) async {
     await _initializeHeaders();
-    final String jsonData = jsonEncode(requestListPostData.toJson());
+    final String jsonData = jsonEncode(req.toJson());
     final response = await http.post(
       Uri.parse('$apiUrl/get_list_posts'),
       headers: headers,

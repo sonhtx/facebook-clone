@@ -1,5 +1,6 @@
 import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
 import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
+import 'package:anti_fb/ui/homepage/videopage/video_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
@@ -182,11 +183,13 @@ class HomeState extends State<HomeScreen> {
 
   final ScrollController homeScrollController = ScrollController();
   final ScrollController peopleScrollController = ScrollController();
+  final ScrollController videoScrollController = ScrollController();
   final ScrollController notificationScrollController = ScrollController();
   final ScrollController menuScrollController = ScrollController();
 
   final GlobalKey<NavigatorState> homeTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> peopleTabNavKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> videoTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> notificationTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> menuTabNavKey = GlobalKey<NavigatorState>();
 
@@ -218,6 +221,16 @@ class HomeState extends State<HomeScreen> {
             );
           }
         case 2:
+          if (videoTabNavKey.currentState!.canPop()) {
+            videoTabNavKey.currentState?.popUntil((r) => r.isFirst);
+          } else {
+            videoScrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          }
+        case 3:
           if (notificationTabNavKey.currentState!.canPop()) {
             notificationTabNavKey.currentState?.popUntil((r) => r.isFirst);
           } else {
@@ -251,6 +264,7 @@ class HomeState extends State<HomeScreen> {
   void dispose() {
     homeScrollController.dispose();
     peopleScrollController.dispose();
+    videoScrollController.dispose();
     notificationScrollController.dispose();
     menuScrollController.dispose();
     super.dispose();
@@ -272,6 +286,10 @@ class HomeState extends State<HomeScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.people_alt_outlined),
+                label: 'People',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.ondemand_video_rounded),
                 label: 'People',
               ),
               BottomNavigationBarItem(
@@ -302,6 +320,12 @@ class HomeState extends State<HomeScreen> {
                     builder: (context) => FriendsPage()
                 );
               case 2:
+                return CupertinoTabView(
+                    navigatorKey: videoTabNavKey,
+                    // builder: (context) => PeoplePage(scrollController: peopleScrollController)
+                    builder: (context) => VideoPage(scrollController: videoScrollController)
+                );
+              case 3:
                 return CupertinoTabView(
                   navigatorKey: notificationTabNavKey,
                   builder: (context) => NotificationPage(scrollController: notificationScrollController),
