@@ -72,7 +72,7 @@ class PostScreenState extends State<PostScreen> {
         appBar: AppBar(
           backgroundColor: WHITE,
           title: PostHeader( imageUrl: post.author!.avatar, email: post.author!.name,
-            timestamp: post.created.substring(0,10),),
+            timestamp: post.created),
           iconTheme: const IconThemeData(
             color: GREY, // Set the color of the back arrow icon to black
           ),

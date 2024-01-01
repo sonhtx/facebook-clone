@@ -15,7 +15,7 @@ class IconWidget extends StatelessWidget {
     return IconButton(
       icon: Icon(
         icon,
-        color: GREY,
+        color: color,
       ),
       onPressed: onPressed,
     );

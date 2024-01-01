@@ -1,7 +1,6 @@
 
 
 import 'dart:convert';
-import 'package:anti_fb/models/request/ReqSetPushNotify.dart';
 import 'package:anti_fb/storage.dart';
 
 import '../../constants.dart';
