@@ -263,7 +263,7 @@ class PostWidget extends StatelessWidget {
             thickness: 0.05,
             color: GREY,
           ),
-          _PostBottom( id: id, is_felt: is_felt,)
+          PostBottom( id: id, is_felt: is_felt,)
         ],
       ),
     );
@@ -291,26 +291,13 @@ class PostHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                email,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text( email, style: const TextStyle( fontWeight: FontWeight.w600,),),
               Row(
                 children: [
                   Text(
-                    '$timestamp  • ',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12.0,
-                    ),
+                    '$timestamp  • ', style: TextStyle( color: Colors.grey[600], fontSize: 12.0,),
                   ),
-                  Icon(
-                    Icons.public,
-                    color: Colors.grey[600],
-                    size: 12.0,
-                  )
+                  Icon( Icons.public, color: Colors.grey[600], size: 12.0,)
                 ],
               )
             ],
@@ -325,8 +312,8 @@ class PostHeader extends StatelessWidget {
   }
 }
 
-class _PostBottom extends StatelessWidget {
-  const _PostBottom(
+class PostBottom extends StatelessWidget {
+  const PostBottom(
       {required this.id,
       required this.is_felt,});
 
