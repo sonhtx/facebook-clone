@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:anti_fb/models/request/ReqListBlocked.dart';
 import 'package:anti_fb/repository/block/block_repo.dart';
+import 'package:anti_fb/ui/homepage/menupage/settingpage/search_people/search_people.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:anti_fb/constants.dart';
 
@@ -20,8 +22,29 @@ class _BlockScreenState extends State<BlockScreen> {
 
   final BlockRepo _blockRepo = BlockRepo();
 
-  static final RequestListBlock requestListBlock = RequestListBlock("0", "10");
+  static final RequestListBlock requestListBlock = RequestListBlock("0", "20");
 
+  Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (context) => SearchUserTab()),
+    );
+
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    if (!mounted) return;
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    if(result == true){
+      print("1234");
+      setState(() {
+        getListBlock();
+      });
+    }
+  }
 
   Future<void> getListBlock() async{
     await Future.delayed(const Duration(seconds: 2));
@@ -114,9 +137,11 @@ class _BlockScreenState extends State<BlockScreen> {
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding:
-                            const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                        const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async{
+                            _navigateAndDisplaySelection(context);
+                          },
                           style: TextButton.styleFrom(
                             shape: const BeveledRectangleBorder(
                                 borderRadius: BorderRadius.zero),
@@ -149,17 +174,17 @@ class _BlockScreenState extends State<BlockScreen> {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        color: Colors.white,
-                        child: Scrollbar(
-                          child: SingleChildScrollView(
-                            child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: listUserBlockedWidget
+                        child: Container(
+                          color: Colors.white,
+                          child: Scrollbar(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: listUserBlockedWidget
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )
+                        )
                     )],
                 ),
               ),

@@ -26,7 +26,13 @@ class _CoinManageState extends State<CoinManage> {
     // setCoin();
     _fetchCoin();
   }
-
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    inputCoin.dispose();
+    super.dispose();
+  }
   final BuyCoinRepo _buyCoinRepo = BuyCoinRepo();
 
   Future<void> _fetchCoin() async{
