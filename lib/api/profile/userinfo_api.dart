@@ -28,6 +28,7 @@ class UserInfoApi {
       headers: headers,
       body: json.encode(requestBody),
     );
+    print(response.statusCode);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
       Map<String, dynamic> userJson = jsonResponse['data'];

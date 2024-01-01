@@ -1,3 +1,4 @@
+import 'package:anti_fb/ui/profile/friend_profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -41,7 +42,16 @@ class FriendItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Handle friend item click
+
         print('Friend $friendId clicked!');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FriendProfile(
+              userId: friendId,
+            ),
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
