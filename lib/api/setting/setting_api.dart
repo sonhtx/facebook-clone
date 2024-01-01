@@ -1,11 +1,12 @@
 
 
 import 'dart:convert';
-import 'package:anti_fb/models/request/ReqSetPushNotify.dart';
 import 'package:anti_fb/storage.dart';
 
 import '../../constants.dart';
 import 'package:http/http.dart' as http;
+
+import '../../models/request/ReqSetNotification.dart';
 
 class SettingApi {
 
@@ -28,7 +29,7 @@ class SettingApi {
       'devtoken' : devtoken
     };
     final response = await http.post(
-      Uri.parse('$apiUrl/settings/set_devtoken'),
+      Uri.parse('$apiUrl/set_devtoken'),
       headers: headers,
       body: json.encode(requestBody),
     );
@@ -48,7 +49,7 @@ class SettingApi {
       'coins' : coins
     };
     final response = await http.post(
-      Uri.parse('$apiUrl/settings/buy_coins'),
+      Uri.parse('$apiUrl/buy_coins'),
       headers: headers,
       body: json.encode(requestBody),
     );
@@ -64,7 +65,7 @@ class SettingApi {
   Future getPushSettings () async {
     await _initializeHeaders();
     final response = await http.post(
-      Uri.parse('$apiUrl/settings/get_push_settings'),
+      Uri.parse('$apiUrl/get_push_settings'),
       headers: headers,
     );
     if (response.statusCode == 200) {
@@ -76,12 +77,12 @@ class SettingApi {
     }
   }
 
-  Future setPushSettings (ReqSetPushNotify req) async {
+  Future setPushSettings (RequestSetNotification req) async {
     await _initializeHeaders();
 
     final String jsonData = jsonEncode(req.toJson());
     final response = await http.post(
-      Uri.parse('$apiUrl/settings/set_push_settings'),
+      Uri.parse('$apiUrl/set_push_settings'),
       headers: headers,
       body: jsonData,
     );

@@ -1,177 +1,13 @@
 import 'package:anti_fb/ui/homepage/friendpage/Friends_page.dart';
 import 'package:anti_fb/ui/homepage/menupage/menu_screen.dart';
+import 'package:anti_fb/ui/homepage/videopage/video_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import '../../models/Notification/NotificationData.dart';
-import '../../models/post/PostListData.dart';
 import 'homepage/home_page.dart';
 import 'notificationpage/notification_page.dart';
 
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({super.key});
-//
-//   @override
-//   State<HomeScreen> createState() => HomeState();
-// }
-//
-// class HomeState extends State<HomeScreen> with TickerProviderStateMixin {
-//   final log = Logger('HomeState');
-//
-//   late PageController pageController;
-//   late ScrollController scrollController;
-//   late TabController tabController;
-//
-//   int _selectedIndex = 0;
-//   int _pageIndex = 0;
-//
-//   late String coin = '';
-//   late String email = '';
-//   late List<PostListData> postlist = [];
-//
-//   @override
-//   void dispose() {
-//     pageController.dispose();
-//     scrollController.dispose();
-//     tabController.dispose();
-//     super.dispose();
-//   }
-//
-//   void _onItemTapped(int index) {
-//     if (_selectedIndex == index) {
-//       if(scrollController.hasClients){
-//         scrollController.animateTo(
-//           0.0,
-//           curve: Curves.easeOut,
-//           duration: const Duration(milliseconds: 300),
-//         );
-//       }
-//
-//     } else {
-//       setState(() {
-//         _selectedIndex = index;
-//         _pageIndex = _selectedIndex;
-//       });
-//       pageController.jumpToPage(index);
-//     }
-//   }
-//
-//   void gotoSuggestion() {
-//     setState(() {
-//       _pageIndex = 5;
-//     });
-//   }
-//
-//   void backfromSuggestion() {
-//     setState(() {
-//       _selectedIndex = 1;
-//       _pageIndex = _selectedIndex;
-//     });
-//   }
-//
-//   void gotoFriend() {
-//     setState(() {
-//       _pageIndex = 6;
-//     });
-//   }
-//
-//   void backfromFriend() {
-//     setState(() {
-//       _selectedIndex = 1;
-//       _pageIndex = _selectedIndex;
-//     });
-//   }
-//
-//   void gotoPersonal() {
-//     setState(() {
-//       _pageIndex = 4;
-//     });
-//   }
-//
-//   void backFromPersonal() {
-//     setState(() {
-//       _selectedIndex = 3;
-//       _pageIndex = _selectedIndex;
-//     });
-//   }
-//
-//   // void gotoChangePassword(){setState(() { _pageIndex = 3;});}
-//   void onPageChanged(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//     pageController.addListener(() {
-//       tabController.animateTo(pageController.page!.round());
-//     });
-//   }
-//   @override
-//   void initState() {
-//     super.initState();
-//     pageController = PageController(initialPage: _selectedIndex);
-//     scrollController = ScrollController();
-//     tabController = TabController(length: 4, vsync: this);
-//     // coin = getCoin() as String;
-//     // initCoin();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final List<Widget> pages = [
-//       HomePage(
-//         email: email,
-//         coin: coin,
-//         postlists: postlist,
-//         scrollController: scrollController,
-//       ),
-//       PeoplePage(scrollController: scrollController),
-//       NotificationPage(scrollController: scrollController),
-//       MenuPage(scrollController: scrollController),
-//       const PersonalPage(),
-//       const SuggestionScreen(),
-//       const FriendScreen()
-//     ];
-//
-//     return Scaffold(
-//         // body: PageView(
-//         //   controller: pageController,
-//         //   onPageChanged: onPageChanged,
-//         //   children: pages,
-//         // ),
-//         body: pages[_pageIndex],
-//         // ),
-//         bottomNavigationBar: Visibility(
-//             child: BottomNavigationBar(
-//           items: const [
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.home),
-//               label: 'Home',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.people_alt_outlined),
-//               label: 'People',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.notifications),
-//               label: 'Notifications',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.menu),
-//               label: 'Menu',
-//             ),
-//           ],
-//           selectedItemColor: FBBLUE,
-//           unselectedItemColor: GREY,
-//           selectedFontSize: 10,
-//           unselectedFontSize: 10,
-//           showSelectedLabels: true,
-//           showUnselectedLabels: true,
-//
-//           currentIndex: _selectedIndex,
-//           onTap: _onItemTapped,
-//           // Set unselected icon color to grey
-//         )));
-//   }
-// }
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -184,11 +20,13 @@ class HomeState extends State<HomeScreen> {
 
   final ScrollController homeScrollController = ScrollController();
   final ScrollController peopleScrollController = ScrollController();
+  final ScrollController videoScrollController = ScrollController();
   final ScrollController notificationScrollController = ScrollController();
   final ScrollController menuScrollController = ScrollController();
 
   final GlobalKey<NavigatorState> homeTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> peopleTabNavKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> videoTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> notificationTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> menuTabNavKey = GlobalKey<NavigatorState>();
 
@@ -196,8 +34,6 @@ class HomeState extends State<HomeScreen> {
 
   late String coin = '';
   late String email = '';
-  late List<PostListData> postlist = [];
-  late List<NotificationData> notificationLists = [];
   _onTapped(int index) {
     if (_selectedIndex == index) {
       switch(index){
@@ -222,6 +58,16 @@ class HomeState extends State<HomeScreen> {
             );
           }
         case 2:
+          if (videoTabNavKey.currentState!.canPop()) {
+            videoTabNavKey.currentState?.popUntil((r) => r.isFirst);
+          } else {
+            videoScrollController.animateTo(
+              0.0,
+              curve: Curves.easeOut,
+              duration: const Duration(milliseconds: 300),
+            );
+          }
+        case 3:
           if (notificationTabNavKey.currentState!.canPop()) {
             notificationTabNavKey.currentState?.popUntil((r) => r.isFirst);
           } else {
@@ -255,6 +101,7 @@ class HomeState extends State<HomeScreen> {
   void dispose() {
     homeScrollController.dispose();
     peopleScrollController.dispose();
+    videoScrollController.dispose();
     notificationScrollController.dispose();
     menuScrollController.dispose();
     super.dispose();
@@ -279,6 +126,10 @@ class HomeState extends State<HomeScreen> {
                 label: 'People',
               ),
               BottomNavigationBarItem(
+                icon: Icon(Icons.ondemand_video_rounded),
+                label: 'Videos',
+              ),
+              BottomNavigationBarItem(
                 icon: Icon(Icons.notifications),
                 label: 'Notifications',
               ),
@@ -296,7 +147,6 @@ class HomeState extends State<HomeScreen> {
                   builder: (context) => HomePage(
                     email: email,
                     coin: coin,
-                    postlists: postlist,
                     scrollController: homeScrollController,
                   ),
                 );
@@ -308,8 +158,14 @@ class HomeState extends State<HomeScreen> {
                 );
               case 2:
                 return CupertinoTabView(
+                    navigatorKey: videoTabNavKey,
+                    // builder: (context) => PeoplePage(scrollController: peopleScrollController)
+                    builder: (context) => VideoPage(scrollController: videoScrollController)
+                );
+              case 3:
+                return CupertinoTabView(
                   navigatorKey: notificationTabNavKey,
-                  builder: (context) => NotificationPage(scrollController: notificationScrollController, notificationLists: notificationLists),
+                  builder: (context) => NotificationPage(scrollController: notificationScrollController),
                 );
               default:
                 return CupertinoTabView(

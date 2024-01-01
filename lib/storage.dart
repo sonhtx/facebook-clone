@@ -17,6 +17,15 @@ Future<void> saveUser(UserLogin user) async {
   await storage.write(key: 'coins', value: user.coins.toString());
 }
 
+Future<void> setToken(String token) async {
+  await storage.write(key: 'token', value: token);
+}
+
+Future<void> setCoin(String coin) async{
+  await storage.write(key: 'coins', value: coin);
+}
+
+
 // void saveUser(User user){
 //   storage.write(key: 'id', value: user.id);
 //   storage.write(key: 'email', value: user.email );

@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:anti_fb/models/request/ReqListBlocked.dart';
 import 'package:anti_fb/repository/block/block_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:anti_fb/constants.dart';
 
 import '../../../../models/block/UserBlocked.dart';
@@ -21,7 +20,8 @@ class _BlockScreenState extends State<BlockScreen> {
 
   final BlockRepo _blockRepo = BlockRepo();
 
-  static final RequestListBlock requestListBlock = RequestListBlock("1", "10");
+  static final RequestListBlock requestListBlock = RequestListBlock("0", "10");
+
 
   Future<void> getListBlock() async{
     await Future.delayed(const Duration(seconds: 2));
@@ -30,14 +30,25 @@ class _BlockScreenState extends State<BlockScreen> {
       List<UserBlocked>? listBlocked = await _blockRepo.getListBlocked(requestListBlock);
 
       setState(() {
+        listUserBlockedWidget = [];
         if(listBlocked != null){
           _userBlocked = listBlocked;
           for(int i=0;i<listBlocked.length;i++){
 
             listUserBlockedWidget.add(BlockedPeople(
+                id: _userBlocked[i].id,
                 imageUrl: _userBlocked[i].avatar,
-                userName: _userBlocked[i].name
+                userName: _userBlocked[i].name,
+                blockRepo:_blockRepo,
+                notifyParent: (){
+                  setState(() {
+                    _blockRepo.unBlock(_userBlocked[i].id);
+                    getListBlock();
+                    Navigator.pop(context);
+                  });
+                },
             ));
+            print("listUserBlockedWidget.length: ${listUserBlockedWidget.length}");
           }
         }
       });
@@ -46,10 +57,10 @@ class _BlockScreenState extends State<BlockScreen> {
       print(error);
     }
   }
-
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     getListBlock();
   }
 
@@ -158,13 +169,21 @@ class _BlockScreenState extends State<BlockScreen> {
   }
 }
 
-class BlockedPeople extends StatelessWidget {
+class BlockedPeople extends StatefulWidget {
+  final String id;
   final String imageUrl;
   final String userName;
+  final VoidCallback notifyParent;
+  final BlockRepo blockRepo;
 
   const BlockedPeople(
-      {super.key, required this.imageUrl, required this.userName});
+      {super.key, required this.imageUrl, required this.userName, required this.id, required this.blockRepo, required this.notifyParent});
 
+  @override
+  State<BlockedPeople> createState() => _BlockedPeopleState();
+}
+
+class _BlockedPeopleState extends State<BlockedPeople> {
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -190,7 +209,7 @@ class BlockedPeople extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Unblock $userName ?",
+                              "Unblock ${widget.userName} ?",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 25.0),
                             ),
@@ -199,7 +218,7 @@ class BlockedPeople extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "If you unblock $userName they may be able to see your Timeline or contact you, depending on your settings",
+                              "If you unblock ${widget.userName} they may be able to see your Timeline or contact you, depending on your settings",
                               style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 15.0,
@@ -210,7 +229,7 @@ class BlockedPeople extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Tags you and $userName previously added to each other may be restored",
+                              "Tags you and ${widget.userName} previously added to each other may be restored",
                               style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 15.0,
@@ -221,7 +240,7 @@ class BlockedPeople extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "You'll have to wait 48 hours if you want to block $userName again",
+                              "You'll have to wait 48 hours if you want to block ${widget.userName} again",
                               style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 15.0,
@@ -234,7 +253,7 @@ class BlockedPeople extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                  onPressed: () {
+                                  onPressed: (){
                                     Navigator.pop(context);
                                   },
                                   child: const Text(
@@ -247,9 +266,7 @@ class BlockedPeople extends StatelessWidget {
                                     shape: const BeveledRectangleBorder(
                                         borderRadius: BorderRadius.zero),
                                   ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
+                                  onPressed: widget.notifyParent,
                                   child: const Text(
                                     "UNBLOCK",
                                     style: TextStyle(
@@ -277,14 +294,14 @@ class BlockedPeople extends StatelessWidget {
                     margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                     child: ImageFiltered(
                       imageFilter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                      child: (imageUrl == "") ?
+                      child: (widget.imageUrl == "") ?
                       Image.asset(
                         'assets/images/messi-world-cup.png',
                         width: 30.0,
                         height: 30.0,
                       ):
                         Image.network(
-                            imageUrl,
+                            widget.imageUrl,
                           width: 30.0,
                           height: 30.0,
                         )
@@ -294,7 +311,7 @@ class BlockedPeople extends StatelessWidget {
                   const SizedBox(height: 4.0),
                   Expanded(
                     child: Text(
-                      userName,
+                      widget.userName,
                       style: const TextStyle(
                           fontSize: 17.0,
                           color: Colors.black,

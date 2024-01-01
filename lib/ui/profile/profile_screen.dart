@@ -29,7 +29,6 @@ class _ProfileState extends State<Profile> {
   late List<Info> info;
   late String friendsCount;
   late FriendsGrid friendsGrid;
-  List<PostListData> postlists = [];
 
   Widget infoTemplate(infoItem, context) {
     return Row(
@@ -377,10 +376,7 @@ class _ProfileState extends State<Profile> {
 
                     // List posts here
 
-                    ListPostWidget(
-                      postlists: postlists,
-                      id: userId,
-                    ),
+                    ListPostWidget(id: userId),
                   ],
                 ),
               ),

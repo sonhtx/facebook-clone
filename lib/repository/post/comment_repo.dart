@@ -3,6 +3,7 @@
 import 'package:anti_fb/models/comment/mark.dart';
 
 import '../../api/post/comment_api.dart';
+import '../../models/request/ReqSetMarkComment.dart';
 
 class CommentRepository{
   final CommentApi _commentApi = CommentApi();
@@ -25,6 +26,20 @@ class CommentRepository{
     } catch(e){
       return false;
     }
-
   }
+
+  Future<bool> setMarkComment(ReqSetMarkCmtData req, bool type) async {
+    try{
+      final setMarkComment = await _commentApi.setMarkComment(req, type);
+      if(setMarkComment ){
+        return true;
+      } else {
+        return false;
+      }
+    } catch(e){
+      return false;
+    }
+  }
+
+
 }
