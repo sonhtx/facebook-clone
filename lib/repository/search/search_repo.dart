@@ -1,8 +1,10 @@
 import 'package:anti_fb/models/post/PostListSearchData.dart';
 import 'package:anti_fb/models/request/ReqSearch.dart';
+import 'package:anti_fb/models/request/ReqSearchUser.dart';
 import 'package:anti_fb/models/search/SavedSearch.dart';
 
 import '../../api/search/search_api.dart';
+import '../../models/SearchUser.dart';
 
 class SearchRepository {
   final SearchApi _searchApi = SearchApi();
@@ -44,6 +46,31 @@ class SearchRepository {
         listpost.add(post);
       }
       return listpost;
+    } catch (e) {
+      print(e);
+      return null; // Signup failed due to an error
+    }
+  }
+
+  Future getSearchUserResult(ReqSearchUser reqSearch) async {
+    try {
+      final getlistUserResult = await _searchApi.searchUser(reqSearch);
+
+      if (getlistUserResult == null) {
+        return null;
+      }
+      if(getlistUserResult['code'] == "1003"){
+        return null;
+      }
+      print(getlistUserResult);
+
+      List<SearchUser> listUser = [];
+      List<dynamic> listUserRaw = getlistUserResult['data'];
+      for (dynamic x in listUserRaw) {
+        SearchUser user = SearchUser.fromJson(x);
+        listUser.add(user);
+      }
+      return listUser;
     } catch (e) {
       print(e);
       return null; // Signup failed due to an error

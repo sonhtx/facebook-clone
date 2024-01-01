@@ -76,7 +76,7 @@ class _PushDetailState extends State<PushDetail> {
                           backgroundColor: BTNBG,
                           child: Icon(Icons.notifications_off,color: Colors.black,)),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +134,7 @@ class _PushDetailState extends State<PushDetail> {
                           backgroundColor: BTNBG,
                           child: Icon(Icons.vibration,color: Colors.black,)),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -192,7 +192,7 @@ class _PushDetailState extends State<PushDetail> {
                           backgroundColor: BTNBG,
                           child: Icon(Icons.flash_on,color: Colors.black,)),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -250,7 +250,7 @@ class _PushDetailState extends State<PushDetail> {
                           backgroundColor: BTNBG,
                           child: Icon(Icons.speaker_phone,color: Colors.black,)),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
