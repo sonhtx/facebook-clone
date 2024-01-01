@@ -75,21 +75,9 @@ class _FriendsPageState extends State<FriendsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            'Uh no ... nothing here!',
-            // style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          Text(
-            'Try selecting a different catogory',
-            // style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
-          ),
+          Text( 'Uh no ... nothing here!',),
+          SizedBox( height: 16,),
+          Text( 'Try selecting a different catogory',),
         ],
       ),
     );
