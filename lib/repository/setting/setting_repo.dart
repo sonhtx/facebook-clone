@@ -25,7 +25,6 @@ class SettingRepository {
 
   Future setPushNotification(RequestSetNotification requestSetNotification)async{
     try{
-      print(requestSetNotification.toString());
       final setPushNotificationResult = await _settingApi.setPushSettings(requestSetNotification);
       if(setPushNotificationResult == null){
         return null;

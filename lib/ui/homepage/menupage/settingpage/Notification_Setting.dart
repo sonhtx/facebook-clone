@@ -75,7 +75,47 @@ class _NotificationSettingState extends State<NotificationSetting> {
       return false;
     }
   }
+  Future<void> _navigateAndDisplaySelection(BuildContext context,int type,bool state,RequestSetNotification requestSetNotification) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (context) => DetailNotification(type: type, state: state, requestSetNotification: requestSetNotification,)),
+    );
 
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    if (!mounted) return;
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    if(result == true){
+      setState(() {
+        _fetchData();
+      });
+    }
+  }
+
+  Future<void> _navigateAndDisplaySelection2(BuildContext context,bool notification_on,bool vibrate_on,bool sound_on, bool led_on,RequestSetNotification requestSetNotification) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (context) => PushDetail(notification_on: notification_on, vibrate_on: vibrate_on, sound_on: sound_on, led_on: led_on, requestSetNotification: requestSetNotification)),
+    );
+
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    if (!mounted) return;
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    if(result == true){
+      setState(() {
+        _fetchData();
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,12 +169,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 1,state: state(pushSettingsData.like_comment), requestSetNotification: requestSetNotification,)),
-                          );
+                        onPressed: () async {
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => DetailNotification(type: 1,state: state(pushSettingsData.like_comment), requestSetNotification: requestSetNotification,)),
+                          // );
+                          _navigateAndDisplaySelection(context,1, state(pushSettingsData.like_comment),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
@@ -186,11 +227,12 @@ class _NotificationSettingState extends State<NotificationSetting> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 2,state: state(pushSettingsData.from_friends), requestSetNotification: requestSetNotification),
-                          ));
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => DetailNotification(type: 2,state: state(pushSettingsData.from_friends), requestSetNotification: requestSetNotification),
+                          // ));
+                          _navigateAndDisplaySelection(context,2, state(pushSettingsData.from_friends),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
@@ -242,11 +284,12 @@ class _NotificationSettingState extends State<NotificationSetting> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 3,state: state(pushSettingsData.requested_friend), requestSetNotification: requestSetNotification),
-                          ));
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => DetailNotification(type: 3,state: state(pushSettingsData.requested_friend), requestSetNotification: requestSetNotification),
+                          // ));
+                          _navigateAndDisplaySelection(context,3, state(pushSettingsData.requested_friend),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
@@ -298,11 +341,12 @@ class _NotificationSettingState extends State<NotificationSetting> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) =>DetailNotification(type: 4,state: state(pushSettingsData.suggested_friend), requestSetNotification: requestSetNotification),
-                          ));
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) =>DetailNotification(type: 4,state: state(pushSettingsData.suggested_friend), requestSetNotification: requestSetNotification),
+                          // ));
+                          _navigateAndDisplaySelection(context,4, state(pushSettingsData.suggested_friend),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
@@ -354,11 +398,12 @@ class _NotificationSettingState extends State<NotificationSetting> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 5,state: state(pushSettingsData.birthday), requestSetNotification: requestSetNotification),
-                          ));
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => DetailNotification(type: 5,state: state(pushSettingsData.birthday), requestSetNotification: requestSetNotification),
+                          // ));
+                          _navigateAndDisplaySelection(context,5, state(pushSettingsData.birthday),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
@@ -410,11 +455,12 @@ class _NotificationSettingState extends State<NotificationSetting> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 6,state: state(pushSettingsData.video), requestSetNotification: requestSetNotification),
-                          ));
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => DetailNotification(type: 6,state: state(pushSettingsData.video), requestSetNotification: requestSetNotification),
+                          // ));
+                          _navigateAndDisplaySelection(context,6, state(pushSettingsData.video),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
@@ -466,11 +512,12 @@ class _NotificationSettingState extends State<NotificationSetting> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => DetailNotification(type: 7,state: state(pushSettingsData.report), requestSetNotification: requestSetNotification)),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => DetailNotification(type: 7,state: state(pushSettingsData.report), requestSetNotification: requestSetNotification)),
+                          // );
+                          _navigateAndDisplaySelection(context,7, state(pushSettingsData.report),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
@@ -529,17 +576,18 @@ class _NotificationSettingState extends State<NotificationSetting> {
                       padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => PushDetail(
-                                  notification_on: state(pushSettingsData.notification_on),
-                                  vibrate_on: state(pushSettingsData.vibrant_on),
-                                  sound_on: state(pushSettingsData.sound_on),
-                                  led_on: state(pushSettingsData.led_on),
-                                  requestSetNotification: requestSetNotification,
-                                )),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => PushDetail(
+                          //         notification_on: state(pushSettingsData.notification_on),
+                          //         vibrate_on: state(pushSettingsData.vibrant_on),
+                          //         sound_on: state(pushSettingsData.sound_on),
+                          //         led_on: state(pushSettingsData.led_on),
+                          //         requestSetNotification: requestSetNotification,
+                          //       )),
+                          // );
+                          _navigateAndDisplaySelection2(context,state(pushSettingsData.notification_on),state(pushSettingsData.vibrant_on),state(pushSettingsData.sound_on),state(pushSettingsData.led_on),requestSetNotification);
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),

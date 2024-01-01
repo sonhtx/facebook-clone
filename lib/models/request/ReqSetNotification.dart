@@ -16,7 +16,7 @@ class RequestSetNotification {
 
   @override
   String toString() {
-    return "like_comment: $from_friends: $from_friends,requested_friend: $requested_friend,suggested_friend:$suggested_friend,birthday: $birthday,video: $video,report: $report,sound_on: $sound_on,notification_on: $notification_on,vibrant_on: $vibrant_on,led_on: $led_on";
+    return "like_comment: $like_comment from_friends: $from_friends,requested_friend: $requested_friend,suggested_friend:$suggested_friend,birthday: $birthday,video: $video,report: $report,sound_on: $sound_on,notification_on: $notification_on,vibrant_on: $vibrant_on,led_on: $led_on";
   }
 
   Map<String, dynamic> toJson() {

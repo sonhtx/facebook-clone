@@ -43,256 +43,267 @@ class _PushDetailState extends State<PushDetail> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, true);
+        return true;
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
-        title: const Text("Push"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 4.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                    child: const CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: BTNBG,
-                        child: Icon(Icons.notifications_off,color: Colors.black,)),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Mute Push Notifications",
-                          style: TextStyle(
-                              fontSize: 17.0, color: Colors.black),
-                        ),
-                        Text(
-                          "Off",
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              fontSize: 10.0, color: Colors.grey),
-                        ),
-                      ],
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: const Text("Push"),
+          leading: BackButton(
+            onPressed: (){
+              Navigator.pop(context, true);
+            },
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 4.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      child: const CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: BTNBG,
+                          child: Icon(Icons.notifications_off,color: Colors.black,)),
                     ),
-                  ),
-                  Switch(
-                      value: !_notification_on,
-                      onChanged: (bool value) async {
-                        setState(() {
-                          _notification_on = !value;
-                        });
-                        requestSetNotification  = RequestSetNotification(
-                            requestSetNotification.like_comment,
-                            requestSetNotification.from_friends,
-                            requestSetNotification.requested_friend,
-                            requestSetNotification.suggested_friend,
-                            requestSetNotification.birthday,
-                            requestSetNotification.video,
-                            requestSetNotification.report,
-                            requestSetNotification.sound_on,
-                            boolToString(_notification_on),
-                            requestSetNotification.vibrant_on,
-                            requestSetNotification.led_on
-                        );
-                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
-                      }
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                    child: const CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: BTNBG,
-                        child: Icon(Icons.vibration,color: Colors.black,)),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Vibrate",
-                          style: TextStyle(
-                              fontSize: 17.0, color: Colors.black),
-                        ),
-                        Text(
-                          "Vibrate on incoming notifications",
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              fontSize: 10.0, color: Colors.grey),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Mute Push Notifications",
+                            style: TextStyle(
+                                fontSize: 17.0, color: Colors.black),
+                          ),
+                          Text(
+                            "Off",
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontSize: 10.0, color: Colors.grey),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Switch(
-                      value: _vibrate_on,
-                      onChanged: (bool value) async {
-                        setState(() {
-                          _vibrate_on = value;
-                        });
-                        requestSetNotification  = RequestSetNotification(
-                            requestSetNotification.like_comment,
-                            requestSetNotification.from_friends,
-                            requestSetNotification.requested_friend,
-                            requestSetNotification.suggested_friend,
-                            requestSetNotification.birthday,
-                            requestSetNotification.video,
-                            requestSetNotification.report,
-                            requestSetNotification.sound_on,
-                            requestSetNotification.notification_on,
-                            boolToString(_vibrate_on),
-                            requestSetNotification.led_on
-                        );
-                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
-                      }
-                  )
-                ],
+                    Switch(
+                        value: !_notification_on,
+                        onChanged: (bool value) async {
+                          setState(() {
+                            _notification_on = !value;
+                          });
+                          requestSetNotification  = RequestSetNotification(
+                              requestSetNotification.like_comment,
+                              requestSetNotification.from_friends,
+                              requestSetNotification.requested_friend,
+                              requestSetNotification.suggested_friend,
+                              requestSetNotification.birthday,
+                              requestSetNotification.video,
+                              requestSetNotification.report,
+                              requestSetNotification.sound_on,
+                              boolToString(_notification_on),
+                              requestSetNotification.vibrant_on,
+                              requestSetNotification.led_on
+                          );
+                          final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
+                        }
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                    child: const CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: BTNBG,
-                        child: Icon(Icons.flash_on,color: Colors.black,)),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Phone LED",
-                          style: TextStyle(
-                              fontSize: 17.0, color: Colors.black),
-                        ),
-                        Text(
-                          "Flash LED on incoming notifications",
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              fontSize: 10.0, color: Colors.grey),
-                        ),
-                      ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      child: const CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: BTNBG,
+                          child: Icon(Icons.vibration,color: Colors.black,)),
                     ),
-                  ),
-                  Switch(
-                      value: _led_on,
-                      onChanged: (bool value) async {
-                        setState(() {
-                          _led_on = value;
-                        });
-                        requestSetNotification  = RequestSetNotification(
-                            requestSetNotification.like_comment,
-                            requestSetNotification.from_friends,
-                            requestSetNotification.requested_friend,
-                            requestSetNotification.suggested_friend,
-                            requestSetNotification.birthday,
-                            requestSetNotification.video,
-                            requestSetNotification.report,
-                            requestSetNotification.sound_on,
-                            requestSetNotification.notification_on,
-                            requestSetNotification.vibrant_on,
-                            boolToString(_led_on)
-                        );
-                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
-                      }
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                    child: const CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: BTNBG,
-                        child: Icon(Icons.speaker_phone,color: Colors.black,)),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Sounds",
-                          style: TextStyle(
-                              fontSize: 17.0, color: Colors.black),
-                        ),
-                        Text(
-                          "Play sounds on incoming notifications",
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              fontSize: 10.0, color: Colors.grey),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Vibrate",
+                            style: TextStyle(
+                                fontSize: 17.0, color: Colors.black),
+                          ),
+                          Text(
+                            "Vibrate on incoming notifications",
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontSize: 10.0, color: Colors.grey),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Switch(
-                      value: _sound_on,
-                      onChanged: (bool value) async {
-                        setState(() {
-                          _sound_on = value;
-                        });
-                        requestSetNotification  = RequestSetNotification(
-                            requestSetNotification.like_comment,
-                            requestSetNotification.from_friends,
-                            requestSetNotification.requested_friend,
-                            requestSetNotification.suggested_friend,
-                            requestSetNotification.birthday,
-                            requestSetNotification.video,
-                            requestSetNotification.report,
-                            boolToString(_sound_on),
-                            requestSetNotification.notification_on,
-                            requestSetNotification.vibrant_on,
-                            requestSetNotification.led_on
-                        );
-                        final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
-                      }
-                  )
-                ],
+                    Switch(
+                        value: _vibrate_on,
+                        onChanged: (bool value) async {
+                          setState(() {
+                            _vibrate_on = value;
+                          });
+                          requestSetNotification  = RequestSetNotification(
+                              requestSetNotification.like_comment,
+                              requestSetNotification.from_friends,
+                              requestSetNotification.requested_friend,
+                              requestSetNotification.suggested_friend,
+                              requestSetNotification.birthday,
+                              requestSetNotification.video,
+                              requestSetNotification.report,
+                              requestSetNotification.sound_on,
+                              requestSetNotification.notification_on,
+                              boolToString(_vibrate_on),
+                              requestSetNotification.led_on
+                          );
+                          final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
+                        }
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width*0.95,
-              child: const Divider(
-                color: Colors.black,
-                thickness: 0.5,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      child: const CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: BTNBG,
+                          child: Icon(Icons.flash_on,color: Colors.black,)),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Phone LED",
+                            style: TextStyle(
+                                fontSize: 17.0, color: Colors.black),
+                          ),
+                          Text(
+                            "Flash LED on incoming notifications",
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontSize: 10.0, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Switch(
+                        value: _led_on,
+                        onChanged: (bool value) async {
+                          setState(() {
+                            _led_on = value;
+                          });
+                          requestSetNotification  = RequestSetNotification(
+                              requestSetNotification.like_comment,
+                              requestSetNotification.from_friends,
+                              requestSetNotification.requested_friend,
+                              requestSetNotification.suggested_friend,
+                              requestSetNotification.birthday,
+                              requestSetNotification.video,
+                              requestSetNotification.report,
+                              requestSetNotification.sound_on,
+                              requestSetNotification.notification_on,
+                              requestSetNotification.vibrant_on,
+                              boolToString(_led_on)
+                          );
+                          final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
+                        }
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      child: const CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: BTNBG,
+                          child: Icon(Icons.speaker_phone,color: Colors.black,)),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Sounds",
+                            style: TextStyle(
+                                fontSize: 17.0, color: Colors.black),
+                          ),
+                          Text(
+                            "Play sounds on incoming notifications",
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontSize: 10.0, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Switch(
+                        value: _sound_on,
+                        onChanged: (bool value) async {
+                          setState(() {
+                            _sound_on = value;
+                          });
+                          requestSetNotification  = RequestSetNotification(
+                              requestSetNotification.like_comment,
+                              requestSetNotification.from_friends,
+                              requestSetNotification.requested_friend,
+                              requestSetNotification.suggested_friend,
+                              requestSetNotification.birthday,
+                              requestSetNotification.video,
+                              requestSetNotification.report,
+                              boolToString(_sound_on),
+                              requestSetNotification.notification_on,
+                              requestSetNotification.vibrant_on,
+                              requestSetNotification.led_on
+                          );
+                          final setStatus = await _settingRepository.setPushNotification(requestSetNotification);
+                        }
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width*0.95,
+                child: const Divider(
+                  color: Colors.black,
+                  thickness: 0.5,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ) ;
