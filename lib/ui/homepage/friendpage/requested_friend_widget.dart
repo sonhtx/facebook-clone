@@ -152,7 +152,7 @@ class FriendRequestWidget extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 35.0, vertical: 5.0),
+                        horizontal: 20.0, vertical: 5.0),
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(5.0)),
@@ -173,7 +173,7 @@ class FriendRequestWidget extends StatelessWidget {
                   const SizedBox(width: 10.0),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 35.0, vertical: 5.0),
+                        horizontal: 20.0, vertical: 5.0),
                     decoration: BoxDecoration(
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(5.0)),
@@ -184,7 +184,7 @@ class FriendRequestWidget extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 35.0, vertical: 10.0),
+                            horizontal: 20.0, vertical: 10.0),
                         backgroundColor: Colors.grey[300],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),

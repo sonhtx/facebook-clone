@@ -122,7 +122,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
     Widget suggestBtns = Row(
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           decoration: BoxDecoration(
               color: Colors.blue, borderRadius: BorderRadius.circular(5.0)),
           child: TextButton(
@@ -131,7 +131,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
             },
             style: TextButton.styleFrom(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                  const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
               backgroundColor: Colors.blue, // Màu nền của nút
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
@@ -145,7 +145,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
         ),
         const SizedBox(width: 10.0),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           decoration: BoxDecoration(
               color: Colors.grey[300],
               borderRadius: BorderRadius.circular(5.0)),
