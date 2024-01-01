@@ -290,7 +290,7 @@ class HomeState extends State<HomeScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.ondemand_video_rounded),
-                label: 'People',
+                label: 'Videos',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.notifications),
