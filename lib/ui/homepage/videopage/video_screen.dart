@@ -1,7 +1,8 @@
 
-import 'package:anti_fb/widget_dung/imageViewWidget.dart';
 import 'package:anti_fb/widgets/TextButtonWidget.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../../api/post/comment_api.dart';
 import '../../../../constants.dart';
@@ -10,22 +11,32 @@ import '../../../../repository/post/post_repo.dart';
 import '../../../../widgets/AlertDialogWidget.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../../../../widgets/custom_react_widget.dart';
-import '../listpost.dart';
-import 'MarkInputWidget.dart';
-import 'markUI.dart';
+import '../homepage/listpost.dart';
+import '../homepage/postpage/MarkInputWidget.dart';
+import '../homepage/postpage/markUI.dart';
 
-class PostScreen extends StatefulWidget{
+class VideoScreen extends StatefulWidget{
   final String id ;
+  final String video_url;
+  final String author_name;
+  final String author_avatar;
+  final String created;
+  final String described;
 
-  const PostScreen({super.key, required this.id,});
+  const VideoScreen({super.key, required this.id, required this.author_name,
+    required this.author_avatar, required this.created, required this.described,
+    required this.video_url,});
 
   @override
-  State<PostScreen> createState() => PostScreenState();
+  State<VideoScreen> createState() => VideoScreenState();
 }
 
-class PostScreenState extends State<PostScreen> {
+class VideoScreenState extends State<VideoScreen> {
   final PostRepository _postRepository = PostRepository();
   final CommentApi _commentApi = CommentApi();
+
+  late VideoPlayerController _videoController;
+  late ChewieController _chewieController;
 
   late PostData post ;
 
@@ -33,7 +44,7 @@ class PostScreenState extends State<PostScreen> {
     try {
       PostData? postData =
       await _postRepository.getPost(id);
-        post = postData!;
+      post = postData!;
     } catch (error) {
       print(error);
     }
@@ -42,12 +53,18 @@ class PostScreenState extends State<PostScreen> {
   @override
   void initState() {
     super.initState();
+
+    _videoController = VideoPlayerController.networkUrl(Uri.parse(widget.video_url));
+    _chewieController = ChewieController(
+      videoPlayerController: _videoController,
+      aspectRatio: 16 / 9, // adjust as needed
+      autoInitialize: true,
+      looping: true, // set to false if you don't want the video to loop
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // List<Reaction> reactionValues = Reaction.values;
-    // Reaction selectedReaction = reactionValues[int.parse(post.is_felt) + 1];
 
     Widget content = const Center(
       child: Column(
@@ -66,13 +83,13 @@ class PostScreenState extends State<PostScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-        return content;
-      } else {
+          return content;
+        } else {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: WHITE,
-          title: PostHeader( imageUrl: post.author!.avatar, email: post.author!.name,
-            timestamp: post.created.substring(0,10),),
+          title: PostHeader( imageUrl: widget.author_avatar, email: widget.author_name,
+            timestamp: widget.created.substring(0,10),),
           iconTheme: const IconThemeData(
             color: GREY, // Set the color of the back arrow icon to black
           ),
@@ -85,12 +102,13 @@ class PostScreenState extends State<PostScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top:10),
                   child: Align(alignment: Alignment.topLeft,
-                      child: Text(post.described)),
+                      child: Text(widget.described)),
                 ),
-                const SizedBox(height: 10,),
-                (post.images.isNotEmpty)
-                    ? ImageWidget(images: post.images)
-                     : const SizedBox.shrink(),
+                SizedBox(
+                  height: 500,
+                  child: Chewie(controller: _chewieController,) ,
+                ),
+
                 Container(
                     height: 30,
                     padding: const EdgeInsets.only(left: 5),
@@ -142,25 +160,25 @@ class PostScreenState extends State<PostScreen> {
                   color: GREY,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 10, top:5, bottom: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ReactionButton(
-                        initialReaction: ReactionValues[int.parse(post.is_felt) + 1],
-                        onReactionChanged: (reaction) {
-                          if(reaction.name == 'none'){
-                            _commentApi.deleteFeel(widget.id);
-                          } else if(reaction.name == 'kudos'){
-                            _commentApi.feel(widget.id, '1');
-                          } else {
-                            _commentApi.feel(widget.id, '0');
-                          }
-                        },
-                      ),
-                      _SetMarkButtonWidget(can_mark: post.can_mark, can_rate: post.can_rate, id: widget.id,),
-                    ],
-                  )
+                    padding: const EdgeInsets.only(left: 10, top:5, bottom: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ReactionButton(
+                          initialReaction: ReactionValues[int.parse(post.is_felt) + 1],
+                          onReactionChanged: (reaction) {
+                            if(reaction.name == 'none'){
+                              _commentApi.deleteFeel(widget.id);
+                            } else if(reaction.name == 'kudos'){
+                              _commentApi.feel(widget.id, '1');
+                            } else {
+                              _commentApi.feel(widget.id, '0');
+                            }
+                          },
+                        ),
+                        _SetMarkButtonWidget(can_mark: post.can_mark, can_rate: post.can_rate, id: widget.id,),
+                      ],
+                    )
 
                 ),
                 // -----------------
@@ -170,16 +188,15 @@ class PostScreenState extends State<PostScreen> {
             ),
 
           )
-          ),
-          // bottomNavigationBar: BottomTextField(id: post.id, can_mark: post.can_mark,
-          // can_rate: post.can_rate,)
-        );
+      ),
+        // bottomNavigationBar: BottomTextField(id: post.id, can_mark: post.can_mark,
+        // can_rate: post.can_rate,)
+      );
+        }
       }
-    }
     );
   }
 }
-
 // Set Mark Button
 
 class _SetMarkButtonWidget extends StatelessWidget{

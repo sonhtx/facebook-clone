@@ -324,23 +324,20 @@ class PostBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Reaction> reactionValues = Reaction.values;
-    Reaction selectedReaction = reactionValues[int.parse(is_felt) + 1];
-
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       Container(
         padding: const EdgeInsets.only(left: 30),
         child: Row(
           children: [
             ReactionButton(
-              initialReaction: selectedReaction,
+              initialReaction: ReactionValues[int.parse(is_felt) + 1],
               onReactionChanged: (reaction) {
                 if(reaction.name == 'none'){
                   _commentApi.deleteFeel(id);
                 } else if(reaction.name == 'kudos'){
-                  _commentApi.feel(id, '0');
-                } else {
                   _commentApi.feel(id, '1');
+                } else {
+                  _commentApi.feel(id, '0');
                 }
               },
             ),

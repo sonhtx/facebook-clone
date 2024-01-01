@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../constants.dart';
 
 enum Reaction { none, kudos, dissapoint }
+List<Reaction> ReactionValues = Reaction.values;
 
 typedef OnButtonPressedCallback = void Function(Reaction newReaction);
 
