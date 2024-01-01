@@ -1,11 +1,15 @@
 
+import 'package:anti_fb/ui/homepage/videopage/video_screen.dart';
 import 'package:chewie/chewie.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../api/post/comment_api.dart';
 import '../../../constants.dart';
 import '../../../widgets/TextWidget.dart';
+import '../../../widgets/custom_react_widget.dart';
 import '../homepage/listpost.dart';
 
 class VideoWidget extends StatefulWidget {
@@ -135,9 +139,75 @@ class VideoWidgetState extends State<VideoWidget> {
             thickness: 0.05,
             color: GREY,
           ),
-          PostBottom( id: widget.id, is_felt: widget.is_felt,)
+          VideoBottom( id: widget.id, is_felt: widget.is_felt, video_url: widget.video_url,
+            author_name: widget.author_name, author_avatar: widget.author_avatar_url,
+            created: widget.created, described: widget.described,
+          )
         ],
       ),
     );
+  }
+}
+
+
+class VideoBottom extends StatelessWidget {
+  const VideoBottom({required this.id,
+        required this.is_felt, required this.video_url, required this.author_name, required this.author_avatar, required this.created, required this.described,});
+
+  final String id;
+  final String is_felt;
+  final String video_url;
+  final String author_name;
+  final String author_avatar;
+  final String created;
+  final String described;
+
+  static final CommentApi _commentApi = CommentApi();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      Container(
+          padding: const EdgeInsets.only(left: 30),
+          child: Row(
+              children: [
+                ReactionButton(
+                  initialReaction: ReactionValues[int.parse(is_felt) + 1],
+                  onReactionChanged: (reaction) {
+                    if(reaction.name == 'none'){
+                      _commentApi.deleteFeel(id);
+                    } else if(reaction.name == 'kudos'){
+                      _commentApi.feel(id, '1');
+                    } else {
+                      _commentApi.feel(id, '0');
+                    }
+                  },
+                ),
+                const TextWidget( text: 'Like', textColor: GREY, fontSize: 12, paddingLeft: 5, width: 50,
+                )
+              ]
+          )
+
+      ),
+      Container(
+          padding: const EdgeInsets.only(right: 10),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (context) =>
+                  VideoScreen(id: id, author_name: author_name, author_avatar: author_avatar,
+                    created: created, described: described, video_url: video_url,)));
+            },
+            child: const Row(
+              children: [
+                Icon(
+                  Icons.comment,
+                  color: GREY,
+                ),
+                TextWidget( text: 'Mark', textColor: GREY, fontSize: 12, paddingLeft: 5, width: 50,)
+              ],
+            ),
+          )),
+    ]);
   }
 }
