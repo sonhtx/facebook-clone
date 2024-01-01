@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FriendProfile(userId: "338"),
+      home: FriendProfile(userId: "339"),
     );
   }
 }
@@ -82,10 +82,10 @@ class _FriendProfileState extends State<FriendProfile> {
     email = 'sonacc2@gmail.com';
     // For testing purpose only, delete after merging
     String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDMxMjk5OTF9.CZIIPwAH-qLCWej_OzXD4UIkbKMeHA8g6lDK8aOiZ98';
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDMyNTYwNzB9.pSLWf-EIW4orFDSaJXokebzZVBrss4jzSNlw0NxTa1g';
     String testId = '339';
     //await deleteAllSecureStorageData();
-    // await storage.write(key: 'token', value: testToken);
+    await storage.write(key: 'token', value: testToken);
     // await storage.write(key: 'id', value: testId);
     // await storage.write(key: 'email', value: email);
     String userId = widget.userId;
