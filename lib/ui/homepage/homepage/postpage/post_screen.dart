@@ -7,7 +7,6 @@ import '../../../../api/post/comment_api.dart';
 import '../../../../constants.dart';
 import '../../../../models/post/PostData.dart';
 import '../../../../repository/post/post_repo.dart';
-import '../../../../widgets/AlertDialogWidget.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../../../../widgets/custom_react_widget.dart';
 import '../listpost.dart';
@@ -226,14 +225,7 @@ class _SetMarkButtonWidget extends StatelessWidget{
   }
 
 }
-void showNotification(BuildContext context, String title, String text) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialogWidget(title: title, text: text);
-    },
-  );
-}
+
 
 void showMarkInput(BuildContext context, String id, String rateStatus) {
   showDialog(

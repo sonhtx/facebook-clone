@@ -26,10 +26,15 @@ class GetVerifyCodeApi{
   }
 
   static Future<bool> checkVerifyCode(String email, String code) async {
+    final Map<String, String> requestBody = {
+      "email": email,
+      "code_verify": code,
+    };
+
     final response = await http.post(
       Uri.parse('$apiUrl/check_verify_code'),
       headers: headers,
-      body: {"email" : email, "code_verify": code},
+      body: jsonEncode(requestBody),
     );
 
     if (response.statusCode == 200) {
