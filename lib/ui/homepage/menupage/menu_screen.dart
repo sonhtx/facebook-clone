@@ -87,8 +87,7 @@ class _MenuPageState extends State<MenuPage>
                           radius: 35.0,
                         )
                       : const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/messi-world-cup.png'),
+                          backgroundImage: AssetImage(defaultAvatar),
                           radius: 35.0,
                         ),
                   onPressed: () {

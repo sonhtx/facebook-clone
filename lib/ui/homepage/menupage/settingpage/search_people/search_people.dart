@@ -3,6 +3,7 @@ import 'package:anti_fb/models/request/ReqSearchUser.dart';
 import 'package:anti_fb/repository/search/search_repo.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../constants.dart';
 import '../../../../../repository/block/block_repo.dart';
 
 class SearchUserTab extends StatefulWidget {
@@ -293,7 +294,7 @@ class _SearchPeopleState extends State<SearchPeople> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                     child: (widget.imageUrl == "")?
-                        Image.asset('assets/images/messi-world-cup.png',
+                        Image.asset(defaultAvatar,
                           width: 30.0,
                           height: 30.0,):
                     Image.network(

@@ -321,7 +321,7 @@ class _BlockedPeopleState extends State<BlockedPeople> {
                       imageFilter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
                       child: (widget.imageUrl == "") ?
                       Image.asset(
-                        'assets/images/messi-world-cup.png',
+                        defaultAvatar,
                         width: 30.0,
                         height: 30.0,
                       ):

@@ -19,7 +19,7 @@ class NotificationWidget extends StatelessWidget {
     int group = int.parse(notification.group);
     return GestureDetector(
       onTap: (){
-        print(type);
+        print(notification.feel!.type);
         if(type == 3){
           print(notification.post?.id);
         }
@@ -125,8 +125,7 @@ class NotificationWidget extends StatelessWidget {
                           radius: 35.0,
                         )
                             : const CircleAvatar(
-                          backgroundImage:
-                          AssetImage('assets/images/messi-world-cup.png'),
+                          backgroundImage: AssetImage(defaultAvatar),
                           radius: 35.0,
                         ),
                       ),
@@ -208,7 +207,13 @@ class Described extends StatelessWidget {
           ]),
     );
   }
-
+  String feel_type(String type){
+    if(type == "1"){
+      return "like";
+    }else{
+      return "dislike";
+    }
+  }
   String showContent(int type){
     switch(type){
       case 1:
@@ -224,7 +229,7 @@ class Described extends StatelessWidget {
       case 4:
         return " updated post";
       case 5:
-        return " ${notification.feel!.type} your post";
+        return " ${feel_type(notification.feel!.type)} your post";
       case 6:
         return " marked your post: ${notification.mark!.mark_content}";
       case 7:
