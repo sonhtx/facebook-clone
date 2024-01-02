@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:anti_fb/models/post/PostListData.dart';
-import 'package:anti_fb/ui/homepage/homepage/listpost.dart';
+import 'package:anti_fb/ui/homepage/homepage/PostWidget.dart';
 import 'package:anti_fb/ui/profile/profile_screen.dart';
 import 'package:anti_fb/widgets1/friends_grid.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -196,7 +196,7 @@ class _FriendProfileState extends State<FriendProfile> {
           }
 
           if (myId == widget.userId) {
-            return const Profile();
+            // return const Profile();
           }
 
           Widget button;
@@ -563,9 +563,9 @@ class _FriendProfileState extends State<FriendProfile> {
 
                     // List posts here
 
-                    ListPostWidget(
-                      id: widget.userId,
-                    ),
+                    // ListPostWidget(
+                    //   id: widget.userId,
+                    // ),
                   ],
                 ),
               ),

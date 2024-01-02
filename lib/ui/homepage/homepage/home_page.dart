@@ -10,7 +10,7 @@ import '../../../widgets/IconWidget.dart';
 import '../search/search_tab.dart';
 import 'appbar.dart';
 import 'createpostbar.dart';
-import 'listpost.dart';
+import 'PostWidget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage(
@@ -149,7 +149,8 @@ class _HomePageState extends State<HomePage> {
                     item.comment_mark,
                     item.is_felt,
                     item.author.name,
-                    item.author.avatar
+                    item.author.avatar,
+                    false
                   )
               ),
             ),

@@ -9,7 +9,7 @@ import '../../../../models/post/PostData.dart';
 import '../../../../repository/post/post_repo.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../../../../widgets/custom_react_widget.dart';
-import '../listpost.dart';
+import '../PostWidget.dart';
 import 'MarkInputWidget.dart';
 import 'markUI.dart';
 
@@ -70,8 +70,8 @@ class PostScreenState extends State<PostScreen> {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: WHITE,
-          title: PostHeader( imageUrl: post.author!.avatar, email: post.author!.name,
-            timestamp: post.created),
+          title: PostHeader(post_id: widget.id, imageUrl: post.author!.avatar, email: post.author!.name,
+            timestamp: post.created.substring(0,10), canEdit: false,),
           iconTheme: const IconThemeData(
             color: GREY, // Set the color of the back arrow icon to black
           ),

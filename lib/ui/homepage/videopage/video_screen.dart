@@ -11,7 +11,7 @@ import '../../../../repository/post/post_repo.dart';
 import '../../../../widgets/AlertDialogWidget.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../../../../widgets/custom_react_widget.dart';
-import '../homepage/listpost.dart';
+import '../homepage/PostWidget.dart';
 import '../homepage/postpage/MarkInputWidget.dart';
 import '../homepage/postpage/markUI.dart';
 
@@ -88,8 +88,8 @@ class VideoScreenState extends State<VideoScreen> {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: WHITE,
-          title: PostHeader( imageUrl: widget.author_avatar, email: widget.author_name,
-            timestamp: widget.created.substring(0,10),),
+          title: PostHeader(post_id: widget.id, imageUrl: widget.author_avatar, email: widget.author_name,
+            timestamp: widget.created.substring(0,10), canEdit: false,),
           iconTheme: const IconThemeData(
             color: GREY, // Set the color of the back arrow icon to black
           ),

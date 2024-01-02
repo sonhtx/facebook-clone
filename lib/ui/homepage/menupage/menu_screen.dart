@@ -32,11 +32,15 @@ class _MenuPageState extends State<MenuPage>
   String? name = "";
   String? imageUrl = "";
 
+  late String userId;
+
   @override
   void initState() {
     super.initState();
     getUserName().then((value) => setState(() => name = value));
     getAvatarUrl().then((value) => setState(() => imageUrl = value));
+
+    getId().then((value) => setState(() => userId = value!));
   }
 
   @override
@@ -91,7 +95,7 @@ class _MenuPageState extends State<MenuPage>
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Profile()));
+                            builder: (context) => Profile(userid: userId,)));
                   },
                 ),
                 const SizedBox(
