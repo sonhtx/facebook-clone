@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:anti_fb/models/post/PostListData.dart';
 import 'package:anti_fb/ui/homepage/homepage/listpost.dart';
+import 'package:anti_fb/ui/profile/profile_screen.dart';
 import 'package:anti_fb/widgets1/friends_grid.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FriendProfile(userId: "339"),
+      home: FriendProfile(userId: "794"),
     );
   }
 }
@@ -48,8 +49,9 @@ class _FriendProfileState extends State<FriendProfile> {
   late List<Info> info;
   late String friendsCount;
   late FriendsGrid friendsGrid;
+  late String myId;
   List<PostListData> postlists = [];
-  int buttonCase = 1;
+  int buttonCase = 0;
 
   Widget infoTemplate(infoItem, context) {
     return Row(
@@ -82,20 +84,29 @@ class _FriendProfileState extends State<FriendProfile> {
     email = 'sonacc2@gmail.com';
     // For testing purpose only, delete after merging
     String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDMyNTYwNzB9.pSLWf-EIW4orFDSaJXokebzZVBrss4jzSNlw0NxTa1g';
-    String testId = '339';
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nzk0LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDQxODk1NzV9.Gj8HqP59QQEYeUILTD-kwZK1yNsuifBT9EFB5Y2nmcg';
+    String testId = '794';
     //await deleteAllSecureStorageData();
-    await storage.write(key: 'token', value: testToken);
+    // await storage.write(key: 'token', value: testToken);
     // await storage.write(key: 'id', value: testId);
     // await storage.write(key: 'email', value: email);
     String userId = widget.userId;
 
-    // get token and userId from storage
+    // get token and email from storage
     token = (await getJwt())!;
     email = (await getEmail())!;
 
+    // get current user (user who is currently log in) id
+    // await storage.write(key: 'id', value: testId);
+    myId = (await getId())!;
+
     UserInfoApi uia = UserInfoApi();
     Map<String, dynamic> userInfo = await uia.getUserInfo(userId);
+
+    // handle button case here
+    buttonCase = await uia.getFriendStatus(userId);
+    print(userInfo);
+
     user = User.fromJson(userInfo);
     print(user.username);
     info = [
@@ -172,64 +183,160 @@ class _FriendProfileState extends State<FriendProfile> {
           // String data = snapshot.data as String;
           print("Finished");
 
-          Widget button;
+          if (buttonCase == -1) {
+            return const Text(
+              "You're navigate to an unexisted user.",
+            );
+          }
 
-          // Handle button
+          if (buttonCase == 4) {
+            return const Text(
+              "You can't see this profile because of blocking issue.",
+            );
+          }
+
+          if (myId == widget.userId) {
+            return const Profile();
+          }
+
+          Widget button;
+          Widget button1;
+          FriendApi fapi = FriendApi();
+
+          // Handle button & button1
           switch (buttonCase) {
-            // Add friend
-            case 1:
+            // Not friend yet
+            case 0:
               button = CustomButton(
                 text: 'Add friend',
                 icon: Icons.person_add,
                 onPressed: () {
+                  fapi.setRequestFriend(widget.userId);
                   setState(() {
-                    // Send friend Request
                     buttonCase = 2;
                   });
-                  // Handle button press
-                  print('Button pressed!');
+                  // Handle send friend request
+                  print('Friend request sent.');
                 },
                 color: FBBLUE, // Set the button color here
               );
-              break;
-            // Friend request sent
-            case 2:
-              button = CustomButton(
-                text: 'Cancel Request',
-                icon: Icons.cancel,
+              button1 = CustomButton(
+                text: 'Block',
+                icon: Icons.clear,
                 onPressed: () {
-                  setState(() {});
-                  // Cancel friend request sent
-                  buttonCase = 1;
-                  print('Button pressed!');
+                  // Handle block here
+                  fapi.setBlock(widget.userId);
+                  setState(() {
+                    buttonCase = 4;
+                  });
+                  print('''You've blocked this user.''');
                 },
-                color: FBBLUE, // Set the button color here
+                color: Colors.red[800],
               );
               break;
-            // Already friend
-            case 3:
+            // Friend already
+            case 1:
               button = CustomButton(
                 text: 'Friends',
                 icon: Icons.done_outlined,
                 onPressed: () {
                   setState(() {});
-                  // Handle button press
+                  buttonCase = 1;
                   print('Button pressed!');
                 },
                 color: FBBLUE, // Set the button color here
               );
-              break;
-            default:
-              // Default case or handle other cases
-              button = CustomButton(
-                text: 'Add friend',
-                icon: Icons.person_add,
+              button1 = CustomButton(
+                text: 'Unfriend',
+                icon: Icons.person_remove,
                 onPressed: () {
-                  setState(() {});
-                  // Handle button press
+                  // Handle unfriend here
+                  fapi.unFriend(widget.userId);
+                  setState(() {
+                    buttonCase = 0;
+                  });
+                  print('''You've unfriended this user.''');
+                },
+                color: Colors.red[800],
+              );
+              break;
+            // Friend request sent
+            case 2:
+              button = CustomButton(
+                text: 'Cancel request',
+                icon: Icons.cancel,
+                onPressed: () {
+                  // Delete friend request here!!!!!
+                  fapi.delRequestFriend(widget.userId);
+                  setState(() {
+                    buttonCase = 0;
+                  });
                   print('Button pressed!');
                 },
                 color: FBBLUE, // Set the button color here
+              );
+              button1 = CustomButton(
+                text: 'Delete request',
+                icon: Icons.remove_circle,
+                onPressed: () {
+                  // Handle delete friend request here
+                  fapi.delRequestFriend(widget.userId);
+                  setState(() {
+                    buttonCase = 0;
+                  });
+                  print('''You've unfriended this user.''');
+                },
+                color: Colors.red[800],
+              );
+              break;
+            // Friend request received
+            case 3:
+              button = CustomButton(
+                text: 'Confirm',
+                icon: Icons.done,
+                onPressed: () {
+                  setState(() {
+                    buttonCase = 1;
+                  });
+                  // Accept friend request here!!!!!
+                  fapi.setAcceptFriend(widget.userId, "1");
+                  print('Button pressed!');
+                },
+                color: FBBLUE, // Set the button color here
+              );
+              button1 = CustomButton(
+                text: 'Block',
+                icon: Icons.clear,
+                onPressed: () {
+                  // Handle block here
+                  fapi.setBlock(widget.userId);
+                  setState(() {
+                    buttonCase = 4;
+                  });
+                  print('''You've blocked this user.''');
+                },
+                color: Colors.red[800],
+              );
+            default:
+              button = CustomButton(
+                text: 'Why this happened?',
+                icon: Icons.error,
+                onPressed: () {
+                  setState(() {});
+                  // Handle button press
+                  print('''You've created an error''');
+                },
+                color: FBBLUE,
+              );
+              button1 = CustomButton(
+                text: 'Why this happened?',
+                icon: Icons.remove_circle,
+                onPressed: () {
+                  setState(() {});
+                  // Handle button1 press
+                  print('''You've created an error''');
+                },
+                color: Colors.red[800],
               );
           }
 
@@ -386,23 +493,9 @@ class _FriendProfileState extends State<FriendProfile> {
                         const SizedBox(
                           width: 10,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Handle Unfriend here
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red[800],
-                          ),
-                          child: const Row(
-                            children: [
-                              Icon(Icons.remove_circle),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text('Unfriend')
-                            ],
-                          ),
-                        ),
+                        // button1
+                        button1,
+
                         const SizedBox(
                           width: 10,
                         ),
