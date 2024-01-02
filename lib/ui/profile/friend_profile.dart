@@ -97,7 +97,7 @@ class _FriendProfileState extends State<FriendProfile> {
     email = (await getEmail())!;
 
     // get current user (user who is currently log in) id
-    await storage.write(key: 'id', value: testId);
+    // await storage.write(key: 'id', value: testId);
     myId = (await getId())!;
 
     UserInfoApi uia = UserInfoApi();
