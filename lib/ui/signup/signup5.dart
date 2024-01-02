@@ -1,11 +1,11 @@
 
 
+import 'package:anti_fb/ui/signup/signup6.dart';
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import '../../repository/auth/signup_repo.dart';
-import '../../widgets/AlertDialogWidget.dart';
 import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextFieldWidget.dart';
 import '../../widgets/TextWidget.dart';
@@ -83,60 +83,49 @@ class _PasswordState extends State<SignupForm5>{
         ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
             backgroundColor: FBBLUE,
             onPressed: () async {
-              if(pw.text == ''){
-                showNeedProvidePasswordNotification(context);
+              if (pw.text == '') {
+                showNotification(context, 'Error', 'Need to provide password');
                 return;
               }
-              if(repw.text == ''){
-                showNeedProvideRePasswordNotification(context);
+              if (repw.text == '') {
+                showNotification(context, 'Error', 'Need re-enter password');
                 return;
               }
 
 
-              if(!isPasswordMatch(pw.text, repw.text)){
+              if (!isPasswordMatch(pw.text, repw.text)) {
                 setPasswordNotMatchState();
               } else {
-                final SignupState? signupState = context.findAncestorStateOfType<SignupState>();
+                final SignupState? signupState = context
+                    .findAncestorStateOfType<SignupState>();
                 signupState?.signupData.password = pw.text;
 
                 // send signup information to backend
                 // redirect to signup7 if receive OK response
                 // use await async for waiting response
 
-                final bool isSignupSuccessful = await SignupRepository.signupUser(signupState!.signupData);
+                final isSignupSuccessful = await SignupRepository.signupUser(
+                    signupState!.signupData);
 
-                if(context.mounted){
-                  isSignupSuccessful ? signupState.moveFoward() : showSignupErrorNotification(context);
+                if (context.mounted) {
+                  if (isSignupSuccessful is String) {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SignupForm6(signupState.signupData.email,
+                                  isSignupSuccessful),
+                        )
+                    );
+
+                  } else {
+                    showNotification(context, 'Error',
+                        'There was an error when trying to sign up');
+                  }
                 }
-
               }
-            }),
+            }
+          )
       ],
-    );
-  }
-
-  void showSignupErrorNotification(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error', text: 'There was an error when trying to sign up');
-      },
-    );
-  }
-  void showNeedProvidePasswordNotification(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error', text: 'Need to provide password');
-      },
-    );
-  }
-  void showNeedProvideRePasswordNotification(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error', text: 'Need re enter password');
-      },
     );
   }
 

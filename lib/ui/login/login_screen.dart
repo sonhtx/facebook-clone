@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import '../../models/request/ReqLoginData.dart';
-import '../../widgets/AlertDialogWidget.dart';
 
 class LoginScreen extends StatelessWidget{
   const LoginScreen({super.key});
@@ -67,11 +66,11 @@ class LoginForm extends StatelessWidget{
                 backgroundColor: FBBLUE,
                 onPressed: () async{
                   if(emailController.text == '' || passwordController.text == ''){
-                    showNeedToEnterEmailAndPasswordNotification(context);
+                    showNotification(context, 'Error', 'Need to enter email and password');
                     return;
                   }
                   if (!isValidEmail(emailController.text)) {
-                    showInvalidEmailNotification(context);
+                    showNotification(context, 'Error', 'Invalid email address');
                     return;
                   }
                   LoginData loginData = LoginData(emailController.text,
@@ -81,7 +80,7 @@ class LoginForm extends StatelessWidget{
 
                   if(context.mounted){
                     if (loginStatus) { Navigator.pushReplacementNamed(context, '/home');
-                    } else { showEmailNotExistNotification(context);}
+                    } else { showNotification(context, 'Error', 'Wrong email or password');}
                   }
                 }),
 
@@ -101,30 +100,6 @@ class LoginForm extends StatelessWidget{
     // You can customize this regex to suit your validation criteria
     final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
     return emailRegex.hasMatch(email);
-  }
-  void showNeedToEnterEmailAndPasswordNotification(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error', text: 'Need to enter email and password');
-      },
-    );
-  }
-  void showInvalidEmailNotification(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error', text: 'Invalid email address');
-      },
-    );
-  }
-  void showEmailNotExistNotification(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error', text: 'Email address not exist');
-      },
-    );
   }
 
 

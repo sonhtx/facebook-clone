@@ -1,10 +1,8 @@
+
 import 'package:anti_fb/models/request/ReqSignupData.dart';
-import 'package:anti_fb/storage.dart';
 import 'package:anti_fb/ui/signup/signup1.dart';
 import 'package:anti_fb/ui/signup/signup4.dart';
-import 'package:anti_fb/ui/signup/signup6.dart';
 import 'package:anti_fb/ui/signup/signup5.dart';
-import 'package:anti_fb/ui/signup/signup7.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -23,15 +21,11 @@ class SignupState extends State<SignupScreen>{
   late int currentFormIndex;
   late Widget screen ;
 
-  late String verifyCode;
-
   void moveToScreen1(){ setState(() {screen = const SignupForm1();});}
   // void moveToScreen2(){ setState(() {screen = SignupForm2(signupData.firstName, signupData.lastName);});}
   // void moveToScreen3(){ setState(() {screen = SignupForm3(signupData.birthday);});}
   void moveToScreen4(){ setState(() {screen = SignupForm4(signupData.email);});}
   void moveToScreen5(){ setState(() {screen = const SignupForm5();}); }
-  void moveToScreen6(){ setState(() {screen = SignupForm6(signupData.email, verifyCode);});}
-  void moveToScreen7(){ setState(() {screen = const SignupForm7();});}
 
   List<void Function()> moveScreen = [];
   @override
@@ -39,12 +33,11 @@ class SignupState extends State<SignupScreen>{
     super.initState();
 
     signupData = SignupData("", "", "",DateTime(2010, 10, 26), "");
-    verifyCode = getVerifyCode() as String;
 
     currentFormIndex = 0;
     screen = const SignupForm1();
 
-    moveScreen = [ moveToScreen1, moveToScreen4, moveToScreen5, moveToScreen6, moveToScreen7,];
+    moveScreen = [ moveToScreen1, moveToScreen4, moveToScreen5, ];
   }
   void moveFoward() {
     currentFormIndex++;
