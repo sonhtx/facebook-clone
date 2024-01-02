@@ -195,7 +195,7 @@ class _ProfileState extends State<Profile> {
         future: myFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

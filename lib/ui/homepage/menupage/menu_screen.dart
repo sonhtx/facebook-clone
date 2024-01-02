@@ -200,6 +200,7 @@ class _MenuPageState extends State<MenuPage>
                                         ),
                                         onPressed: () async {
                                           LogoutRepository logoutRepo = LogoutRepository();
+                                          showLoaderDialog(context);
                                           final logoutStatus = await logoutRepo.logout();
                                           if (context.mounted) {
                                             if (logoutStatus) {
