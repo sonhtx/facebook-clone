@@ -1,9 +1,7 @@
 // List of posts
 import 'dart:ui';
 
-import 'package:anti_fb/models/post/PostListData.dart';
-import 'package:anti_fb/models/request/ReqListPost_VideoData.dart';
-import 'package:anti_fb/repository/post/post_repo.dart';
+import 'package:anti_fb/api/post/post_api.dart';
 import 'package:anti_fb/ui/homepage/homepage/postpage/post_screen.dart';
 import 'package:anti_fb/widget_dung/imageViewWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,139 +14,6 @@ import '../../../models/post/ImageData.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/custom_react_widget.dart';
 import '../../../widgets/profile_avatar.dart';
-
-class ListPostWidget extends StatefulWidget {
-  const ListPostWidget({super.key, required this.id});
-
-  final String? id;
-
-  @override
-  State<ListPostWidget> createState() => ListPostWidgetState();
-}
-
-class ListPostWidgetState extends State<ListPostWidget> {
-
-  late List<Widget> listPostsWidget = [];
-
-  late final String? _id ;
-  late String _index;
-  late bool isLoading ;
-
-  final PostRepository _postRepository = PostRepository();
-  final ScrollController _scrollController = ScrollController();
-
-  Future<void> getlistpost(RequestListPost_VideoData request) async {
-    await Future.delayed(const Duration(seconds: 2));
-    try {
-      List<PostListData>? listPost =
-      await _postRepository.getlistpost(request);
-      setState(() {
-        for (int i = 0; i < listPost!.length; i++) {
-          PostListData curPost = listPost[i];
-          listPostsWidget.add(PostWidget(
-              curPost.id,
-              curPost.name,
-              curPost.image,
-              curPost.described,
-              curPost.created.substring(0, 10),
-              curPost.feel,
-              curPost.comment_mark,
-              curPost.is_felt,
-              curPost.author.name,
-              curPost.author.avatar));
-        }
-      });
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _id = widget.id;
-    _index = "0";
-
-    _scrollController.addListener(_scrollListener);
-
-    isLoading = false;
-
-    final RequestListPost_VideoData requestListPostData =
-    RequestListPost_VideoData(_id, "1", "1", "1.0", "1.0", null, _index, "10");
-
-    getlistpost(requestListPostData);
-  }
-
-
-  Future<void> getMorePost() async {
-    try{
-      listPostsWidget.add(Container(
-        height: 20,
-        color: GREEN,
-          child: const Text("new post"),
-      ));
-      _index = (int.parse(_index) + 10).toString();
-
-      final RequestListPost_VideoData request =
-      RequestListPost_VideoData(_id, "1", "1", "1.0", "1.0", null, _index, "10");
-      List<PostListData>? listPost =
-      await _postRepository.getlistpost(request);
-      setState(() {
-        for (int i = 0; i < listPost!.length; i++) {
-          PostListData curPost = listPost[i];
-          listPostsWidget.add(PostWidget(
-              curPost.id,
-              curPost.name,
-              curPost.image,
-              curPost.described,
-              curPost.created.substring(0, 10),
-              curPost.feel,
-              curPost.comment_mark,
-              curPost.is_felt,
-              curPost.author.name,
-              curPost.author.avatar));
-        }
-      });
-      setState(() {
-        isLoading = false;
-      });
-    } catch(error){
-      print(error);
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _scrollListener() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
-      if(!isLoading){
-      setState(() {
-        isLoading = true;
-      });}
-      if(isLoading){
-        getMorePost();
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: ListView.builder(
-        controller: _scrollController,
-        itemCount: listPostsWidget.length,
-        itemBuilder: (context, index) {
-          return listPostsWidget[index];
-        }
-      )
-    );
-  }
-}
 
 // post
 class PostWidget extends StatelessWidget {
@@ -163,6 +28,8 @@ class PostWidget extends StatelessWidget {
   final String author_name;
   final String author_avatar_url;
 
+  final bool canEdit;
+
   const PostWidget(
       this.id,
       this.name,
@@ -174,6 +41,7 @@ class PostWidget extends StatelessWidget {
       this.is_felt,
       this.author_name,
       this.author_avatar_url,
+      this.canEdit,
       {super.key});
 
   @override
@@ -193,6 +61,8 @@ class PostWidget extends StatelessWidget {
                   imageUrl: author_avatar_url,
                   email: author_name,
                   timestamp: created,
+                  canEdit: canEdit,
+                  post_id: id,
                 ),
                 const SizedBox(height: 4.0),
                 // _PostCaption(caption: post.caption,),
@@ -271,15 +141,20 @@ class PostWidget extends StatelessWidget {
 }
 
 class PostHeader extends StatelessWidget {
+  final String post_id;
+
   final String imageUrl;
   final String email;
   final String timestamp;
 
-  const PostHeader(
-      {super.key,
-      required this.imageUrl,
-      required this.email,
-      required this.timestamp});
+  final bool canEdit;
+
+  const PostHeader({ super.key,
+    required this.post_id,
+    required this.imageUrl,
+    required this.email,
+    required this.timestamp,
+    required this.canEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +180,11 @@ class PostHeader extends StatelessWidget {
         ),
         IconButton(
           icon: const Icon(Icons.more_horiz),
-          onPressed: () {},
+          onPressed: () {
+            if(canEdit){
+              showEditPostSheetMenu(context, post_id);
+            }
+          },
         )
       ],
     );
@@ -367,3 +246,103 @@ class PostBottom extends StatelessWidget {
     ]);
   }
 }
+
+void handleDeletePost(BuildContext context, String post_id) async{
+  final PostApi _postApi = PostApi();
+
+  final delStatus = await _postApi.deletePost(post_id);
+  print(delStatus);
+  if(delStatus){
+    ScaffoldMessenger.of(context).showSnackBar(snackBarDelPostOK);
+  } else {
+    showNotification(context, "Error", "There was an error when trying to delete post");
+  }
+}
+
+
+void showEditPostSheetMenu(BuildContext context, String post_id) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext builderContext) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 1 / 3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(8.0),
+                backgroundColor: WHITE, // Màu nền của nút
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                side: BorderSide.none, // Loại bỏ border
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon( Icons.edit, size: 22.0, color: BLACK,
+                    ),
+                    SizedBox(width: 20,),
+                    Text( 'Edit this post',
+                      style: TextStyle( color: BLACK, fontSize: 14.0, fontWeight: FontWeight.bold),),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox( height: 10,),
+
+            const SizedBox( height: 10,),
+            ElevatedButton(
+              onPressed: () {
+                handleDeletePost(context, post_id);
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(8.0),
+                backgroundColor: WHITE, // Màu nền của nút
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                side: BorderSide.none, // Loại bỏ border
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Icon( Icons.remove_circle_outlined, size: 22.0, color: RED,),
+                    SizedBox( width: 20,),
+                    Text( 'Remove this post',
+                      style: TextStyle( fontSize: 14.0, fontWeight: FontWeight.bold, color: RED,),
+                    ),
+                    SizedBox( height: 5,),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+final snackBarDelPostOK = SnackBar(
+  content: const Text('Del post successfully, refresh page to see the change'),
+  action: SnackBarAction(
+    label: 'Undo',
+    onPressed: () {
+      // Some code to undo the change.
+    },
+  ),
+);

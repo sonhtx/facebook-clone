@@ -1,21 +1,23 @@
-import 'dart:convert';
 
 import 'package:anti_fb/api/friend/friend_api.dart';
-import 'package:anti_fb/models/post/PostListData.dart';
-import 'package:anti_fb/ui/homepage/homepage/listpost.dart';
+import 'package:anti_fb/ui/homepage/homepage/PostWidget.dart';
 import 'package:anti_fb/widgets1/friends_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import '../../models/post/PostListData.dart';
+import '../../models/request/ReqListPost_VideoData.dart';
+import '../../repository/post/post_repo.dart';
 import '/models/info.dart';
 import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/storage.dart';
-import 'package:anti_fb/api/profile/profile_api.dart';
 import 'package:anti_fb/api/profile/userinfo_api.dart';
 import 'package:anti_fb/models/User.dart';
-import 'package:anti_fb/widgets1/friend_grid_view.dart';
 import 'dart:math';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  const Profile({super.key, required this.userid});
+
+  final String userid;
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -30,44 +32,46 @@ class _ProfileState extends State<Profile> {
   late String friendsCount;
   late FriendsGrid friendsGrid;
 
-  Widget infoTemplate(infoItem, context) {
-    return Row(
-      children: [
-        infoItem.icon,
-        const SizedBox(
-          width: 5,
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width - 50.0,
-          padding: const EdgeInsets.all(5),
-          child: RichText(
-              text: TextSpan(style: const TextStyle(fontSize: 18), children: [
-            TextSpan(
-                text: infoItem.normalText,
-                style: const TextStyle(color: Colors.black)),
-            TextSpan(
-                text: infoItem.boldText,
-                style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold))
-          ])),
-        ),
-      ],
-    );
+  final ScrollController scrollController = ScrollController();
+
+  int index = 0;
+  static const _pageSize = 8;
+  final PostRepository _postRepository = PostRepository();
+  final PagingController<int, PostListData> _pagingController =
+  PagingController(firstPageKey: 1);
+
+  late RequestListPost_VideoData requestListPostData =
+  RequestListPost_VideoData(widget.userid, "1", "1", "1.0", "1.0", null, "0", "10");
+
+  Future<void> _fetchPage(pageKey) async {
+    await Future.delayed(const Duration(seconds: 2));
+    try {
+      List<PostListData>? listPost =
+      await _postRepository.getlistpost(requestListPostData);
+      setState(() {
+        index+=10;
+        requestListPostData = RequestListPost_VideoData(widget.userid, "1", "1", "1.0", "1.0",
+            null, index.toString(), "10");
+      });
+      if(listPost!=null){
+        final isLastPage = listPost.length < _pageSize;
+        if (isLastPage) {
+          _pagingController.appendLastPage(listPost);
+        } else {
+          final nextPageKey = pageKey + 1;
+          _pagingController.appendPage(listPost, nextPageKey);
+        }
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
   }
+
+
+
 
   // Init data use for API calling
   Future<void> fetchData() async {
-    // fix this to your actual email
-    email = 'sonacc2@gmail.com';
-    // For testing purpose only, delete after merging
-    String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NzA3ODJ9.aYHRZhmvm2XMbGoXsjPveL6AS-whPVn5Les1CtPgt9o';
-    String testId = '339';
-    //await deleteAllSecureStorageData();
-    // await storage.write(key: 'token', value: testToken);
-    // await storage.write(key: 'id', value: testId);
-    // await storage.write(key: 'email', value: email);
-
     // get token and userId from storage
     token = (await getJwt())!;
     userId = (await getId())!;
@@ -114,6 +118,57 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
+  void initState(){
+    super.initState();
+
+    // fetchData();
+
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+
+    _pagingController.addStatusListener((status) {
+      if (status == PagingStatus.subsequentPageError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Something went wrong while fetching a new page.',
+            ),
+            action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () => _pagingController.retryLastFailedRequest(),
+            ),
+          ),
+        );
+      }
+    });
+  }
+
+  Widget infoTemplate(infoItem, context) {
+    return Row(
+      children: [
+        infoItem.icon,
+        const SizedBox(
+          width: 5,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width - 50.0,
+          padding: const EdgeInsets.all(5),
+          child: RichText(
+              text: TextSpan(style: const TextStyle(fontSize: 18), children: [
+                TextSpan(
+                    text: infoItem.normalText,
+                    style: const TextStyle(color: Colors.black)),
+                TextSpan(
+                    text: infoItem.boldText,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold))
+              ])),
+        ),
+      ],
+    );
+  }
+  @override
   Widget build(BuildContext context) {
     Widget boundary = const Divider(
       thickness: 1,
@@ -136,254 +191,302 @@ class _ProfileState extends State<Profile> {
     );
 
     return FutureBuilder(
-      future: fetchData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // While the future is still running, show a loading indicator
-          print("Waiting..");
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          // If there's an error, display an error message
-          print("Error: ${snapshot.error}");
-          return Text('Error: ${snapshot.error}');
-        } else {
-          // When the future is complete, use the result to build the widget
-          // String data = snapshot.data as String;
-          print("Finished");
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                color: Colors.white,
-                // constraints: const BoxConstraints.expand(),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    // Background & avatar
-                    Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 180,
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10)),
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                    user.coverImage,
-                                  ),
-                                  fit: BoxFit.cover)),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 80),
-                          child: CircleAvatar(
-                            radius: 74.0,
-                            backgroundColor: Colors.white,
-                            child: CircleAvatar(
-                              radius: 70.0,
-                              backgroundImage: NetworkImage(
-                                user.avatar,
+        future: fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return SafeArea(
+                child: Scaffold(
+                    body: RefreshIndicator(
+                      onRefresh: () {
+                        setState(() {
+                          index = 0;
+                          requestListPostData = RequestListPost_VideoData(
+                              widget.userid, "1", "1", "1.0", "1.0", null, index.toString(), "10");});
+                        return Future.sync(
+                              () => _pagingController.refresh(),
+                        );
+                      },
+                      child: CustomScrollView(
+                          controller: scrollController,
+                          slivers: <Widget>[
+                            
+                            SliverToBoxAdapter(
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10),
+                                color: WHITE,
+                                // constraints: const BoxConstraints.expand(),
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    // Background & avatar
+                                    Stack(
+                                      alignment: Alignment.topCenter,
+                                      children: [
+                                        Container(
+                                          width: MediaQuery
+                                              .of(context)
+                                              .size
+                                              .width,
+                                          height: 180,
+                                          decoration: BoxDecoration(
+                                              borderRadius: const BorderRadius
+                                                  .only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10)),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                    user.coverImage,
+                                                  ),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 80),
+                                          child: CircleAvatar(
+                                            radius: 74.0,
+                                            backgroundColor: Colors.white,
+                                            child: CircleAvatar(
+                                              radius: 70.0,
+                                              backgroundImage: NetworkImage(
+                                                user.avatar,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.only(top: 190),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center,
+                                            children: [
+                                              const SizedBox(
+                                                width: 55,
+                                              ),
+                                              const SizedBox(
+                                                width: 25,
+                                              ),
+                                              Container(
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                    BorderRadius.all(
+                                                        Radius.circular(50))),
+                                                child: Center(
+                                                  child: Container(
+                                                    width: 40.0,
+                                                    // Set the desired width
+                                                    height: 40.0,
+                                                    alignment: Alignment.center,
+                                                    child: IconButton(
+                                                      icon: const Icon(
+                                                          Icons.camera_alt),
+                                                      iconSize: 20.0,
+                                                      color: Colors.white,
+                                                      onPressed: () {
+                                                        // Change avatar
+                                                        print(
+                                                            'IconButton clicked!');
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.only(
+                                            left: 250, top: 140,),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .center,
+                                            children: [
+                                              const SizedBox(width: 55,),
+                                              const SizedBox(width: 25,),
+                                              Container(
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                    BorderRadius.all(
+                                                        Radius.circular(50))),
+                                                child: Center(
+                                                  child: Container(
+                                                    width: 40.0,
+                                                    // Set the desired width
+                                                    height: 40.0,
+                                                    alignment: Alignment.center,
+                                                    child: IconButton(
+                                                      icon: const Icon(
+                                                          Icons.camera_alt),
+                                                      iconSize: 20.0,
+                                                      color: Colors.white,
+                                                      onPressed: () {
+                                                        // Change background image
+                                                        print(
+                                                            'IconButton clicked!');
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    // Username
+                                    Text(
+                                      user.username,
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    // const SizedBox(
+                                    //   height: 10,
+                                    // ),
+
+                                    // Description
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        user.description,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color.fromARGB(
+                                                255, 50, 47, 47)),
+                                      ),
+                                    ),
+
+                                    endline,
+                                    boundary,
+                                    endline,
+
+                                    // User information
+                                    Column(
+                                      children: info
+                                          .map<Widget>(
+                                              (infoList) =>
+                                              infoTemplate(infoList, context))
+                                          .toList(),
+                                    ),
+
+                                    // Edit details button
+                                    Container(
+                                      width: MediaQuery
+                                          .of(context)
+                                          .size
+                                          .width,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            // To edit profile
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color.fromARGB(
+                                                255, 209, 247, 254),
+                                          ),
+                                          child: const Text(
+                                            'Edit public details',
+                                            style: TextStyle(color: FBBLUE),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // Friend here
+                                    // Container(
+                                    //   child: MyGridView(),
+                                    // ),
+
+                                    endline,
+                                    boundary,
+                                    endline,
+
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Friends',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+
+                                    endline5,
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        '$friendsCount friends',
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+
+                                    friendsGrid,
+
+                                    bigBoundary,
+
+                                    const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Posts',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+
+                                    // List posts here
+
+
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 190),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 55,
+                            PagedSliverList<int, PostListData>(
+                              pagingController: _pagingController,
+                              builderDelegate: PagedChildBuilderDelegate<
+                                  PostListData>(
+                                  animateTransitions: true,
+                                  itemBuilder: (context, item, index) =>
+                                      PostWidget(
+                                          item.id,
+                                          item.name,
+                                          item.image,
+                                          item.described,
+                                          item.created.substring(0, 10),
+                                          item.feel,
+                                          item.comment_mark,
+                                          item.is_felt,
+                                          item.author.name,
+                                          item.author.avatar,
+                                          true
+                                      )
                               ),
-                              const SizedBox(
-                                width: 25,
-                              ),
-                              Container(
-                                decoration: const BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50))),
-                                child: Center(
-                                  child: Container(
-                                    width: 40.0, // Set the desired width
-                                    height: 40.0,
-                                    alignment: Alignment.center,
-                                    child: IconButton(
-                                      icon: const Icon(Icons.camera_alt),
-                                      iconSize: 20.0,
-                                      color: Colors.white,
-                                      onPressed: () {
-                                        // Change avatar
-                                        print('IconButton clicked!');
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            left: 250,
-                            top: 140,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 55,
-                              ),
-                              const SizedBox(
-                                width: 25,
-                              ),
-                              Container(
-                                decoration: const BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50))),
-                                child: Center(
-                                  child: Container(
-                                    width: 40.0, // Set the desired width
-                                    height: 40.0,
-                                    alignment: Alignment.center,
-                                    child: IconButton(
-                                      icon: const Icon(Icons.camera_alt),
-                                      iconSize: 20.0,
-                                      color: Colors.white,
-                                      onPressed: () {
-                                        // Change background image
-                                        print('IconButton clicked!');
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // Username
-                    Text(
-                      user.username,
-                      style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-
-                    // Description
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        user.description,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 50, 47, 47)),
+                            ),
+                          ]
                       ),
-                    ),
-
-                    endline,
-                    boundary,
-                    endline,
-
-                    // User information
-                    Column(
-                      children: info
-                          .map<Widget>(
-                              (infoList) => infoTemplate(infoList, context))
-                          .toList(),
-                    ),
-
-                    // Edit details button
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // To edit profile
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 209, 247, 254),
-                          ),
-                          child: const Text(
-                            'Edit public details',
-                            style: TextStyle(color: FBBLUE),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Friend here
-                    // Container(
-                    //   child: MyGridView(),
-                    // ),
-
-                    endline,
-                    boundary,
-                    endline,
-
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Friends',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-
-                    endline5,
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '$friendsCount friends',
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-
-                    friendsGrid,
-
-                    bigBoundary,
-
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Posts',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-
-                    // List posts here
-
-                    ListPostWidget(id: userId),
-                  ],
-                ),
-              ),
-            ),
-          );
+                    )
+                )
+            );
+          }
         }
-      },
     );
   }
 }

@@ -10,7 +10,7 @@ import '../../../api/post/comment_api.dart';
 import '../../../constants.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/custom_react_widget.dart';
-import '../homepage/listpost.dart';
+import '../homepage/PostWidget.dart';
 
 class VideoWidget extends StatefulWidget {
   final String id;
@@ -71,9 +71,11 @@ class VideoWidgetState extends State<VideoWidget> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 PostHeader(
+                  post_id: widget.id,
                   imageUrl: widget.author_avatar_url,
                   email: widget.author_name,
                   timestamp: widget.created,
+                  canEdit: false,
                 ),
                 const SizedBox(height: 4.0),
                 // _PostCaption(caption: post.caption,),

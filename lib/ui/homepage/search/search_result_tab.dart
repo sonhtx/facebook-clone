@@ -1,11 +1,7 @@
 import 'package:anti_fb/models/post/PostListSearchData.dart';
 import 'package:anti_fb/models/request/ReqSearch.dart';
-import 'package:anti_fb/models/search/SavedSearch.dart';
 import 'package:anti_fb/repository/search/search_repo.dart';
-import 'package:anti_fb/ui/homepage/homepage/listpost.dart';
-import 'package:anti_fb/ui/homepage/homepage/postpage/post_screen.dart';
-import 'package:anti_fb/ui/homepage/search/search_result_widget.dart';
-import 'package:anti_fb/widgets/ButtonWidget.dart';
+import 'package:anti_fb/ui/homepage/homepage/PostWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -50,7 +46,8 @@ class _SearchResultTabState extends State<SearchResultTab> {
                     current.mark_comment,
                     current.is_felt,
                     current.author.name,
-                    current.author.avatar))
+                    current.author.avatar,
+                    false))
                 .toList() ??
             [];
         print(postScreenList);
