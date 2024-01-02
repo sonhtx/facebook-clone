@@ -3,7 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../constants.dart';
 
-enum Reaction { none, kudos, dissapoint }
+enum Reaction { none, dissapoint, kudos }
 List<Reaction> ReactionValues = Reaction.values;
 
 typedef OnButtonPressedCallback = void Function(Reaction newReaction);

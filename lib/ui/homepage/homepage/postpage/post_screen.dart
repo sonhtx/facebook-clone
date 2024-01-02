@@ -65,7 +65,7 @@ class PostScreenState extends State<PostScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-        return content;
+        return const Text("Network disconnected");
       } else {
       return Scaffold(
         appBar: AppBar(

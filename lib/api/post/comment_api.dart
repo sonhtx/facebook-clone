@@ -104,6 +104,7 @@ class CommentApi {
   }
 
   Future deleteFeel(String id) async{
+    await _initializeHeaders();
     final Map<String, dynamic> requestBody = {
       "id" : id,
     };
