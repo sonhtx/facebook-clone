@@ -1,17 +1,13 @@
-import 'dart:convert';
 
 import 'package:anti_fb/api/friend/friend_api.dart';
-import 'package:anti_fb/models/post/PostListData.dart';
 import 'package:anti_fb/ui/homepage/homepage/listpost.dart';
 import 'package:anti_fb/widgets1/friends_grid.dart';
 import 'package:flutter/material.dart';
 import '/models/info.dart';
 import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/storage.dart';
-import 'package:anti_fb/api/profile/profile_api.dart';
 import 'package:anti_fb/api/profile/userinfo_api.dart';
 import 'package:anti_fb/models/User.dart';
-import 'package:anti_fb/widgets1/friend_grid_view.dart';
 import 'dart:math';
 
 class Profile extends StatefulWidget {
@@ -58,11 +54,11 @@ class _ProfileState extends State<Profile> {
   // Init data use for API calling
   Future<void> fetchData() async {
     // fix this to your actual email
-    email = 'sonacc2@gmail.com';
-    // For testing purpose only, delete after merging
-    String testToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NzA3ODJ9.aYHRZhmvm2XMbGoXsjPveL6AS-whPVn5Les1CtPgt9o';
-    String testId = '339';
+    // email = 'sonacc2@gmail.com';
+    // // For testing purpose only, delete after merging
+    // String testToken =
+    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDI1NzA3ODJ9.aYHRZhmvm2XMbGoXsjPveL6AS-whPVn5Les1CtPgt9o';
+    // String testId = '339';
     //await deleteAllSecureStorageData();
     // await storage.write(key: 'token', value: testToken);
     // await storage.write(key: 'id', value: testId);
@@ -76,7 +72,6 @@ class _ProfileState extends State<Profile> {
     UserInfoApi uia = UserInfoApi();
     Map<String, dynamic> userInfo = await uia.getUserInfo(userId);
     user = User.fromJson(userInfo);
-    print(user.username);
     info = [
       Info(
         icon: const Icon(
@@ -151,6 +146,11 @@ class _ProfileState extends State<Profile> {
           // String data = snapshot.data as String;
           print("Finished");
           return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              title: const Text("test"),
+            ),
             body: SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.only(left: 10, right: 10),

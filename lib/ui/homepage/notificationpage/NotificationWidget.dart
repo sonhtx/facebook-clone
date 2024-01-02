@@ -19,6 +19,7 @@ class NotificationWidget extends StatelessWidget {
     int group = int.parse(notification.group);
     return GestureDetector(
       onTap: (){
+        print(type);
         if(type == 3){
           print(notification.post?.id);
         }
@@ -191,7 +192,7 @@ class Described extends StatelessWidget {
       softWrap: true,
       maxLines: 3,
       text: TextSpan(
-          text: notification.user!.username,
+          text: (notification.user?.username == null)? "" : notification.user!.username,
           style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
