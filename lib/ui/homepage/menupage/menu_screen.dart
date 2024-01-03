@@ -87,8 +87,7 @@ class _MenuPageState extends State<MenuPage>
                           radius: 35.0,
                         )
                       : const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/messi-world-cup.png'),
+                          backgroundImage: AssetImage(defaultAvatar),
                           radius: 35.0,
                         ),
                   onPressed: () {
@@ -201,6 +200,7 @@ class _MenuPageState extends State<MenuPage>
                                         ),
                                         onPressed: () async {
                                           LogoutRepository logoutRepo = LogoutRepository();
+                                          showLoaderDialog(context);
                                           final logoutStatus = await logoutRepo.logout();
                                           if (context.mounted) {
                                             if (logoutStatus) {

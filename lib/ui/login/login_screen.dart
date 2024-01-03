@@ -76,6 +76,7 @@ class LoginForm extends StatelessWidget{
                   LoginData loginData = LoginData(emailController.text,
                                                 passwordController.text,);
                   LoginRepository loginRepo = LoginRepository();
+                  showLoaderDialog(context);
                   final loginStatus = await loginRepo.login(loginData);
 
                   if(context.mounted){

@@ -173,7 +173,7 @@ class _FriendProfileState extends State<FriendProfile> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While the future is still running, show a loading indicator
           print("Waiting..");
-          return const CircularProgressIndicator();
+          return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           // If there's an error, display an error message
           print("Error: ${snapshot.error}");

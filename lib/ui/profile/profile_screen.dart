@@ -31,6 +31,7 @@ class _ProfileState extends State<Profile> {
   late List<Info> info;
   late String friendsCount;
   late FriendsGrid friendsGrid;
+  late final Future myFuture;
 
   final ScrollController scrollController = ScrollController();
 
@@ -66,8 +67,6 @@ class _ProfileState extends State<Profile> {
       _pagingController.error = error;
     }
   }
-
-
 
 
   // Init data use for API calling
@@ -122,6 +121,8 @@ class _ProfileState extends State<Profile> {
     super.initState();
 
     // fetchData();
+
+    myFuture =fetchData();
 
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
@@ -191,15 +192,20 @@ class _ProfileState extends State<Profile> {
     );
 
     return FutureBuilder(
-        future: fetchData(),
+        future: myFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
             return SafeArea(
                 child: Scaffold(
+                    appBar: AppBar(
+                      centerTitle: true,
+                      backgroundColor: BG,
+                      title: Text(user.username),
+                    ),
                     body: RefreshIndicator(
                       onRefresh: () {
                         setState(() {
