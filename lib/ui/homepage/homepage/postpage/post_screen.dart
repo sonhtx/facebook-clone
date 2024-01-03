@@ -63,7 +63,7 @@ class PostScreenState extends State<PostScreen> {
       future: getPost(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
         return const Text("Network disconnected");
       } else {
@@ -71,7 +71,7 @@ class PostScreenState extends State<PostScreen> {
         appBar: AppBar(
           backgroundColor: WHITE,
           title: PostHeader(post_id: widget.id, imageUrl: post.author!.avatar, email: post.author!.name,
-            timestamp: post.created.substring(0,10), canEdit: false,),
+            timestamp: calculateTimeDifference(post.created), canEdit: false,),
           iconTheme: const IconThemeData(
             color: GREY, // Set the color of the back arrow icon to black
           ),

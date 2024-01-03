@@ -19,7 +19,7 @@ class NotificationWidget extends StatelessWidget {
     int group = int.parse(notification.group);
     return GestureDetector(
       onTap: (){
-        print(notification.feel!.type);
+        print(type);
         if(type == 3){
           print(notification.post?.id);
         }
