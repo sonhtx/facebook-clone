@@ -74,13 +74,15 @@ class PostWidget extends StatelessWidget {
                   trimCollapsedText: '    Show more',
                   trimExpandedText: '',
                   moreStyle: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold, color: GREY),
+                      fontSize: 14, fontWeight: FONTBOLD, color: GREY),
                 ),
                 // images != [] ? const SizedBox.shrink():const SizedBox(height: 6.0,)
               ],
             ),
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           // ----------------------------
           (images.isNotEmpty)
               ? ImageWidget(images: images)
@@ -98,24 +100,33 @@ class PostWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           TextWidget(
-                            text: feel, textColor: GREY, fontSize: 12, width: 12,
+                            text: feel,
+                            textColor: GREY,
+                            fontSize: 12,
+                            width: 12,
                           ),
                           Container(
                             padding: const EdgeInsets.all(4.0),
                             decoration: const BoxDecoration(
-                              color: FBBLUE, shape: BoxShape.circle,
+                              color: FBBLUE,
+                              shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.thumb_up, size: 10.0, color: WHITE,
+                              Icons.thumb_up,
+                              size: 10.0,
+                              color: WHITE,
                             ),
                           ),
                           Container(
                             padding: const EdgeInsets.all(4.0),
                             decoration: const BoxDecoration(
-                              color: RED, shape: BoxShape.circle,
+                              color: RED,
+                              shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.thumb_down, size: 10.0, color: WHITE,
+                              Icons.thumb_down,
+                              size: 10.0,
+                              color: WHITE,
                             ),
                           ),
                         ],
@@ -133,7 +144,10 @@ class PostWidget extends StatelessWidget {
             thickness: 0.05,
             color: GREY,
           ),
-          PostBottom( id: id, is_felt: is_felt,)
+          PostBottom(
+            id: id,
+            is_felt: is_felt,
+          )
         ],
       ),
     );
@@ -149,12 +163,13 @@ class PostHeader extends StatelessWidget {
 
   final bool canEdit;
 
-  const PostHeader({ super.key,
-    required this.post_id,
-    required this.imageUrl,
-    required this.email,
-    required this.timestamp,
-    required this.canEdit});
+  const PostHeader(
+      {super.key,
+      required this.post_id,
+      required this.imageUrl,
+      required this.email,
+      required this.timestamp,
+      required this.canEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -166,13 +181,26 @@ class PostHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text( email, style: const TextStyle( fontWeight: FontWeight.w600,),),
+              Text(
+                email,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               Row(
                 children: [
                   Text(
-                    '$timestamp  • ', style: TextStyle( color: Colors.grey[600], fontSize: 12.0,),
+                    '$timestamp  • ',
+                    style: TextStyle(
+                      color: GREY[600],
+                      fontSize: 12.0,
+                    ),
                   ),
-                  Icon( Icons.public, color: Colors.grey[600], size: 12.0,)
+                  Icon(
+                    Icons.public,
+                    color: GREY[600],
+                    size: 12.0,
+                  )
                 ],
               )
             ],
@@ -181,7 +209,7 @@ class PostHeader extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.more_horiz),
           onPressed: () {
-            if(canEdit){
+            if (canEdit) {
               showEditPostSheetMenu(context, post_id);
             }
           },
@@ -192,9 +220,10 @@ class PostHeader extends StatelessWidget {
 }
 
 class PostBottom extends StatelessWidget {
-  const PostBottom(
-      {required this.id,
-      required this.is_felt,});
+  const PostBottom({
+    required this.id,
+    required this.is_felt,
+  });
 
   final String id;
   final String is_felt;
@@ -205,33 +234,37 @@ class PostBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       Container(
-        padding: const EdgeInsets.only(left: 30),
-        child: Row(
-          children: [
+          padding: const EdgeInsets.only(left: 30),
+          child: Row(children: [
             ReactionButton(
               initialReaction: ReactionValues[int.parse(is_felt) + 1],
               onReactionChanged: (reaction) {
-                if(reaction.name == 'none'){
+                if (reaction.name == 'none') {
                   _commentApi.deleteFeel(id);
-                } else if(reaction.name == 'kudos'){
+                } else if (reaction.name == 'kudos') {
                   _commentApi.feel(id, '1');
                 } else {
                   _commentApi.feel(id, '0');
                 }
               },
             ),
-            const TextWidget( text: 'Like', textColor: GREY, fontSize: 12, paddingLeft: 5, width: 50,
+            const TextWidget(
+              text: 'Like',
+              textColor: GREY,
+              fontSize: 12,
+              paddingLeft: 5,
+              width: 50,
             )
-          ]
-        )
-
-      ),
+          ])),
       Container(
           padding: const EdgeInsets.only(right: 10),
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (context) => PostScreen(
-                  id: id,)));
+              Navigator.of(context, rootNavigator: true)
+                  .push(CupertinoPageRoute(
+                      builder: (context) => PostScreen(
+                            id: id,
+                          )));
             },
             child: const Row(
               children: [
@@ -239,7 +272,13 @@ class PostBottom extends StatelessWidget {
                   Icons.comment,
                   color: GREY,
                 ),
-                TextWidget( text: 'Mark', textColor: GREY, fontSize: 12, paddingLeft: 5, width: 50,)
+                TextWidget(
+                  text: 'Mark',
+                  textColor: GREY,
+                  fontSize: 12,
+                  paddingLeft: 5,
+                  width: 50,
+                )
               ],
             ),
           )),
@@ -247,18 +286,18 @@ class PostBottom extends StatelessWidget {
   }
 }
 
-void handleDeletePost(BuildContext context, String post_id) async{
+void handleDeletePost(BuildContext context, String post_id) async {
   final PostApi _postApi = PostApi();
 
   final delStatus = await _postApi.deletePost(post_id);
   print(delStatus);
-  if(delStatus){
+  if (delStatus) {
     ScaffoldMessenger.of(context).showSnackBar(snackBarDelPostOK);
   } else {
-    showNotification(context, "Error", "There was an error when trying to delete post");
+    showNotification(
+        context, "Error", "There was an error when trying to delete post");
   }
 }
-
 
 void showEditPostSheetMenu(BuildContext context, String post_id) {
   showModalBottomSheet(
@@ -273,11 +312,8 @@ void showEditPostSheetMenu(BuildContext context, String post_id) {
             const SizedBox(
               height: 15,
             ),
-
             ElevatedButton(
-              onPressed: () {
-
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(8.0),
                 backgroundColor: WHITE, // Màu nền của nút
@@ -291,18 +327,29 @@ void showEditPostSheetMenu(BuildContext context, String post_id) {
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Icon( Icons.edit, size: 22.0, color: BLACK,
+                    Icon(
+                      Icons.edit,
+                      size: 22.0,
+                      color: BLACK,
                     ),
-                    SizedBox(width: 20,),
-                    Text( 'Edit this post',
-                      style: TextStyle( color: BLACK, fontSize: 14.0, fontWeight: FontWeight.bold),),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'Edit this post',
+                      style: TextStyle(
+                          color: BLACK, fontSize: 14.0, fontWeight: FONTBOLD),
+                    ),
                   ],
                 ),
               ),
             ),
-            const SizedBox( height: 10,),
-
-            const SizedBox( height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
               onPressed: () {
                 handleDeletePost(context, post_id);
@@ -320,12 +367,25 @@ void showEditPostSheetMenu(BuildContext context, String post_id) {
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Icon( Icons.remove_circle_outlined, size: 22.0, color: RED,),
-                    SizedBox( width: 20,),
-                    Text( 'Remove this post',
-                      style: TextStyle( fontSize: 14.0, fontWeight: FontWeight.bold, color: RED,),
+                    Icon(
+                      Icons.remove_circle_outlined,
+                      size: 22.0,
+                      color: RED,
                     ),
-                    SizedBox( height: 5,),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'Remove this post',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FONTBOLD,
+                        color: RED,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
                   ],
                 ),
               ),

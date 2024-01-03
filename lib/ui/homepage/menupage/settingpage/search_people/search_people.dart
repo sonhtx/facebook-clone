@@ -100,7 +100,7 @@ class _SearchUserTabState extends State<SearchUserTab> {
                         // vertical: 10.0,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: GREY[300],
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       child: TextField(
@@ -119,7 +119,7 @@ class _SearchUserTabState extends State<SearchUserTab> {
                 const SizedBox(height: 15.0),
                 Expanded(
                     child: Container(
-                      color: Colors.white,
+                      color: WHITE,
                       child: Scrollbar(
                         child: SingleChildScrollView(
                           child: Column(
@@ -164,7 +164,7 @@ class _SearchPeopleState extends State<SearchPeople> {
               context: context,
               builder: (BuildContext context) => Dialog(
                 insetPadding: const EdgeInsets.all(16.0),
-                surfaceTintColor: Colors.white,
+                surfaceTintColor: WHITE,
                 shape: RoundedRectangleBorder(
                   borderRadius:
                   BorderRadius.circular(0.0), // Set the radius here
@@ -180,7 +180,7 @@ class _SearchPeopleState extends State<SearchPeople> {
                         child: Text(
                           "Block ${widget.userName} ?",
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25.0),
+                              fontWeight: FONTBOLD, fontSize: 25.0),
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -189,9 +189,9 @@ class _SearchPeopleState extends State<SearchPeople> {
                         child: Text(
                           "${widget.userName} will no longer be able to:",
                           style: const TextStyle(
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FONTNORMAL,
                               fontSize: 15.0,
-                              color: Colors.grey),
+                              color: GREY),
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -200,9 +200,9 @@ class _SearchPeopleState extends State<SearchPeople> {
                         child: Text(
                           "• See your posts",
                           style: TextStyle(
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FONTNORMAL,
                               fontSize: 15.0,
-                              color: Colors.grey),
+                              color: GREY),
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -211,9 +211,9 @@ class _SearchPeopleState extends State<SearchPeople> {
                         child: Text(
                           "• Tag you",
                           style: TextStyle(
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FONTNORMAL,
                               fontSize: 15.0,
-                              color: Colors.grey),
+                              color: GREY),
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -222,9 +222,9 @@ class _SearchPeopleState extends State<SearchPeople> {
                         child: Text(
                           "• Invite you to events or groups",
                           style: TextStyle(
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FONTNORMAL,
                               fontSize: 15.0,
-                              color: Colors.grey),
+                              color: GREY),
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -233,9 +233,9 @@ class _SearchPeopleState extends State<SearchPeople> {
                         child: Text(
                           "• Message you",
                           style: TextStyle(
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FONTNORMAL,
                               fontSize: 15.0,
-                              color: Colors.grey),
+                              color: GREY),
                         ),
                       ),const SizedBox(height: 10.0),
                       Align(
@@ -243,9 +243,9 @@ class _SearchPeopleState extends State<SearchPeople> {
                         child: Text(
                           "If you're friend, block ${widget.userName} will also unfriend you.",
                           style: const TextStyle(
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FONTNORMAL,
                               fontSize: 15.0,
-                              color: Colors.grey),
+                              color: GREY),
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -260,7 +260,7 @@ class _SearchPeopleState extends State<SearchPeople> {
                               child: const Text(
                                 "CANCEL",
                                 style: TextStyle(
-                                    fontSize: 15.0, color: Colors.black),
+                                    fontSize: 15.0, color: BLACK),
                               )),
                           TextButton(
                               style: TextButton.styleFrom(
@@ -271,7 +271,7 @@ class _SearchPeopleState extends State<SearchPeople> {
                               child: const Text(
                                 "BLOCK",
                                 style: TextStyle(
-                                    fontSize: 15.0, color: Colors.red),
+                                    fontSize: 15.0, color: RED),
                               ))
                         ],
                       )
@@ -309,13 +309,13 @@ class _SearchPeopleState extends State<SearchPeople> {
                       widget.userName,
                       style: const TextStyle(
                           fontSize: 17.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal),
+                          color: BLACK,
+                          fontWeight: FONTNORMAL),
                     ),
                   ),
                   const Text(
                     "BLOCK",
-                    style: TextStyle(color: Colors.red),
+                    style: TextStyle(color: RED),
                   )
                 ],
               ),

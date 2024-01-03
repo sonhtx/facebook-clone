@@ -47,7 +47,7 @@ class TextFieldWidget extends StatelessWidget {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           hintStyle: TextStyle(
               color: GREY.shade400,
-              fontWeight: FontWeight.normal,
+              fontWeight: FONTNORMAL,
               fontSize: fontSize // Adjust the color to make it more bland
               ),
           labelStyle: const TextStyle(fontSize: 14.0),

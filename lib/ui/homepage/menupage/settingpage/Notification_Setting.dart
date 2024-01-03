@@ -119,9 +119,9 @@ class _NotificationSettingState extends State<NotificationSetting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: WHITE,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
         title: const Text("Notification Settings"),
       ),
       body: FutureBuilder(
@@ -140,12 +140,12 @@ class _NotificationSettingState extends State<NotificationSetting> {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                         width: MediaQuery.of(context).size.width,
-                        color: Colors.white,
+                        color: WHITE,
                         child: const Align(
                           alignment: Alignment.topLeft,
                           child: Text(
                             "Facebook may still send you important notifications about your account and content outside of your preferred notification settings",
-                            style: TextStyle(fontSize: 15.0, color: Colors.black),
+                            style: TextStyle(fontSize: 15.0, color: BLACK),
                           ),
                         )),
                   ),
@@ -158,8 +158,8 @@ class _NotificationSettingState extends State<NotificationSetting> {
                         "What Notifications You Receive",
                         style: TextStyle(
                             fontSize: 20.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold
+                            color: BLACK,
+                            fontWeight: FONTBOLD
                         ),
                       ),
                     ),
@@ -193,7 +193,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.comment_rounded,color: Colors.black,)),
+                                    child: Icon(Icons.comment_rounded,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -204,13 +204,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Comment",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfNotification(pushSettingsData.like_comment),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),
@@ -250,7 +250,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.people,color: Colors.black,)),
+                                    child: Icon(Icons.people,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -261,13 +261,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Updates from friend",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfNotification(pushSettingsData.from_friends),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),
@@ -307,7 +307,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.person_add_alt_outlined,color: Colors.black,)),
+                                    child: Icon(Icons.person_add_alt_outlined,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -318,13 +318,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Friend Requests",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfNotification(pushSettingsData.requested_friend),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),
@@ -364,7 +364,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.person_add_alt_outlined,color: Colors.black,)),
+                                    child: Icon(Icons.person_add_alt_outlined,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -375,13 +375,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Suggested Friend",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfNotification(pushSettingsData.suggested_friend),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),
@@ -421,7 +421,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.cake,color: Colors.black,)),
+                                    child: Icon(Icons.cake,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -432,13 +432,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Birthdays",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfNotification(pushSettingsData.birthday),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),
@@ -478,7 +478,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.play_circle_outlined,color: Colors.black,)),
+                                    child: Icon(Icons.play_circle_outlined,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -489,13 +489,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Video",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfNotification(pushSettingsData.video),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),
@@ -535,7 +535,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.report,color: Colors.black,)),
+                                    child: Icon(Icons.report,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -546,13 +546,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Report",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfNotification(pushSettingsData.report),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),
@@ -566,7 +566,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width*0.95,
                     child: const Divider(
-                      color: Colors.black,
+                      color: BLACK,
                       thickness: 0.5,
                     ),
                   ),
@@ -605,7 +605,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                 child: const CircleAvatar(
                                     radius: 20.0,
                                     backgroundColor: BTNBG,
-                                    child: Icon(Icons.notifications_on_outlined,color: Colors.black,)),
+                                    child: Icon(Icons.notifications_on_outlined,color: BLACK,)),
                               ),
                               Expanded(
                                 child: Column(
@@ -616,13 +616,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                                     const Text(
                                       "Push",
                                       style: TextStyle(
-                                          fontSize: 17.0, color: Colors.black),
+                                          fontSize: 17.0, color: BLACK),
                                     ),
                                     Text(
                                       typeOfPush(pushSettingsData.notification_on),
                                       overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontSize: 10.0, color: Colors.grey),
+                                          fontSize: 10.0, color: GREY),
                                     ),
                                   ],
                                 ),

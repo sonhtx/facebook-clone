@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import '../constants.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -44,7 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Custom Button Widget'),
+          title: const Text('Custom Button Widget'),
         ),
         body: Center(
           child: CustomButton(
@@ -54,7 +52,7 @@ class MyApp extends StatelessWidget {
               // Handle button press
               print('Button pressed!');
             },
-            color: Colors.blue, // Set the button color here
+            color: BLUE, // Set the button color here
           ),
         ),
       ),

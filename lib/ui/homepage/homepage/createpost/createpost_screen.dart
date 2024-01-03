@@ -47,7 +47,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
     // Open the image picker to select multiple images
     final List<XFile> pickedImages = await picker.pickMultiImage();
-    if(pickedImages != null){
+    if (pickedImages != null) {
       createPostData.images = pickedImages;
       imagesNotifier.value = pickedImages;
       createPostData.video = null;
@@ -62,7 +62,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     final XFile? pickedVideo =
         await picker.pickVideo(source: ImageSource.gallery);
 
-    if(pickedVideo!= null){
+    if (pickedVideo != null) {
       createPostData.video = pickedVideo;
       videoNotifier.value = pickedVideo;
       createPostData.images = null;
@@ -118,7 +118,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     content: Text('Success'),
                   ));
                   Navigator.pop(context);
-
                 },
               ),
             ],
@@ -207,14 +206,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       child: ValueListenableBuilder<XFile?>(
                         valueListenable: videoNotifier,
                         builder: (context, videoFile, _) {
-                          if(videoFile!=null){
+                          if (videoFile != null) {
                             print(videoFile!.path);
                           }
                           if (videoFile!.path.isEmpty) {
                             return Container();
                           } else {
                             // return Text('1 video selected.');
-                            return videoImportPlayerWidget(url: videoFile!.path);
+                            return videoImportPlayerWidget(
+                                url: videoFile!.path);
                             // return VideoPlayerWidget(videoFile: videoFile);
                           }
                         },

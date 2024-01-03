@@ -12,14 +12,14 @@ class Security extends StatelessWidget {
     return Scaffold(
       backgroundColor: BG,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
       ),
       body: Column(
         children: [
           const SizedBox(height: 4.0),
           Container(
             width: MediaQuery.of(context).size.width,
-            color: Colors.white,
+            color: WHITE,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -34,7 +34,7 @@ class Security extends StatelessWidget {
                           child: Text(
                             "Security and Login",
                             style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                                fontSize: 20.0, fontWeight: FONTBOLD),
                           ),
                         ),
                       ],
@@ -53,7 +53,7 @@ class Security extends StatelessWidget {
                           child: Text(
                             "Login",
                             style: TextStyle(
-                                fontSize: 17.0, fontWeight: FontWeight.bold),
+                                fontSize: 17.0, fontWeight: FONTBOLD),
                           ),
                         ),
                       ],
@@ -87,7 +87,7 @@ class Security extends StatelessWidget {
                                 margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                                 child: const Icon(
                                   Icons.key,
-                                  color: Colors.black,
+                                  color: BLACK,
                                 ),
                               ),
                               Expanded(
@@ -100,13 +100,13 @@ class Security extends StatelessWidget {
                                       "Change your password",
                                       style: TextStyle(
                                           fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                          fontWeight: FONTBOLD,
+                                          color: BLACK),
                                     ),
                                     Text(
                                       "You should use a strong password that you haven't used anywhere else",
                                       style: TextStyle(
-                                          fontSize: 13.0, color: Colors.grey),
+                                          fontSize: 13.0, color: GREY),
                                     )
                                   ],
                                 ),

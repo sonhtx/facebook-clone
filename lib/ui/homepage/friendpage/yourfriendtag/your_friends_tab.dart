@@ -132,7 +132,7 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
           style: TextStyle(
             color: BLACK,
             fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontWeight: FONTBOLD,
           ),
         ),
         backgroundColor: WHITE,
@@ -164,14 +164,14 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                   Text(
                     '$countFriends Friends',
                     style: const TextStyle(
-                        fontSize: 25.0, fontWeight: FontWeight.bold),
+                        fontSize: 25.0, fontWeight: FONTBOLD),
                   ),
                   TextButton(
                     onPressed: () {
                       handlePressedSort();
                     },
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.white, // Màu chữ của nút
+                      backgroundColor: WHITE, // Màu chữ của nút
                       padding: EdgeInsets.zero, // Bỏ padding
                       minimumSize: Size(0, 0), // Bỏ kích thước tối thiểu
                       alignment: Alignment.center, // Canh giữa văn bản
@@ -180,8 +180,8 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                       'Sort',
                       style: TextStyle(
                         fontSize: 18.0,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.blue,
+                        fontWeight: FONTNORMAL,
+                        color: BLUE,
                       ),
                     ),
                   ),
@@ -215,7 +215,7 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -229,15 +229,15 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                       Icon(
                         Icons.star,
                         size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.black, // Màu của biểu tượng
+                        color: BLACK, // Màu của biểu tượng
                       ),
                       SizedBox(width: 20),
                       Text(
                         "Default",
                         style: TextStyle(
                           fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          fontWeight: FONTBOLD,
+                          color: BLACK,
                         ),
                       ),
                     ],
@@ -252,7 +252,7 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -266,15 +266,15 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                       Icon(
                         Icons.align_vertical_top,
                         size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.black, // Màu của biểu tượng
+                        color: BLACK, // Màu của biểu tượng
                       ),
                       SizedBox(width: 20),
                       Text(
                         "Newest friends first",
                         style: TextStyle(
                           fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          fontWeight: FONTBOLD,
+                          color: BLACK,
                         ),
                       ),
                     ],
@@ -289,7 +289,7 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -303,15 +303,15 @@ class _YourFriendsTabState extends State<YourFriendsTab> {
                       Icon(
                         Icons.align_vertical_bottom_sharp,
                         size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.black, // Màu của biểu tượng
+                        color: BLACK, // Màu của biểu tượng
                       ),
                       SizedBox(width: 20),
                       Text(
                         "Oldest friends first",
                         style: TextStyle(
                           fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          fontWeight: FONTBOLD,
+                          color: BLACK,
                         ),
                       ),
                     ],

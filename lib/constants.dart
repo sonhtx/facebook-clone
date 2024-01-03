@@ -19,10 +19,12 @@ const BTNBG = Color(0xFFE5E4E9);
 
 const TRANSPARENT = Colors.transparent;
 
+const FONTBOLD = FontWeight.bold;
+const FONTNORMAL = FontWeight.normal;
+
 const myPort = 33333;
 const authUrl = "http://localhost:2400/api/auth";
 const apiUrl = "https://it4788.catan.io.vn";
-
 
 const defaultAvatar = "assets/images/default-avatar.jpg";
 
@@ -62,19 +64,23 @@ void showNotification(BuildContext context, String title, String text) {
   );
 }
 
-showLoaderDialog(BuildContext context, String text){
-  AlertDialog alert=AlertDialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-    content: new Row(
+showLoaderDialog(BuildContext context, String text) {
+  AlertDialog alert = AlertDialog(
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    content: Row(
       children: [
-        CircularProgressIndicator(),
-        SizedBox(width: 20,),
+        const CircularProgressIndicator(),
+        const SizedBox(
+          width: 20,
+        ),
         Text(text)
-      ],),
+      ],
+    ),
   );
-  showDialog(barrierDismissible: false,
-    context:context,
-    builder:(BuildContext context){
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
       return alert;
     },
   );

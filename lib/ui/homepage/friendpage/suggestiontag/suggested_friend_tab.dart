@@ -9,7 +9,6 @@ class SuggestedFriendsTab extends StatefulWidget {
   SuggestedFriendsTab({super.key});
 
   final FriendRepository _friendRepository = FriendRepository();
-  
 
   @override
   State<StatefulWidget> createState() {
@@ -19,6 +18,7 @@ class SuggestedFriendsTab extends StatefulWidget {
 
 class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
   List<SuggestedFriendWidget> suggestedWidgetList = [];
+
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,6 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
   void delWhenDelSuggestion(String id) {
     setState(() {
       suggestedWidgetList.removeWhere((element) => element.id == id);
-      // countFriends = suggestedWidgetList.length.toString();
     });
   }
 
@@ -64,18 +63,12 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
         children: [
           Text(
             'Uh no ... nothing here!',
-            // style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
           SizedBox(
             height: 16,
           ),
           Text(
             'Try selecting a different catogory',
-            // style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
         ],
       ),
@@ -96,12 +89,12 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
           style: TextStyle(
             color: BLACK,
             fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontWeight: FONTBOLD,
           ),
         ),
         backgroundColor: WHITE,
         iconTheme: const IconThemeData(
-          color: BLACK, // Màu của biểu tượng (mũi tên back)
+          color: BLACK,
         ),
         elevation: 0.0,
         actions: [
@@ -123,8 +116,7 @@ class _SuggestedFriendsTabState extends State<SuggestedFriendsTab> {
             children: <Widget>[
               const SizedBox(height: 15.0),
               const Text('People you may know',
-                  style:
-                      TextStyle(fontSize: 21.0, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 21.0, fontWeight: FONTBOLD)),
               const SizedBox(height: 20.0),
               content,
             ],

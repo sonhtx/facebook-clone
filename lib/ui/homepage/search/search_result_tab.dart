@@ -71,18 +71,12 @@ class _SearchResultTabState extends State<SearchResultTab> {
         children: [
           Text(
             'Uh no ... nothing here!',
-            // style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
           SizedBox(
             height: 16,
           ),
           Text(
             'Try selecting a different catogory',
-            // style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
         ],
       ),
@@ -115,7 +109,7 @@ class _SearchResultTabState extends State<SearchResultTab> {
                 // vertical: 10.0,
               ),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: GREY[300],
                 borderRadius: BorderRadius.circular(30.0),
               ),
               child: Align(

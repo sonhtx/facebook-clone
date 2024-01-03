@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class ButtonWidget extends StatelessWidget{
+import '../constants.dart';
+
+class ButtonWidget extends StatelessWidget {
   final String buttonText;
   final double paddingTop;
   final double paddingLeft;
@@ -14,18 +16,19 @@ class ButtonWidget extends StatelessWidget{
   final fontSize;
   final double width;
 
-  const ButtonWidget({
-    super.key,
-    required this.buttonText,
-    required this.paddingTop,
-    required this.textColor,
-    required this.backgroundColor,
-    this.borderColor = Colors.cyan,
-    required this.onPressed,
-    this.radius = 20.0,
-    this.fontSize=20.0,
-    this.width = double.infinity, this.paddingLeft = 0, this.paddingRight = 0});
-
+  const ButtonWidget(
+      {super.key,
+      required this.buttonText,
+      required this.paddingTop,
+      required this.textColor,
+      required this.backgroundColor,
+      this.borderColor = CYAN,
+      required this.onPressed,
+      this.radius = 20.0,
+      this.fontSize = 20.0,
+      this.width = double.infinity,
+      this.paddingLeft = 0,
+      this.paddingRight = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +37,11 @@ class ButtonWidget extends StatelessWidget{
       width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor, // Set the background color to transparent
+          backgroundColor: backgroundColor,
+          // Set the background color to transparent
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius),
-            side: BorderSide(color: borderColor)
-          ),
+              borderRadius: BorderRadius.circular(radius),
+              side: BorderSide(color: borderColor)),
           elevation: 0,
         ),
         onPressed: onPressed,
@@ -51,12 +54,5 @@ class ButtonWidget extends StatelessWidget{
         ),
       ),
     );
-
   }
-
-
-
-
 }
-
-

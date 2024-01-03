@@ -8,7 +8,13 @@ class CustomTabBar extends StatelessWidget {
   final bool isBottomIndicator;
   final TabController controller;
 
-  const CustomTabBar({super.key, required this.icons, required this.selectedIndex, required this.onTap, this.isBottomIndicator = false,required this.controller});
+  const CustomTabBar(
+      {super.key,
+      required this.icons,
+      required this.selectedIndex,
+      required this.onTap,
+      this.isBottomIndicator = false,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class CustomTabBar extends StatelessWidget {
         controller: controller,
         indicatorPadding: EdgeInsets.zero,
         indicator: const BoxDecoration(
-          border:  Border(
+          border: Border(
             top: BorderSide(
               color: FBBLUE,
               width: 3.0,
@@ -26,18 +32,18 @@ class CustomTabBar extends StatelessWidget {
           ),
         ),
         tabs: icons
-            .asMap() .map((i, e) => MapEntry(i,
-          Tab(
-            icon: Icon(
-              e,
-              color: i == selectedIndex
-                  ? FBBLUE
-                  : Colors.black45,
-              size: 30.0,
-            ),
-            // text: ,
-          ),
-        ))
+            .asMap()
+            .map((i, e) => MapEntry(
+                  i,
+                  Tab(
+                    icon: Icon(
+                      e,
+                      color: i == selectedIndex ? FBBLUE : Colors.black45,
+                      size: 30.0,
+                    ),
+                    // text: ,
+                  ),
+                ))
             .values
             .toList(),
         onTap: onTap,

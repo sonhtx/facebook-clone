@@ -94,7 +94,7 @@ class ProfileApi {
     print(responseBody);
   }
 
-  Future<void> setUserInfo1(ReqSetUserinfo req) async {
+  Future<bool> setUserInfo1(ReqSetUserinfo req) async {
     await _initializeHeaders();
 
     final request = http.MultipartRequest(
@@ -134,27 +134,10 @@ class ProfileApi {
       );
     }
     final response = await request.send();
-
-    // Process the response
-    final String responseBody = await response.stream.bytesToString();
-    print(responseBody);
-  }
-
-  Future<void> buyCoins(String coins) async {
-    await _initializeHeaders();
-
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse('$apiUrl/buy_coins'),
-    );
-
-    request.headers.addAll(headers);
-    request.fields['code'] = "string";
-    request.fields['coins'] = coins;
-    final response = await request.send();
-
-    // Process the response
-    final String responseBody = await response.stream.bytesToString();
-    print(responseBody);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

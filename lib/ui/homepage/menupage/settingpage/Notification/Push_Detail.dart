@@ -49,9 +49,9 @@ class _PushDetailState extends State<PushDetail> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: WHITE,
           title: const Text("Push"),
           leading: BackButton(
             onPressed: (){
@@ -74,7 +74,7 @@ class _PushDetailState extends State<PushDetail> {
                       child: const CircleAvatar(
                           radius: 20.0,
                           backgroundColor: BTNBG,
-                          child: Icon(Icons.notifications_off,color: Colors.black,)),
+                          child: Icon(Icons.notifications_off,color: BLACK,)),
                     ),
                     const Expanded(
                       child: Column(
@@ -85,13 +85,13 @@ class _PushDetailState extends State<PushDetail> {
                           Text(
                             "Mute Push Notifications",
                             style: TextStyle(
-                                fontSize: 17.0, color: Colors.black),
+                                fontSize: 17.0, color: BLACK),
                           ),
                           Text(
                             "Off",
                             overflow: TextOverflow.clip,
                             style: TextStyle(
-                                fontSize: 10.0, color: Colors.grey),
+                                fontSize: 10.0, color: GREY),
                           ),
                         ],
                       ),
@@ -132,7 +132,7 @@ class _PushDetailState extends State<PushDetail> {
                       child: const CircleAvatar(
                           radius: 20.0,
                           backgroundColor: BTNBG,
-                          child: Icon(Icons.vibration,color: Colors.black,)),
+                          child: Icon(Icons.vibration,color: BLACK,)),
                     ),
                     const Expanded(
                       child: Column(
@@ -143,13 +143,13 @@ class _PushDetailState extends State<PushDetail> {
                           Text(
                             "Vibrate",
                             style: TextStyle(
-                                fontSize: 17.0, color: Colors.black),
+                                fontSize: 17.0, color: BLACK),
                           ),
                           Text(
                             "Vibrate on incoming notifications",
                             overflow: TextOverflow.clip,
                             style: TextStyle(
-                                fontSize: 10.0, color: Colors.grey),
+                                fontSize: 10.0, color: GREY),
                           ),
                         ],
                       ),
@@ -190,7 +190,7 @@ class _PushDetailState extends State<PushDetail> {
                       child: const CircleAvatar(
                           radius: 20.0,
                           backgroundColor: BTNBG,
-                          child: Icon(Icons.flash_on,color: Colors.black,)),
+                          child: Icon(Icons.flash_on,color: BLACK,)),
                     ),
                     const Expanded(
                       child: Column(
@@ -201,13 +201,13 @@ class _PushDetailState extends State<PushDetail> {
                           Text(
                             "Phone LED",
                             style: TextStyle(
-                                fontSize: 17.0, color: Colors.black),
+                                fontSize: 17.0, color: BLACK),
                           ),
                           Text(
                             "Flash LED on incoming notifications",
                             overflow: TextOverflow.clip,
                             style: TextStyle(
-                                fontSize: 10.0, color: Colors.grey),
+                                fontSize: 10.0, color: GREY),
                           ),
                         ],
                       ),
@@ -248,7 +248,7 @@ class _PushDetailState extends State<PushDetail> {
                       child: const CircleAvatar(
                           radius: 20.0,
                           backgroundColor: BTNBG,
-                          child: Icon(Icons.speaker_phone,color: Colors.black,)),
+                          child: Icon(Icons.speaker_phone,color: BLACK,)),
                     ),
                     const Expanded(
                       child: Column(
@@ -259,13 +259,13 @@ class _PushDetailState extends State<PushDetail> {
                           Text(
                             "Sounds",
                             style: TextStyle(
-                                fontSize: 17.0, color: Colors.black),
+                                fontSize: 17.0, color: BLACK),
                           ),
                           Text(
                             "Play sounds on incoming notifications",
                             overflow: TextOverflow.clip,
                             style: TextStyle(
-                                fontSize: 10.0, color: Colors.grey),
+                                fontSize: 10.0, color: GREY),
                           ),
                         ],
                       ),
@@ -298,7 +298,7 @@ class _PushDetailState extends State<PushDetail> {
               SizedBox(
                 width: MediaQuery.of(context).size.width*0.95,
                 child: const Divider(
-                  color: Colors.black,
+                  color: BLACK,
                   thickness: 0.5,
                 ),
               ),

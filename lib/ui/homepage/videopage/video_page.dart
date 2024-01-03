@@ -8,14 +8,12 @@ import '../../../models/post/VideoData.dart';
 import '../../../models/request/ReqListPost_VideoData.dart';
 import '../../../repository/post/post_repo.dart';
 import '../../../widgets/IconWidget.dart';
-import '../homepage/appbar.dart';
 import '../search/search_tab.dart';
 
-class VideoPage extends StatefulWidget{
-
+class VideoPage extends StatefulWidget {
   final ScrollController scrollController;
-  const VideoPage({super.key, required this.scrollController});
 
+  const VideoPage({super.key, required this.scrollController});
 
   @override
   State<VideoPage> createState() => _VideoPageState();
@@ -28,21 +26,22 @@ class _VideoPageState extends State<VideoPage> {
   final PostRepository _postRepository = PostRepository();
 
   final PagingController<int, VideoData> _pagingController =
-  PagingController(firstPageKey: 1);
+      PagingController(firstPageKey: 1);
 
   late RequestListPost_VideoData requestListPostData =
-  RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", null, "0", "10");
+      RequestListPost_VideoData(null, "1", "1", "1.0", "1.0", null, "0", "10");
+
   Future<void> _fetchPage(pageKey) async {
     await Future.delayed(const Duration(seconds: 2));
     try {
       List<VideoData>? listVideo =
-      await _postRepository.getlistvideo(requestListPostData);
+          await _postRepository.getlistvideo(requestListPostData);
       setState(() {
-        index+=10;
-        requestListPostData = RequestListPost_VideoData(null, "1", "1", "1.0", "1.0",
-            null, index.toString(), "10");
+        index += 10;
+        requestListPostData = RequestListPost_VideoData(
+            null, "1", "1", "1.0", "1.0", null, index.toString(), "10");
       });
-      if(listVideo!=null){
+      if (listVideo != null) {
         final isLastPage = listVideo.length < _pageSize;
         if (isLastPage) {
           _pagingController.appendLastPage(listVideo);
@@ -92,17 +91,19 @@ class _VideoPageState extends State<VideoPage> {
     return SafeArea(
       child: Scaffold(
           body: RefreshIndicator(
-            onRefresh: () {
-              setState(() {
-                index = 0;
-                requestListPostData = RequestListPost_VideoData(null, "1", "1", "1.0", "1.0",
-                    null, index.toString(), "10");
-              });
-              return Future.sync(
-                    ()=>_pagingController.refresh(),
-              );
-            } ,
-            child : CustomScrollView(controller: widget.scrollController, slivers: <Widget>[
+        onRefresh: () {
+          setState(() {
+            index = 0;
+            requestListPostData = RequestListPost_VideoData(
+                null, "1", "1", "1.0", "1.0", null, index.toString(), "10");
+          });
+          return Future.sync(
+            () => _pagingController.refresh(),
+          );
+        },
+        child: CustomScrollView(
+            controller: widget.scrollController,
+            slivers: <Widget>[
               SliverAppBar(
                 title: const VideoAppBarTitle(),
                 centerTitle: false,
@@ -118,15 +119,18 @@ class _VideoPageState extends State<VideoPage> {
                             onPressed: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute( builder: (context) => SearchTab()));
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchTab()));
                             },
                           ),
-                          IconWidget( icon: Icons.message, onPressed: () {},)
+                          IconWidget(
+                            icon: Icons.message,
+                            onPressed: () {},
+                          )
                         ],
                       )),
                 ],
               ),
-
               PagedSliverList<int, VideoData>(
                 pagingController: _pagingController,
                 builderDelegate: PagedChildBuilderDelegate<VideoData>(
@@ -141,13 +145,10 @@ class _VideoPageState extends State<VideoPage> {
                         item.comment_mark,
                         item.is_felt,
                         item.author.name,
-                        item.author.avatar
-                    )
-                ),
+                        item.author.avatar)),
               ),
             ]),
-          )
-      ),
+      )),
     );
   }
 }
@@ -157,13 +158,18 @@ class VideoAppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(left: 5),
-            child: const Text( 'Videos', style: TextStyle(color: BLACK, fontSize: 20, fontWeight: FontWeight.bold,),),
-          )
-        ]
-    );
+    return Row(children: [
+      Container(
+        padding: const EdgeInsets.only(left: 5),
+        child: const Text(
+          'Videos',
+          style: TextStyle(
+            color: BLACK,
+            fontSize: 20,
+            fontWeight: FONTBOLD,
+          ),
+        ),
+      )
+    ]);
   }
 }

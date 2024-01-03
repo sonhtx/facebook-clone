@@ -1,6 +1,8 @@
 import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../constants.dart';
+
 class SuggestedFriendWidget extends StatefulWidget {
   final String id;
   final String username;
@@ -23,6 +25,7 @@ class SuggestedFriendWidget extends StatefulWidget {
 
 class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
   bool isRequested = false;
+
   @override
   Widget build(BuildContext context) {
     void handleCancelRequest() {
@@ -124,7 +127,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(5.0)),
+              color: BLUE, borderRadius: BorderRadius.circular(5.0)),
           child: TextButton(
             onPressed: () {
               handleAddFriend();
@@ -132,14 +135,14 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
             style: TextButton.styleFrom(
               padding:
                   const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
-              backgroundColor: Colors.blue, // Màu nền của nút
+              backgroundColor: BLUE, // Màu nền của nút
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
               ),
             ),
             child: const Text(
               'Add friend',
-              style: TextStyle(color: Colors.white, fontSize: 15.0),
+              style: TextStyle(color: WHITE, fontSize: 15.0),
             ),
           ),
         ),
@@ -147,20 +150,19 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(5.0)),
+              color: GREY[300], borderRadius: BorderRadius.circular(5.0)),
           child: TextButton(
             onPressed: handleDelSuggestion,
             style: TextButton.styleFrom(
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-              backgroundColor: Colors.grey[300], // Màu nền của nút
+              backgroundColor: GREY[300], // Màu nền của nút
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),
               ),
             ),
             child: const Text('Remove',
-                style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                style: TextStyle(color: BLACK, fontSize: 15.0)),
           ),
         ),
       ],
@@ -173,8 +175,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 100.0, vertical: 10.0),
             decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(5.0)),
+                color: GREY[300], borderRadius: BorderRadius.circular(5.0)),
             child: TextButton(
               onPressed: () {
                 handleCancelRequest();
@@ -182,13 +183,13 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 15.0, vertical: 10.0),
-                backgroundColor: Colors.grey[300],
+                backgroundColor: GREY[300],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 ),
               ),
               child: const Text('Cancel',
-                  style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                  style: TextStyle(color: BLACK, fontSize: 15.0)),
             ),
           ),
         ],
@@ -213,7 +214,7 @@ class _SuggestFriendWidget extends State<SuggestedFriendWidget> {
                 widget.username,
                 style: const TextStyle(
                   fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FONTBOLD,
                 ),
               ),
               const SizedBox(height: 15.0),

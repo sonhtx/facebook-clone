@@ -21,24 +21,21 @@ class _CoinManageState extends State<CoinManage> {
   @override
   void initState() {
     super.initState();
-    // String? coinValue = getCoin() as String?;
-    // coin = coinValue!;
-    // setCoin();
     _fetchCoin();
   }
+
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the
-    // widget tree.
     inputCoin.dispose();
     super.dispose();
   }
+
   final BuyCoinRepo _buyCoinRepo = BuyCoinRepo();
 
-  Future<void> _fetchCoin() async{
-    try{
+  Future<void> _fetchCoin() async {
+    try {
       coin = (await getCoin())!;
-    }catch(e){
+    } catch (e) {
       return;
     }
   }
@@ -46,9 +43,9 @@ class _CoinManageState extends State<CoinManage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: WHITE,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
         title: const Text("Coin Manage"),
         leading: BackButton(
           onPressed: () {
@@ -59,117 +56,120 @@ class _CoinManageState extends State<CoinManage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          color: Colors.white,
+          color: WHITE,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FutureBuilder(
                 future: _fetchCoin(),
-                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
-                  }else{
+                  } else {
                     return Text(
                       "Your Coin: $coin",
-                      style: const TextStyle(
-                          fontSize: 20.0
-                      ),
+                      style: const TextStyle(fontSize: 20.0),
                     );
                   }
                 },
               ),
               IconWidget(
-                  icon: Icons.add_circle_outline,
-                  onPressed: ()=> showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context)=>Dialog(
-                        insetPadding: const EdgeInsets.all(16.0),
-                        surfaceTintColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(0.0), // Set the radius here
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(13.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  "Buy more coin",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 25.0),
-                                ),
-                              ),
-                              const SizedBox(height: 10.0),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  "Enter the number of coins you want to buy",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15.0,
-                                      color: Colors.black),
-                                ),
-                              ),
-                              const SizedBox(height: 10.0),
-                              TextField(
-                                controller: inputCoin,
-                                decoration: const InputDecoration(labelText: "Number of coin"),
-                                keyboardType: TextInputType.number,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly
-                                ], // Only numbers can be entered
-                              ),
-                              const SizedBox(height: 10.0),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                      onPressed: (){
-                                        Navigator.pop(context);
-                                        inputCoin.text = "";
-                                      },
-                                      child: const Text(
-                                        "CANCEL",
-                                        style: TextStyle(
-                                            fontSize: 15.0, color: Colors.black),
-                                      )),
-                                  TextButton(
-                                      style: TextButton.styleFrom(
-                                        shape: const BeveledRectangleBorder(
-                                            borderRadius: BorderRadius.zero),
-                                      ),
-                                      onPressed: (){
-                                        _buyCoinRepo.buyCoin(inputCoin.text.toString()).then((value) {
-                                          if(value != null){
-                                            setState(() {
-                                              coin = value;
-                                            });
-                                          }
-                                        });
-                                        Navigator.pop(context);
-                                        inputCoin.text = "";
-                                      },
-                                      child: const Text(
-                                        "Purchase",
-                                        style: TextStyle(
-                                            fontSize: 15.0, color: FBBLUE),
-                                      ))
-                                ],
-                              )
-                            ],
+                icon: Icons.add_circle_outline,
+                onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => Dialog(
+                          insetPadding: const EdgeInsets.all(16.0),
+                          surfaceTintColor: WHITE,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                0.0), // Set the radius here
                           ),
-                        ),
-                      )
-                  ),
-                color: Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.all(13.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Buy more coin",
+                                    style: TextStyle(
+                                        fontWeight: FONTBOLD, fontSize: 25.0),
+                                  ),
+                                ),
+                                const SizedBox(height: 10.0),
+                                const Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Enter the number of coins you want to buy",
+                                    style: TextStyle(
+                                        fontWeight: FONTNORMAL,
+                                        fontSize: 15.0,
+                                        color: BLACK),
+                                  ),
+                                ),
+                                const SizedBox(height: 10.0),
+                                TextField(
+                                  controller: inputCoin,
+                                  decoration: const InputDecoration(
+                                      labelText: "Number of coin"),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ], // Only numbers can be entered
+                                ),
+                                const SizedBox(height: 10.0),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          inputCoin.text = "";
+                                        },
+                                        child: const Text(
+                                          "CANCEL",
+                                          style: TextStyle(
+                                              fontSize: 15.0, color: BLACK),
+                                        )),
+                                    TextButton(
+                                        style: TextButton.styleFrom(
+                                          shape: const BeveledRectangleBorder(
+                                              borderRadius: BorderRadius.zero),
+                                        ),
+                                        onPressed: () {
+                                          _buyCoinRepo
+                                              .buyCoin(
+                                                  inputCoin.text.toString())
+                                              .then((value) {
+                                            if (value != null) {
+                                              setState(() {
+                                                coin = value;
+                                              });
+                                            }
+                                          });
+                                          Navigator.pop(context);
+                                          inputCoin.text = "";
+                                        },
+                                        child: const Text(
+                                          "Purchase",
+                                          style: TextStyle(
+                                              fontSize: 15.0, color: FBBLUE),
+                                        ))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )),
+                color: BLACK,
               )
             ],
           ),

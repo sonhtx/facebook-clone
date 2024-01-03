@@ -1,12 +1,8 @@
-
-
-
-
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-class TextButtonWidget extends StatelessWidget{
+class TextButtonWidget extends StatelessWidget {
   final String buttonText;
   final double paddingTop;
   final double paddingLeft;
@@ -19,9 +15,16 @@ class TextButtonWidget extends StatelessWidget{
 
   final VoidCallback onPressed;
 
-  const TextButtonWidget({super.key, required this.buttonText, this.paddingTop = 0, required this.textColor,
-    required this.backgroundColor, this.borderColor = FBBLUE, required this.onPressed, this.paddingLeft = 0, this.radiusRoundBorder = 0});
-
+  const TextButtonWidget(
+      {super.key,
+      required this.buttonText,
+      this.paddingTop = 0,
+      required this.textColor,
+      required this.backgroundColor,
+      this.borderColor = FBBLUE,
+      required this.onPressed,
+      this.paddingLeft = 0,
+      this.radiusRoundBorder = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +35,13 @@ class TextButtonWidget extends StatelessWidget{
           foregroundColor: textColor,
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radiusRoundBorder), // Set border radius
+            borderRadius:
+                BorderRadius.circular(radiusRoundBorder), // Set border radius
           ),
         ),
-
         child: Text(buttonText),
         onPressed: onPressed,
       ),
     );
-
   }
-
-
-
-
 }
-
-

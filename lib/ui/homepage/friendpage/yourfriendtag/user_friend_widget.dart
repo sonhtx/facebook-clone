@@ -2,6 +2,8 @@ import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../constants.dart';
+
 class UserFriendWidget extends StatelessWidget {
   final String id;
   final String username;
@@ -45,13 +47,13 @@ class UserFriendWidget extends StatelessWidget {
                     username,
                     style: const TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FONTBOLD,
                     ),
                   ),
                   Text(
                     '$sameFriends mutual friends',
-                    style: const TextStyle(
-                        fontSize: 14.0, fontWeight: FontWeight.normal),
+                    style:
+                        const TextStyle(fontSize: 14.0, fontWeight: FONTNORMAL),
                   ),
                 ],
               ),
@@ -101,7 +103,7 @@ class UserFriendWidget extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -126,16 +128,16 @@ class UserFriendWidget extends StatelessWidget {
                               Text(
                                 username,
                                 style: const TextStyle(
-                                    color: Colors.black,
+                                    color: BLACK,
                                     fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FONTBOLD),
                               ),
                               Text(
                                 formatDate(created),
                                 style: const TextStyle(
-                                    color: Colors.black,
+                                    color: BLACK,
                                     fontSize: 14.0,
-                                    fontWeight: FontWeight.normal),
+                                    fontWeight: FONTNORMAL),
                               ),
                             ],
                           ),
@@ -153,7 +155,7 @@ class UserFriendWidget extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -167,7 +169,7 @@ class UserFriendWidget extends StatelessWidget {
                       const Icon(
                         Icons.chat_outlined,
                         size: 22.0,
-                        color: Colors.black,
+                        color: BLACK,
                       ),
                       const SizedBox(
                         width: 20,
@@ -175,9 +177,7 @@ class UserFriendWidget extends StatelessWidget {
                       Text(
                         'Message $username',
                         style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold),
+                            color: BLACK, fontSize: 14.0, fontWeight: FONTBOLD),
                       ),
                     ],
                   ),
@@ -193,7 +193,7 @@ class UserFriendWidget extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -207,7 +207,7 @@ class UserFriendWidget extends StatelessWidget {
                       const Icon(
                         Icons.person_off_rounded,
                         size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.black, // Màu của biểu tượng
+                        color: BLACK, // Màu của biểu tượng
                       ),
                       const SizedBox(
                         width: 20,
@@ -219,9 +219,9 @@ class UserFriendWidget extends StatelessWidget {
                           Text(
                             'Block $username',
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: BLACK,
                                 fontSize: 14.0,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FONTBOLD),
                           ),
                           const SizedBox(
                             height: 5,
@@ -230,7 +230,7 @@ class UserFriendWidget extends StatelessWidget {
                             'A won\'t be able to see you or contact you on Facebook',
                             style: TextStyle(
                                 fontSize: 12.0,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FONTNORMAL,
                                 color: Color.fromARGB(197, 14, 13, 13)),
                           ),
                         ],
@@ -249,7 +249,7 @@ class UserFriendWidget extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -263,7 +263,7 @@ class UserFriendWidget extends StatelessWidget {
                       const Icon(
                         Icons.person_remove_outlined,
                         size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.red, // Màu của biểu tượng
+                        color: RED, // Màu của biểu tượng
                       ),
                       const SizedBox(
                         width: 20,
@@ -276,8 +276,8 @@ class UserFriendWidget extends StatelessWidget {
                             'Unfriend $username',
                             style: const TextStyle(
                               fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
+                              fontWeight: FONTBOLD,
+                              color: RED,
                             ),
                           ),
                           const SizedBox(
@@ -287,7 +287,7 @@ class UserFriendWidget extends StatelessWidget {
                             'Remove $username as a friend',
                             style: const TextStyle(
                                 fontSize: 12.0,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FONTNORMAL,
                                 color: Color.fromARGB(197, 14, 13, 13)),
                           ),
                         ],

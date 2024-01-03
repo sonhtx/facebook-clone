@@ -1,5 +1,3 @@
-
-
 import 'package:anti_fb/ui/signup/signup_screen.dart';
 import 'package:anti_fb/widgets/AlertDialogWidget.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +7,10 @@ import '../../constants.dart';
 import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextWidget.dart';
 
-
-class SignupForm3 extends StatelessWidget{
+class SignupForm3 extends StatelessWidget {
   DateTime birthday;
 
-  SignupForm3(this.birthday, {super.key });
+  SignupForm3(this.birthday, {super.key});
 
   void onBirthdayChanged(DateTime newDate) {
     birthday = newDate;
@@ -21,37 +18,43 @@ class SignupForm3 extends StatelessWidget{
 
   bool calculateAge(DateTime birthday) {
     final now = DateTime.now();
-    final age = now.year - birthday.year ;
-    if(age<18){ return false;}
+    final age = now.year - birthday.year;
+    if (age < 18) {
+      return false;
+    }
     return true;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const TextWidget(text: "What's your birthday?", fontSize: 20, textColor: FBBLUE),
-        const TextWidget(text: "Choose your date of birth. You can always make it private later.",
-            fontSize: 10, textColor: GREY, paddingTop: 5.0),
-
+        const TextWidget(
+            text: "What's your birthday?", fontSize: 20, textColor: FBBLUE),
+        const TextWidget(
+            text:
+                "Choose your date of birth. You can always make it private later.",
+            fontSize: 10,
+            textColor: GREY,
+            paddingTop: 5.0),
         Container(
-          padding: const EdgeInsets.only(top: 50.0),
-          child: DatePicker(
+            padding: const EdgeInsets.only(top: 50.0),
+            child: DatePicker(
               birthday: birthday,
               onBirthdayChanged: onBirthdayChanged,
-            )
-        ),
-
-        ElevatedButtonWidget(buttonText: 'Next', paddingTop: 10.0, textColor: WHITE,
+            )),
+        ElevatedButtonWidget(
+            buttonText: 'Next',
+            paddingTop: 10.0,
+            textColor: WHITE,
             backgroundColor: FBBLUE,
-            onPressed: (){
-              if(!calculateAge(birthday)){
+            onPressed: () {
+              if (!calculateAge(birthday)) {
                 showAgeRestrictionNotification(context);
               } else {
-                final SignupState? signupState = context
-                    .findAncestorStateOfType<SignupState>();
+                final SignupState? signupState =
+                    context.findAncestorStateOfType<SignupState>();
 
                 signupState?.signupData.birthday = birthday;
                 signupState?.moveFoward();
@@ -65,16 +68,18 @@ class SignupForm3 extends StatelessWidget{
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Age restriction',
+        return const AlertDialogWidget(
+            title: 'Age restriction',
             text: 'You must be more than 18 years old to sign up');
       },
     );
   }
-
 }
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({Key? key, required this.birthday, required this.onBirthdayChanged}) : super(key: key);
+  const DatePicker(
+      {Key? key, required this.birthday, required this.onBirthdayChanged})
+      : super(key: key);
 
   final DateTime birthday;
   final Function(DateTime) onBirthdayChanged;
@@ -84,7 +89,7 @@ class DatePicker extends StatefulWidget {
 }
 
 class _DatePickerState extends State<DatePicker> {
-  late DateTime bday ;
+  late DateTime bday;
 
   @override
   void initState() {
@@ -119,53 +124,51 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      child:   Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          children: <Widget>[
-            _DatePickerItem(
-              children: <Widget>[
-                const Text('Birthday'),
-                CupertinoButton(
-                  // Display a CupertinoDatePicker in date picker mode.
-                  onPressed: () => _showDialog(
-                    CupertinoDatePicker(
-                      initialDateTime: bday,
-                      mode: CupertinoDatePickerMode.date,
-                      use24hFormat: true,
-                      // This shows day of week alongside day of month
-                      showDayOfWeek: true,
-                      // This is called when the user changes the date.
-                      onDateTimeChanged: (DateTime newDate) {
-                        setState(() => bday = newDate);
-                        widget.onBirthdayChanged(bday);
-                      },
-                    ),
-                  ),
-                  // In this example, the date is formatted manually. You can
-                  // use the intl package to format the value based on the
-                  // user's locale settings.
-                  child: Text(
-                    '${bday.month}-${bday.day}-${bday.year}',
-                    style: const TextStyle(
-                      color : FBBLUE,
-                      fontSize: 16.0,
-                    ),
+        child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _DatePickerItem(
+            children: <Widget>[
+              const Text('Birthday'),
+              CupertinoButton(
+                // Display a CupertinoDatePicker in date picker mode.
+                onPressed: () => _showDialog(
+                  CupertinoDatePicker(
+                    initialDateTime: bday,
+                    mode: CupertinoDatePickerMode.date,
+                    use24hFormat: true,
+                    // This shows day of week alongside day of month
+                    showDayOfWeek: true,
+                    // This is called when the user changes the date.
+                    onDateTimeChanged: (DateTime newDate) {
+                      setState(() => bday = newDate);
+                      widget.onBirthdayChanged(bday);
+                    },
                   ),
                 ),
-              ],
-            ),
-
-          ],
-        ),
-      )
-    );
+                // In this example, the date is formatted manually. You can
+                // use the intl package to format the value based on the
+                // user's locale settings.
+                child: Text(
+                  '${bday.month}-${bday.day}-${bday.year}',
+                  style: const TextStyle(
+                    color: FBBLUE,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ));
   }
 }
 
 class _DatePickerItem extends StatelessWidget {
   const _DatePickerItem({required this.children});
+
   final List<Widget> children;
 
   @override
