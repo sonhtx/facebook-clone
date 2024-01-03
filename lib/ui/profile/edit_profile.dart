@@ -1,37 +1,12 @@
+import 'dart:io';
+
 import 'package:anti_fb/models/request/ReqSetUserinfo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/api/profile/profile_api.dart';
 import 'package:anti_fb/models/User.dart';
-
-//
-// Map<String, dynamic> json = {
-//   'id': '339',
-//   "username": "Thomas Shelby",
-//   "description": "All religion is a foolish answer to a foolish question.",
-//   "avatar":
-//       "https://it4788.catan.io.vn/files/avatar-1702051303359-135313063.jpg",
-//   "cover_image":
-//       "https://it4788.catan.io.vn/files//cover_image-1702052928186-131402460.jpg",
-//   "link": "https://peaky-blinders.fandom.com/wiki/Thomas_Shelby",
-//   "address": "Small Health",
-//   "city": "Birmingham",
-//   "country": "United Kingdom",
-//   "coins": "0",
-// };
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: EditProfilePage(user: User.fromJson(json)),
-//     );
-//   }
-// }
 
 class EditProfilePage extends StatefulWidget {
   final User user;
@@ -49,8 +24,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late TextEditingController _cityController;
   late TextEditingController _countryController;
   late TextEditingController _coinController;
-  String imageUrlAva = "";
-  String imageUrlCover = "";
+  late XFile? avaImage;
+  late XFile? coverImage;
+
+  // ValueNotifier<XFile> avaNotifier = ValueNotifier<XFile>(XFile(''));
+  // ValueNotifier<XFile> coverNotifier = ValueNotifier<XFile>(XFile(''));
 
   @override
   void initState() {
@@ -63,8 +41,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _cityController = TextEditingController(text: widget.user.city);
     _countryController = TextEditingController(text: widget.user.country);
     _coinController = TextEditingController(text: "0");
-    imageUrlAva = widget.user.avatar;
-    imageUrlCover = widget.user.coverImage;
+    avaImage = null;
+    coverImage = null;
   }
 
   @override
@@ -78,8 +56,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildImagePicker('Avatar', widget.user.avatar, true),
-            _buildImagePicker('Cover Photo', widget.user.coverImage, false),
+            _buildImagePicker('Avatar', avaImage, true),
+            _buildImagePicker('Cover Photo', coverImage, false),
             _buildTextField('Username', _usernameController),
             _buildTextField('Description', _descriptionController),
             _buildTextField('Address', _addressController),
@@ -98,24 +76,71 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildImagePicker(String title, String imageUrl, bool isAvatar) {
+  Future<void> pickImages(bool isAvatar) async {
+    final ImagePicker picker = ImagePicker();
+
+    // Open the image picker to select multiple images
+    final XFile? pickedImages = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImages != null) {
+      if(isAvatar){
+        setState(() {
+          avaImage = pickedImages;
+        });
+        // avaNotifier.value = pickedImages;
+      } else {
+        setState(() {
+          coverImage = pickedImages;
+        });
+        // coverNotifier.value = pickedImages;
+      }
+    }
+  }
+
+  Widget _buildImagePicker(String title, XFile? image, bool isAvatar) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(title,
-            style: const TextStyle(fontSize: 18.0, fontWeight: FONTBOLD)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title,
+                style: const TextStyle(fontSize: 18.0, fontWeight: FONTBOLD)),
+            IconButton(
+              icon: const Icon(Icons.delete_forever),
+              onPressed: () {
+                setState(() {
+                  image = null;
+                });
+              },
+            )
+          ],
+        ),
+
         const SizedBox(height: 8.0),
+
         GestureDetector(
-          onTap: () => _pickImage(imageUrl, isAvatar),
+          onTap: () => pickImages(isAvatar),
           child: Container(
             height: 150.0,
             decoration: BoxDecoration(
               color: GREY[200],
               borderRadius: BorderRadius.circular(8.0),
             ),
-            child: imageUrl.isNotEmpty
-                ? Image.network(imageUrl, fit: BoxFit.cover)
-                : const Icon(Icons.camera_alt, size: 50.0),
+            child: image != null
+                ? StaggeredGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 2,
+                  crossAxisSpacing: 2,
+                  children: [
+                    StaggeredGridTile.count(
+                        crossAxisCellCount: 2,
+                        mainAxisCellCount: 2,
+                        child: Image.file(
+                          File(image!.path),
+                          fit: BoxFit.cover,
+                        ))
+                  ]
+                ) : const Icon(Icons.camera_alt, size: 50.0),
           ),
         ),
         const SizedBox(height: 16.0),
@@ -142,49 +167,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Future<void> _pickImage(String imagePath, bool isAvatar) async {
-    // Implement image picking logic here, for example, using image picker package.
-    // Update the imagePath variable with the selected image.
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        if (isAvatar) {
-          imageUrlAva = pickedFile.path;
-        } else {
-          imageUrlCover = pickedFile.path;
-        }
-      });
-    }
-  }
 
   Future<void> _saveProfile() async {
     // Implement logic to save the profile information.
     // You can access the updated values using the controllers.
-    final updatedUser = User(
-      id: widget.user.id,
-      avatar: widget.user.avatar,
-      coverImage: widget.user.coverImage,
-      username: _usernameController.text,
-      description: _descriptionController.text,
-      address: _addressController.text,
-      city: _cityController.text,
-      country: _countryController.text,
-      coins: _coinController.text,
-      link: widget.user.link,
-    );
 
     ReqSetUserinfo info = ReqSetUserinfo();
-    info.username = widget.user.username;
-    info.description = widget.user.description;
-    info.address = widget.user.address;
-    info.city = widget.user.city;
-    info.country = widget.user.country;
+    info.username = _usernameController.text;
+    info.description = _descriptionController.text;
+    info.address = _addressController.text;
+    info.city = _cityController.text;
+    info.country = _countryController.text;
     info.link = widget.user.link;
 
-    info.avatar = null;
-    info.cover_image = null;
+    info.avatar = avaImage;
+    info.cover_image = coverImage;
 
     ProfileApi papi = ProfileApi();
     final bool status = await papi.setUserInfo1(info);

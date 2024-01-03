@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import '../../api/auth/getverifycode_api.dart';
-import '../../widgets/AlertDialogWidget.dart';
 import '../../widgets/ElevatedButtonWidget.dart';
 import '../../widgets/TextWidget.dart';
 
@@ -51,9 +50,10 @@ class SignupForm6 extends StatelessWidget {
             onPressed: () async {
               final getverifycode = await GetVerifyCodeApi.checkVerifyCode(
                   email, verifyCodeController.text);
+              print(getverifycode);
               if (context.mounted) {
                 if (!getverifycode) {
-                  showVerifyErrorlNotification(context);
+                  showNotification(context, "Error", "Can't verify");
                 } else {
                   Navigator.pushNamed(context, '/signupok');
                 }
@@ -71,12 +71,4 @@ class SignupForm6 extends StatelessWidget {
     ));
   }
 
-  void showVerifyErrorlNotification(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const AlertDialogWidget(title: 'Error', text: 'Can not verify');
-      },
-    );
-  }
 }
