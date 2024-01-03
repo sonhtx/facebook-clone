@@ -21,11 +21,19 @@ class _videoImportPlayerWidgetState extends State<videoImportPlayerWidget> {
   void initState() {
     super.initState();
     _videoPlayerController = VideoPlayerController.file(File(widget.url));
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: 16 / 9, // adjust as needed
-      autoInitialize: true,
-      looping: true, // set to false if you don't want the video to loop
+    // _chewieController = ChewieController(
+    //   videoPlayerController: _videoPlayerController,
+    //   aspectRatio: 16 / 9, // adjust as needed
+    //   autoInitialize: true,
+    //   looping: true, // set to false if you don't want the video to loop
+    // );
+    _videoPlayerController.initialize().then(
+        (_)=> setState(
+            () => _chewieController = ChewieController(
+                videoPlayerController: _videoPlayerController,
+              aspectRatio: _videoPlayerController.value.aspectRatio
+            )
+        )
     );
   }
 
@@ -39,12 +47,13 @@ class _videoImportPlayerWidgetState extends State<videoImportPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: (9/16)*MediaQuery.of(context).size.width,
+    return _videoPlayerController.value.isInitialized?
+      AspectRatio(
+      aspectRatio: _videoPlayerController.value.aspectRatio,
       child: Chewie(
         controller: _chewieController,
       ),
-    );
+    ):
+    const SizedBox.shrink();
   }
 }

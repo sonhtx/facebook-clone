@@ -111,7 +111,14 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   createPostData.status = "Hyped";
                   createPostData.auto_accept = "1";
                   // send create post request, need jwt
+                  showLoaderDialog(context, "Loading");
                   await _addPostApi.addPost(createPostData);
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Success'),
+                  ));
+                  Navigator.pop(context);
+
                 },
               ),
             ],
@@ -200,6 +207,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       child: ValueListenableBuilder<XFile?>(
                         valueListenable: videoNotifier,
                         builder: (context, videoFile, _) {
+                          if(videoFile!=null){
+                            print(videoFile!.path);
+                          }
                           if (videoFile!.path.isEmpty) {
                             return Container();
                           } else {
