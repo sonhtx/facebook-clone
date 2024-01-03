@@ -157,7 +157,7 @@ class NotificationsAppBarTitle extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.only(left: 5),
-            child: const Text( 'Notifications', style: TextStyle(color: BLACK, fontSize: 20, fontWeight: FontWeight.bold,),),
+            child: const Text( 'Notifications', style: TextStyle(color: BLACK, fontSize: 20, fontWeight: FONTBOLD,),),
           )
         ]
     );

@@ -94,7 +94,7 @@ class VideoWidgetState extends State<VideoWidget> {
                   trimCollapsedText: '    Show more',
                   trimExpandedText: '',
                   moreStyle: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold, color: GREY),
+                      fontSize: 14, fontWeight: FONTBOLD, color: GREY),
                 ),
                 // images != [] ? const SizedBox.shrink():const SizedBox(height: 6.0,)
               ],

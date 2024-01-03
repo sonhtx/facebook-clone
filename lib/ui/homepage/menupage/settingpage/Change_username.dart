@@ -13,13 +13,13 @@ class ChangeUsername extends StatelessWidget {
     return Scaffold(
       backgroundColor: BG,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
         title: const Text('Name'),
       ),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(8.0),
-          color: Colors.white,
+          color: WHITE,
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -30,7 +30,7 @@ class ChangeUsername extends StatelessWidget {
                   child: Text(
                     "Name",
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                        TextStyle(fontWeight: FONTBOLD, fontSize: 20.0),
                   ),
                 ),
                 const Divider(),
@@ -74,15 +74,15 @@ class ChangeUsernameForm extends StatelessWidget {
               text: const TextSpan(
                   text: "Please note that: ",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      color: BLACK,
+                      fontWeight: FONTBOLD,
                       fontSize: 15.0),
                   children: [
                     TextSpan(
                         text:
                             ": If you change your name on Facebook, your Name cannot be changed for 60 days. Don't add any unusual capitalization, punctuation, characters, or random words. ",
                         style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.normal))
+                            color: BLACK, fontWeight: FONTNORMAL))
                   ]),
             ),
           ),
@@ -91,7 +91,7 @@ class ChangeUsernameForm extends StatelessWidget {
         ButtonWidget(
           buttonText: "Save",
           paddingTop: 10.0,
-          textColor: Colors.white,
+          textColor: WHITE,
           backgroundColor: FBBLUE,
           onPressed: () {
             Navigator.pop(context);
@@ -102,14 +102,14 @@ class ChangeUsernameForm extends StatelessWidget {
         ButtonWidget(
           buttonText: "Cancel",
           paddingTop: 10.0,
-          textColor: Colors.black,
-          backgroundColor: Colors.white,
+          textColor: BLACK,
+          backgroundColor: WHITE,
           onPressed: () {
             Navigator.pop(context);
           },
           radius: 10.0,
           fontSize: 15.0,
-          borderColor: Colors.black,
+          borderColor: BLACK,
         )
       ],
     );

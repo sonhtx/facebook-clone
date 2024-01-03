@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../constants.dart';
 
 enum Reaction { none, dissapoint, kudos }
+
 List<Reaction> ReactionValues = Reaction.values;
 
 typedef OnButtonPressedCallback = void Function(Reaction newReaction);
@@ -36,9 +37,11 @@ class _ReactionButtonState extends State<ReactionButton> {
       ),
     ),
     ReactionElement(
-      Reaction.dissapoint,
-        const Icon( Icons.thumb_down, color: RED,)
-    ),
+        Reaction.dissapoint,
+        const Icon(
+          Icons.thumb_down,
+          color: RED,
+        )),
   ];
 
   @override
@@ -71,7 +74,7 @@ class _ReactionButtonState extends State<ReactionButton> {
             height: 40,
             width: 120,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: GREY.shade300,
               borderRadius: BorderRadius.circular(50),
             ),
             child: ListView.builder(
@@ -144,17 +147,27 @@ class _ReactionButtonState extends State<ReactionButton> {
 
 class ReactionIcon extends StatelessWidget {
   const ReactionIcon({super.key, required this.reaction});
+
   final Reaction reaction;
 
   @override
   Widget build(BuildContext context) {
     switch (reaction) {
       case Reaction.kudos:
-        return const Icon( Icons.thumb_up_off_alt_rounded, color: BLUE,);
+        return const Icon(
+          Icons.thumb_up_off_alt_rounded,
+          color: BLUE,
+        );
       case Reaction.dissapoint:
-        return const Icon( Icons.thumb_down, color: RED,);
+        return const Icon(
+          Icons.thumb_down,
+          color: RED,
+        );
       case Reaction.none:
-        return const Icon( Icons.thumb_up_off_alt_rounded, color: GREY,);
+        return const Icon(
+          Icons.thumb_up_off_alt_rounded,
+          color: GREY,
+        );
     }
   }
 }

@@ -1,6 +1,7 @@
-import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:anti_fb/api/search/search_api.dart';
 import 'package:flutter/material.dart';
+
+import '../../../constants.dart';
 
 class HistorySearchWidget extends StatefulWidget {
   final String id;
@@ -43,7 +44,7 @@ class _HistorySearchWidget extends State<HistorySearchWidget> {
               ),
               child: const Icon(
                 Icons.search,
-                color: Colors.white,
+                color: WHITE,
               ),
             ),
           ),
@@ -58,14 +59,14 @@ class _HistorySearchWidget extends State<HistorySearchWidget> {
                 'You searched on facebook',
                 style: TextStyle(
                   fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FONTBOLD,
                 ),
               ),
               Text(
                 widget.keyword,
                 style: const TextStyle(
                     fontSize: 12.0,
-                    fontWeight: FontWeight.normal,
+                    fontWeight: FONTNORMAL,
                     color: Color.fromARGB(197, 14, 13, 13)),
               ),
               const Row(
@@ -78,7 +79,7 @@ class _HistorySearchWidget extends State<HistorySearchWidget> {
                     'Only you',
                     style: TextStyle(
                         fontSize: 12.0,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FONTNORMAL,
                         color: Color.fromARGB(197, 14, 13, 13)),
                   ),
                   SizedBox(
@@ -88,7 +89,7 @@ class _HistorySearchWidget extends State<HistorySearchWidget> {
                     'Hidden on your profile',
                     style: TextStyle(
                         fontSize: 12.0,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FONTNORMAL,
                         color: Color.fromARGB(197, 14, 13, 13)),
                   ),
                 ],

@@ -3,7 +3,6 @@ import 'package:anti_fb/constants.dart';
 import 'package:anti_fb/models/search/SavedSearch.dart';
 import 'package:anti_fb/repository/search/search_repo.dart';
 import 'package:anti_fb/ui/homepage/search/group_by_date_widget.dart';
-import 'package:anti_fb/ui/homepage/search/history_search_widget.dart';
 import 'package:flutter/material.dart';
 
 class HistorySearchTab extends StatefulWidget {
@@ -100,18 +99,12 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
         children: [
           Text(
             'Uh no ... nothing here!',
-            // style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
           SizedBox(
             height: 16,
           ),
           Text(
             'Try selecting a different catogory',
-            // style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
         ],
       ),
@@ -132,26 +125,16 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
           style: TextStyle(
             color: BLACK,
             fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontWeight: FONTBOLD,
           ),
         ),
         backgroundColor: WHITE,
         iconTheme: const IconThemeData(
           color: BLACK, // Màu của biểu tượng (mũi tên back)
         ),
-        // elevation: 0.0,
-        // actions: [
-        //   IconSearchWidget(
-        //     onPressed: () {
-        //       Navigator.pushNamed(context, '/search');
-        //     },
-        //   )
-        // ],
       ),
       body: SingleChildScrollView(
         child: Container(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +152,7 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
                       handleClearAll();
                     },
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.white, // Màu chữ của nút
+                      backgroundColor: WHITE, // Màu chữ của nút
                       padding: EdgeInsets.zero, // Bỏ padding
                       minimumSize: Size(0, 0), // Bỏ kích thước tối thiểu
                       alignment: Alignment.center, // Canh giữa văn bản
@@ -178,8 +161,8 @@ class _HistorySearchTabState extends State<HistorySearchTab> {
                       'Clear all',
                       style: TextStyle(
                           fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue),
+                          fontWeight: FONTBOLD,
+                          color: BLUE),
                     ),
                   ),
                 ],

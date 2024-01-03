@@ -15,13 +15,13 @@ class ChangePassword extends StatelessWidget {
     return Scaffold(
       backgroundColor: BG,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
         title: const Text('Change Password'),
       ),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(8.0),
-          color: Colors.white,
+          color: WHITE,
           width: MediaQuery.of(context).size.width,
           child: const Padding(
             padding: EdgeInsets.all(8.0),
@@ -109,7 +109,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
           child: Text(
             error,
             style: const TextStyle(
-              color: Colors.red
+              color: RED
             ),
           ),
         ),
@@ -117,7 +117,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
         ButtonWidget(
           buttonText: "Save",
           paddingTop: 10.0,
-          textColor: Colors.white,
+          textColor: WHITE,
           backgroundColor: FBBLUE,
           onPressed: () async {
             FocusManager.instance.primaryFocus?.unfocus();
@@ -156,14 +156,14 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
         ButtonWidget(
           buttonText: "Cancel",
           paddingTop: 10.0,
-          textColor: Colors.black,
-          backgroundColor: Colors.white,
+          textColor: BLACK,
+          backgroundColor: WHITE,
           onPressed: () {
             Navigator.pop(context);
           },
           radius: 10.0,
           fontSize: 15.0,
-          borderColor: Colors.black,
+          borderColor: BLACK,
         ),
         TextButton(
             onPressed: () {},

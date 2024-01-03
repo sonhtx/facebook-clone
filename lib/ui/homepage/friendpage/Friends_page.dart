@@ -8,12 +8,6 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../widgets/icon/IconSearchWidget.dart';
 
-/*
-"email": "namvh@email.com",
-  "password": "123456",
-  "uuid": "string"
-*/
-
 class FriendsPage extends StatefulWidget {
   FriendsPage({super.key});
 
@@ -46,21 +40,20 @@ class _FriendsPageState extends State<FriendsPage> {
   Future<void> getFriendSuggest() async {
     try {
       List<dynamic> result =
-      await widget._friendRepository.getRequestedFriend('0', '5');
+          await widget._friendRepository.getRequestedFriend('0', '5');
 
       List<RequestedFriend>? listSuggest = result[0];
       countRequest = result[1];
       setState(() {
         requestWidgetList = listSuggest
-            ?.map((curSuggest) =>
-            FriendRequestWidget(
-              curSuggest.id,
-              curSuggest.username,
-              curSuggest.avatar,
-              curSuggest.created,
-              delWhenAcceptOrDelete,
-            ))
-            .toList() ??
+                ?.map((curSuggest) => FriendRequestWidget(
+                      curSuggest.id,
+                      curSuggest.username,
+                      curSuggest.avatar,
+                      curSuggest.created,
+                      delWhenAcceptOrDelete,
+                    ))
+                .toList() ??
             [];
       });
     } catch (e) {
@@ -75,9 +68,15 @@ class _FriendsPageState extends State<FriendsPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text( 'Uh no ... nothing here!',),
-          SizedBox( height: 16,),
-          Text( 'Try selecting a different catogory',),
+          Text(
+            'Uh no ... nothing here!',
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            'Try selecting a different catogory',
+          ),
         ],
       ),
     );
@@ -113,7 +112,7 @@ class _FriendsPageState extends State<FriendsPage> {
           style: TextStyle(
             color: BLACK,
             fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontWeight: FONTBOLD,
           ),
         ),
         backgroundColor: WHITE,
@@ -142,7 +141,7 @@ class _FriendsPageState extends State<FriendsPage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 10.0),
                   decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: GREY[300],
                       borderRadius: BorderRadius.circular(30.0)),
                   child: TextButton(
                     onPressed: () {
@@ -156,9 +155,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     child: const Text(
                       'Suggestions',
                       style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold,
-                          color: BLACK),
+                          fontSize: 17.0, fontWeight: FONTBOLD, color: BLACK),
                     ),
                   ),
                 ),
@@ -167,7 +164,7 @@ class _FriendsPageState extends State<FriendsPage> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 10.0),
                   decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: GREY[300],
                       borderRadius: BorderRadius.circular(30.0)),
                   child: TextButton(
                     onPressed: () {
@@ -181,9 +178,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     child: const Text(
                       'All Friends',
                       style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold,
-                          color: BLACK),
+                          fontSize: 17.0, fontWeight: FONTBOLD, color: BLACK),
                     ),
                   ),
                 ),
@@ -193,8 +188,7 @@ class _FriendsPageState extends State<FriendsPage> {
             Row(
               children: [
                 const Text('Friend Requests',
-                    style:
-                    TextStyle(fontSize: 21.0, fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontSize: 21.0, fontWeight: FONTBOLD)),
                 const SizedBox(width: 10.0),
 
                 //count of friend requests
@@ -202,8 +196,8 @@ class _FriendsPageState extends State<FriendsPage> {
                   countRequest,
                   style: const TextStyle(
                     fontSize: 21.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
+                    fontWeight: FONTBOLD,
+                    color: RED,
                   ),
                 )
               ],

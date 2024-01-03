@@ -1,58 +1,42 @@
-import 'dart:convert';
-
-import 'package:anti_fb/api/friend/friend_api.dart';
-import 'package:anti_fb/models/post/PostListData.dart';
 import 'package:anti_fb/models/request/ReqSetUserinfo.dart';
-import 'package:anti_fb/ui/profile/profile_screen.dart';
-import 'package:anti_fb/widgets1/friends_grid.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '/models/info.dart';
 import 'package:anti_fb/constants.dart';
-import 'package:anti_fb/storage.dart';
 import 'package:anti_fb/api/profile/profile_api.dart';
-import 'package:anti_fb/api/profile/userinfo_api.dart';
 import 'package:anti_fb/models/User.dart';
-import 'package:anti_fb/widgets1/friend_grid_view.dart';
-import 'package:anti_fb/widgets1/custom_button.dart';
-import 'dart:math';
 
-void main() {
-  runApp(const MyApp());
-}
+//
+// Map<String, dynamic> json = {
+//   'id': '339',
+//   "username": "Thomas Shelby",
+//   "description": "All religion is a foolish answer to a foolish question.",
+//   "avatar":
+//       "https://it4788.catan.io.vn/files/avatar-1702051303359-135313063.jpg",
+//   "cover_image":
+//       "https://it4788.catan.io.vn/files//cover_image-1702052928186-131402460.jpg",
+//   "link": "https://peaky-blinders.fandom.com/wiki/Thomas_Shelby",
+//   "address": "Small Health",
+//   "city": "Birmingham",
+//   "country": "United Kingdom",
+//   "coins": "0",
+// };
 
-Map<String, dynamic> json = {
-  'id': '339',
-  "username": "Thomas Shelby",
-  "description": "All religion is a foolish answer to a foolish question.",
-  "avatar":
-      "https://it4788.catan.io.vn/files/avatar-1702051303359-135313063.jpg",
-  "cover_image":
-      "https://it4788.catan.io.vn/files//cover_image-1702052928186-131402460.jpg",
-  "link": "https://peaky-blinders.fandom.com/wiki/Thomas_Shelby",
-  "address": "Small Health",
-  "city": "Birmingham",
-  "country": "United Kingdom",
-  "coins": "0",
-};
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: EditProfilePage(user: User.fromJson(json)),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: EditProfilePage(user: User.fromJson(json)),
+//     );
+//   }
+// }
 
 class EditProfilePage extends StatefulWidget {
   final User user;
 
-  EditProfilePage({required this.user});
+  const EditProfilePage({super.key, required this.user});
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -71,10 +55,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    storage.write(
-        key: 'token',
-        value:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM5LCJkZXZpY2VfaWQiOiJzdHJpbmciLCJpYXQiOjE3MDQyNjAzNTV9.q9vW9_a7aXtwYMPtL3Mr2C0uE0ilh4csxG309HEdjWk');
+
     _usernameController = TextEditingController(text: widget.user.username);
     _descriptionController =
         TextEditingController(text: widget.user.description);
@@ -88,31 +69,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Edit Profile'),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildImagePicker('Avatar', widget.user.avatar, true),
-              _buildImagePicker('Cover Photo', widget.user.coverImage, false),
-              _buildTextField('Username', _usernameController),
-              _buildTextField('Description', _descriptionController),
-              _buildTextField('Address', _addressController),
-              _buildTextField('City', _cityController),
-              _buildTextField('Country', _countryController),
-              _buildTextField('Buy coins', _coinController),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: _saveProfile,
-                child: Text('Save Profile'),
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Edit Profile'),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildImagePicker('Avatar', widget.user.avatar, true),
+            _buildImagePicker('Cover Photo', widget.user.coverImage, false),
+            _buildTextField('Username', _usernameController),
+            _buildTextField('Description', _descriptionController),
+            _buildTextField('Address', _addressController),
+            _buildTextField('City', _cityController),
+            _buildTextField('Country', _countryController),
+            _buildTextField('Buy coins', _coinController),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _saveProfile,
+              child: const Text('Save Profile'),
+            ),
+            const SizedBox(height: 50.0),
+          ],
         ),
       ),
     );
@@ -123,22 +103,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(title,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-        SizedBox(height: 8.0),
+            style: const TextStyle(fontSize: 18.0, fontWeight: FONTBOLD)),
+        const SizedBox(height: 8.0),
         GestureDetector(
           onTap: () => _pickImage(imageUrl, isAvatar),
           child: Container(
             height: 150.0,
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: GREY[200],
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: imageUrl.isNotEmpty
                 ? Image.network(imageUrl, fit: BoxFit.cover)
-                : Icon(Icons.camera_alt, size: 50.0),
+                : const Icon(Icons.camera_alt, size: 50.0),
           ),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -148,16 +128,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(label,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-        SizedBox(height: 8.0),
+            style: const TextStyle(fontSize: 18.0, fontWeight: FONTBOLD)),
+        const SizedBox(height: 8.0),
         TextField(
           decoration: InputDecoration(
-            border: OutlineInputBorder(),
+            border: const OutlineInputBorder(),
             hintText: label,
           ),
           controller: controller,
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -207,8 +187,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
     info.cover_image = null;
 
     ProfileApi papi = ProfileApi();
-    await papi.setUserInfo1(info);
-    // await papi.buyCoins(widget.user.coins);
-    // Use the updatedUser object as needed.
+    final bool status = await papi.setUserInfo1(info);
+
+    if(status){
+      ScaffoldMessenger.of(context).showSnackBar(snackBarChangeProfileOK);
+    } else {
+      showNotification(
+          context, "Error", "There was an error when trying to change profile");
+    }
   }
 }
+
+final snackBarChangeProfileOK = SnackBar(
+  content: const Text('Change profile successfully, refresh page to see the change'),
+  action: SnackBarAction(
+    label: 'Undo',
+    onPressed: () {
+      // Some code to undo the change.
+    },
+  ),
+);

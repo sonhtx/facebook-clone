@@ -205,9 +205,9 @@ class _DetailNotificationState extends State<DetailNotification> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: WHITE,
           title: const Text("Notification Settings"),
           leading: BackButton(
             onPressed: (){
@@ -223,12 +223,12 @@ class _DetailNotificationState extends State<DetailNotification> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.white,
+                    color: WHITE,
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         description,
-                        style: const TextStyle(fontSize: 15.0, color: Colors.black),
+                        style: const TextStyle(fontSize: 15.0, color: BLACK),
                       ),
                     )),
               ),
@@ -236,7 +236,7 @@ class _DetailNotificationState extends State<DetailNotification> {
               SizedBox(
                 width: MediaQuery.of(context).size.width*0.95,
                 child: const Divider(
-                  color: Colors.black,
+                  color: BLACK,
                   thickness: 0.5,
                 ),
               ),
@@ -244,15 +244,15 @@ class _DetailNotificationState extends State<DetailNotification> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.white,
+                    color: WHITE,
                     child: const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         "Where you receive these notifications",
                         style: TextStyle(
                             fontSize: 20.0,
-                            color: Colors.black,
-                          fontWeight: FontWeight.bold
+                            color: BLACK,
+                          fontWeight: FONTBOLD
                         ),
                       ),
                     )),
@@ -267,7 +267,7 @@ class _DetailNotificationState extends State<DetailNotification> {
                       margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                       child: const Icon(
                         Icons.notification_add,
-                        color: Colors.black,
+                        color: BLACK,
                       )
                     ),
                     const SizedBox(height: 4.0),
@@ -276,8 +276,8 @@ class _DetailNotificationState extends State<DetailNotification> {
                         "Push",
                         style: TextStyle(
                             fontSize: 17.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
+                            color: BLACK,
+                            fontWeight: FONTNORMAL),
                       ),
                     ),
                     Switch(
@@ -302,7 +302,7 @@ class _DetailNotificationState extends State<DetailNotification> {
               SizedBox(
                 width: MediaQuery.of(context).size.width*0.95,
                 child: const Divider(
-                  color: Colors.black,
+                  color: BLACK,
                   thickness: 0.5,
                 ),
               ),
@@ -348,15 +348,15 @@ class Example extends StatelessWidget{
                     text: TextSpan(
                         text: "Messi",
                         style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                            color: BLACK,
+                            fontWeight: FONTBOLD,
                             fontSize: 15.0),
                         children: [
                           TextSpan(
                               text:
                               example,
                               style: const TextStyle(
-                                  color: Colors.black, fontWeight: FontWeight.normal))
+                                  color: BLACK, fontWeight: FONTNORMAL))
                         ]),
                   ),
                 ),

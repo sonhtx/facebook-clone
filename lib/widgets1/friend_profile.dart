@@ -1,27 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Facebook Friend Profile'),
-        ),
-        body: const MyFriendProfile(
-          avatarUrl:
-              'https://it4788.catan.io.vn/files/avatar-1702051303359-135313063.jpg', // Replace with your avatar URL
-          friendName:
-              'Neymar Junior Dos Santos Lionel Ibrahimovic', // Replace with the friend's name
-        ),
-      ),
-    );
-  }
-}
+import '../constants.dart';
 
 class MyFriendProfile extends StatelessWidget {
   final String avatarUrl;
@@ -50,7 +29,7 @@ class MyFriendProfile extends StatelessWidget {
                 border: Border.all(
                   width: 2.0, // Border width
                 ),
-                color: Colors.grey, // Background color of the square
+                color: GREY, // Background color of the square
                 borderRadius:
                     BorderRadius.circular(11.0), // Same radius as ClipRRect
                 image: DecorationImage(
@@ -67,7 +46,7 @@ class MyFriendProfile extends StatelessWidget {
               friendName,
               style: const TextStyle(
                 fontSize: 13.0,
-                fontWeight: FontWeight.bold,
+                fontWeight: FONTBOLD,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

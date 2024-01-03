@@ -12,14 +12,14 @@ class PersonalDetail extends StatelessWidget {
     return Scaffold(
       backgroundColor: BG,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: WHITE,
       ),
       body: Column(
         children: [
           const SizedBox(height: 4.0),
           Container(
             width: MediaQuery.of(context).size.width,
-            color: Colors.white,
+            color: WHITE,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -34,7 +34,7 @@ class PersonalDetail extends StatelessWidget {
                           child: Text(
                             "Personal Detail",
                             style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                                fontSize: 20.0, fontWeight: FONTBOLD),
                           ),
                         ),
                       ],
@@ -53,7 +53,7 @@ class PersonalDetail extends StatelessWidget {
                           child: Text(
                             "General  ",
                             style: TextStyle(
-                                fontSize: 17.0, fontWeight: FontWeight.bold),
+                                fontSize: 17.0, fontWeight: FONTBOLD),
                           ),
                         ),
                       ],
@@ -94,13 +94,13 @@ class PersonalDetail extends StatelessWidget {
                                       "Name",
                                       style: TextStyle(
                                           fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                          fontWeight: FONTBOLD,
+                                          color: BLACK),
                                     ),
                                     Text(
                                       name,
                                       style: const TextStyle(
-                                          fontSize: 13.0, color: Colors.grey),
+                                          fontSize: 13.0, color: GREY),
                                     )
                                   ],
                                 ),

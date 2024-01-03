@@ -1,12 +1,8 @@
-
-
-
-
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-class ElevatedButtonWidget extends StatelessWidget{
+class ElevatedButtonWidget extends StatelessWidget {
   final String buttonText;
   final double paddingTop;
   final Color textColor;
@@ -14,9 +10,14 @@ class ElevatedButtonWidget extends StatelessWidget{
   final Color borderColor;
   final VoidCallback onPressed;
 
-  const ElevatedButtonWidget({super.key, required this.buttonText, this.paddingTop = 0, this.textColor = BLACK,
-    required this.backgroundColor, this.borderColor = FBBLUE, required this.onPressed});
-
+  const ElevatedButtonWidget(
+      {super.key,
+      required this.buttonText,
+      this.paddingTop = 0,
+      this.textColor = BLACK,
+      required this.backgroundColor,
+      this.borderColor = FBBLUE,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +26,11 @@ class ElevatedButtonWidget extends StatelessWidget{
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor, // Set the background color to transparent
+          backgroundColor: backgroundColor,
+          // Set the background color to transparent
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            side: BorderSide(color: borderColor)
-          ),
+              borderRadius: BorderRadius.circular(15.0),
+              side: BorderSide(color: borderColor)),
           elevation: 0,
         ),
         onPressed: onPressed,
@@ -41,12 +42,5 @@ class ElevatedButtonWidget extends StatelessWidget{
         ),
       ),
     );
-
   }
-
-
-
-
 }
-
-

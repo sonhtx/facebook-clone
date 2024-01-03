@@ -92,7 +92,7 @@ class _BlockScreenState extends State<BlockScreen> {
     return Scaffold(
         backgroundColor: BG,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: WHITE,
           title: const Text("Blocking"),
         ),
         body: Column(
@@ -101,7 +101,7 @@ class _BlockScreenState extends State<BlockScreen> {
             Expanded(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: Colors.white,
+                color: WHITE,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -125,7 +125,7 @@ class _BlockScreenState extends State<BlockScreen> {
                               child: Text(
                                 "Once you block someone, that person can no longer see things you post on your Timeline, tag you, invite you to events or groups, start a conversation with you, or add you as a friend. This doesn't include apps, games or groups you both participate in.",
                                 style: TextStyle(
-                                    fontSize: 13.0, color: Colors.grey),
+                                    fontSize: 13.0, color: GREY),
                               ),
                             ),
                           ],
@@ -175,7 +175,7 @@ class _BlockScreenState extends State<BlockScreen> {
                     ),
                     Expanded(
                         child: Container(
-                          color: Colors.white,
+                          color: WHITE,
                           child: Scrollbar(
                             child: SingleChildScrollView(
                               child: Column(
@@ -220,7 +220,7 @@ class _BlockedPeopleState extends State<BlockedPeople> {
               context: context,
               builder: (BuildContext context) => Dialog(
                     insetPadding: const EdgeInsets.all(16.0),
-                    surfaceTintColor: Colors.white,
+                    surfaceTintColor: WHITE,
                     shape: RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.circular(0.0), // Set the radius here
@@ -236,7 +236,7 @@ class _BlockedPeopleState extends State<BlockedPeople> {
                             child: Text(
                               "Unblock ${widget.userName} ?",
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25.0),
+                                  fontWeight: FONTBOLD, fontSize: 25.0),
                             ),
                           ),
                           const SizedBox(height: 10.0),
@@ -245,9 +245,9 @@ class _BlockedPeopleState extends State<BlockedPeople> {
                             child: Text(
                               "If you unblock ${widget.userName} they may be able to see your Timeline or contact you, depending on your settings",
                               style: const TextStyle(
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FONTNORMAL,
                                   fontSize: 15.0,
-                                  color: Colors.grey),
+                                  color: GREY),
                             ),
                           ),
                           const SizedBox(height: 10.0),
@@ -256,9 +256,9 @@ class _BlockedPeopleState extends State<BlockedPeople> {
                             child: Text(
                               "Tags you and ${widget.userName} previously added to each other may be restored",
                               style: const TextStyle(
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FONTNORMAL,
                                   fontSize: 15.0,
-                                  color: Colors.grey),
+                                  color: GREY),
                             ),
                           ),
                           const SizedBox(height: 10.0),
@@ -267,9 +267,9 @@ class _BlockedPeopleState extends State<BlockedPeople> {
                             child: Text(
                               "You'll have to wait 48 hours if you want to block ${widget.userName} again",
                               style: const TextStyle(
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FONTNORMAL,
                                   fontSize: 15.0,
-                                  color: Colors.grey),
+                                  color: GREY),
                             ),
                           ),
                           const SizedBox(height: 10.0),
@@ -284,7 +284,7 @@ class _BlockedPeopleState extends State<BlockedPeople> {
                                   child: const Text(
                                     "CANCEL",
                                     style: TextStyle(
-                                        fontSize: 15.0, color: Colors.black),
+                                        fontSize: 15.0, color: BLACK),
                                   )),
                               TextButton(
                                   style: TextButton.styleFrom(
@@ -339,13 +339,13 @@ class _BlockedPeopleState extends State<BlockedPeople> {
                       widget.userName,
                       style: const TextStyle(
                           fontSize: 17.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal),
+                          color: BLACK,
+                          fontWeight: FONTNORMAL),
                     ),
                   ),
                   const Text(
                     "UNBLOCK",
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: GREY),
                   )
                 ],
               ),

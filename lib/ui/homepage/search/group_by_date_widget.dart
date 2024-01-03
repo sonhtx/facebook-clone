@@ -2,6 +2,8 @@ import 'package:anti_fb/models/search/SavedSearch.dart';
 import 'package:anti_fb/ui/homepage/search/history_search_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
+
 class GroupByDateWidget extends StatefulWidget {
   final String date;
   final List<SavedSearch> historySearch;
@@ -62,9 +64,9 @@ class _GroupByDateState extends State<GroupByDateWidget> {
         Text(
           widget.date,
           style: const TextStyle(
-            color: Colors.black,
+            color: BLACK,
             fontSize: 14.0,
-            fontWeight: FontWeight.bold,
+            fontWeight: FONTBOLD,
           ),
         ),
         const SizedBox(

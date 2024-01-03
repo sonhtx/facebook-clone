@@ -86,19 +86,18 @@ class MarkWidget extends StatefulWidget {
 
   MarkWidget(
       {super.key,
-        required this.your_id,
-        required this.post_id,
-        required this.mark_id,
-        required this.mark_content,
-        required this.type_of_mark,
-        required this.created,
-        required this.poster,
-        required this.comments});
+      required this.your_id,
+      required this.post_id,
+      required this.mark_id,
+      required this.mark_content,
+      required this.type_of_mark,
+      required this.created,
+      required this.poster,
+      required this.comments});
 
   @override
   State<MarkWidget> createState() => MarkWidgetState();
 }
-
 
 class MarkWidgetState extends State<MarkWidget> {
   late bool isExpanded;
@@ -141,17 +140,24 @@ class MarkWidgetState extends State<MarkWidget> {
                     child: Column(
                       children: [
                         TextWidget(
-                          text: widget.poster.name, fontSize: 14, width: 200,
+                          text: widget.poster.name,
+                          fontSize: 14,
+                          width: 200,
                         ),
                         TextWidget(
-                          text: widget.mark_content, fontSize: 14, fontWeight: FontWeight.normal,
+                          text: widget.mark_content,
+                          fontSize: 14,
+                          fontWeight: FONTNORMAL,
                           width: 200,
                         ),
                       ],
                     ),
                   ),
                   TextWidget(
-                    text: widget.created, fontSize: 14, width: 200, fontWeight: FontWeight.normal,
+                    text: widget.created,
+                    fontSize: 14,
+                    width: 200,
+                    fontWeight: FONTNORMAL,
                     textColor: GREY,
                   ),
                   TextButton(
@@ -173,37 +179,47 @@ class MarkWidgetState extends State<MarkWidget> {
                     ),
                   ),
                   SizedBox(
-                    width: 200,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFieldWidget(
-                            controller: commentController, hintText: 'Add comment',
-                            radiusRoundBorder: 15, fontSize: 12,
+                      width: 200,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFieldWidget(
+                              controller: commentController,
+                              hintText: 'Add comment',
+                              radiusRoundBorder: 15,
+                              fontSize: 12,
+                            ),
                           ),
-                        ),
-                        IconWidget(
-                          icon: Icons.send_rounded,
-                          color: BLUE,
-                          onPressed: () {
-                            String content = commentController.text;
-                            ReqSetMarkCmtData req = ReqSetMarkCmtData.withMarkId(widget.post_id,
-                                content, "0", "10", widget.mark_id, '0');
-                          _commentRepository.setMarkComment(req, false);
-                          setState(() {
-                            numComment++;
-                            widget.listCommentsWidget.add(CommentWidget(
-                              content: content,
-                              created: "now",
-                              poster: PosterData(id: widget.your_id,name: 'you', avatar: defaultAvatar, ),
-                            ));
-                          });
-
-                          })
-                      ],
-                    )
-                  ),
-                  const SizedBox(height : 10)
+                          IconWidget(
+                              icon: Icons.send_rounded,
+                              color: BLUE,
+                              onPressed: () {
+                                String content = commentController.text;
+                                ReqSetMarkCmtData req =
+                                    ReqSetMarkCmtData.withMarkId(
+                                        widget.post_id,
+                                        content,
+                                        "0",
+                                        "10",
+                                        widget.mark_id,
+                                        '0');
+                                _commentRepository.setMarkComment(req, false);
+                                setState(() {
+                                  numComment++;
+                                  widget.listCommentsWidget.add(CommentWidget(
+                                    content: content,
+                                    created: "now",
+                                    poster: PosterData(
+                                      id: widget.your_id,
+                                      name: 'you',
+                                      avatar: defaultAvatar,
+                                    ),
+                                  ));
+                                });
+                              })
+                        ],
+                      )),
+                  const SizedBox(height: 10)
                 ],
               )
             ],
@@ -244,7 +260,7 @@ class CommentWidget extends StatelessWidget {
               TextWidget(
                 text: content,
                 fontSize: 12,
-                fontWeight: FontWeight.normal,
+                fontWeight: FONTNORMAL,
                 width: 100,
               )
             ])

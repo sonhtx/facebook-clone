@@ -7,7 +7,6 @@ import 'package:logging/logging.dart';
 import 'homepage/home_page.dart';
 import 'notificationpage/notification_page.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -27,16 +26,18 @@ class HomeState extends State<HomeScreen> {
   final GlobalKey<NavigatorState> homeTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> peopleTabNavKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> videoTabNavKey = GlobalKey<NavigatorState>();
-  final GlobalKey<NavigatorState> notificationTabNavKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> notificationTabNavKey =
+      GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> menuTabNavKey = GlobalKey<NavigatorState>();
 
   int _selectedIndex = 0;
 
   late String coin = '';
   late String email = '';
+
   _onTapped(int index) {
     if (_selectedIndex == index) {
-      switch(index){
+      switch (index) {
         case 0:
           if (homeTabNavKey.currentState!.canPop()) {
             homeTabNavKey.currentState?.popUntil((r) => r.isFirst);
@@ -89,7 +90,6 @@ class HomeState extends State<HomeScreen> {
           }
       }
       // firstTabNavKey.currentState?.popUntil((r) => r.isFirst);
-
     } else {
       setState(() {
         _selectedIndex = index;
@@ -154,23 +154,24 @@ class HomeState extends State<HomeScreen> {
                 return CupertinoTabView(
                     navigatorKey: peopleTabNavKey,
                     // builder: (context) => PeoplePage(scrollController: peopleScrollController)
-                    builder: (context) => FriendsPage()
-                );
+                    builder: (context) => FriendsPage());
               case 2:
                 return CupertinoTabView(
                     navigatorKey: videoTabNavKey,
                     // builder: (context) => PeoplePage(scrollController: peopleScrollController)
-                    builder: (context) => VideoPage(scrollController: videoScrollController)
-                );
+                    builder: (context) =>
+                        VideoPage(scrollController: videoScrollController));
               case 3:
                 return CupertinoTabView(
                   navigatorKey: notificationTabNavKey,
-                  builder: (context) => NotificationPage(scrollController: notificationScrollController),
+                  builder: (context) => NotificationPage(
+                      scrollController: notificationScrollController),
                 );
               default:
                 return CupertinoTabView(
                   navigatorKey: menuTabNavKey,
-                  builder: (context) => MenuPage(scrollController: menuScrollController),
+                  builder: (context) =>
+                      MenuPage(scrollController: menuScrollController),
                 );
             }
           }),

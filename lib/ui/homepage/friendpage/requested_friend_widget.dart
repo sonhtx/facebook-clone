@@ -1,6 +1,8 @@
 import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
+
 class FriendRequestWidget extends StatelessWidget {
   final String id;
   final String username;
@@ -132,16 +134,16 @@ class FriendRequestWidget extends StatelessWidget {
                 children: [
                   Text(
                     username,
-                    style: const TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                    style:
+                        const TextStyle(fontSize: 16.0, fontWeight: FONTBOLD),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   Text(
                     calculateTimeDifference(created),
-                    style: const TextStyle(
-                        fontSize: 10.0, fontWeight: FontWeight.normal),
+                    style:
+                        const TextStyle(fontSize: 10.0, fontWeight: FONTNORMAL),
                   ),
                 ],
               ),
@@ -154,19 +156,18 @@ class FriendRequestWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 5.0),
                     decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5.0)),
+                        color: BLUE, borderRadius: BorderRadius.circular(5.0)),
                     child: TextButton(
                       onPressed: handleAccept,
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: BLUE,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
                       child: const Text(
                         'Confirm',
-                        style: TextStyle(color: Colors.white, fontSize: 15.0),
+                        style: TextStyle(color: WHITE, fontSize: 15.0),
                       ),
                     ),
                   ),
@@ -175,7 +176,7 @@ class FriendRequestWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 5.0),
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: GREY[300],
                         borderRadius: BorderRadius.circular(5.0)),
                     child: TextButton(
                       onPressed: () {
@@ -185,14 +186,14 @@ class FriendRequestWidget extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 10.0),
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: GREY[300],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
                       child: const Text(
                         'Delete',
-                        style: TextStyle(color: Colors.black, fontSize: 15.0),
+                        style: TextStyle(color: BLACK, fontSize: 15.0),
                       ),
                     ),
                   ),
@@ -231,7 +232,7 @@ class FriendRequestWidget extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(8.0),
-                  backgroundColor: Colors.white, // Màu nền của nút
+                  backgroundColor: WHITE, // Màu nền của nút
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -245,7 +246,7 @@ class FriendRequestWidget extends StatelessWidget {
                       Icon(
                         Icons.person_remove_outlined,
                         size: 22.0, // Kích thước của biểu tượng
-                        color: Colors.black, // Màu của biểu tượng
+                        color: BLACK, // Màu của biểu tượng
                       ),
                       SizedBox(width: 20),
                       Column(
@@ -256,8 +257,8 @@ class FriendRequestWidget extends StatelessWidget {
                             'Block A',
                             style: TextStyle(
                               fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              fontWeight: FONTBOLD,
+                              color: BLACK,
                             ),
                           ),
                           SizedBox(height: 5),
@@ -265,7 +266,7 @@ class FriendRequestWidget extends StatelessWidget {
                             'A won\'t be able to see you or contact you on Facebook',
                             style: TextStyle(
                               fontSize: 12.0,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FONTNORMAL,
                               color: Color.fromARGB(197, 14, 13, 13),
                             ),
                           ),

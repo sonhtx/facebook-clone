@@ -1,5 +1,3 @@
-import 'package:anti_fb/models/post/PostListSearchData.dart';
-import 'package:anti_fb/models/request/ReqSearch.dart';
 import 'package:anti_fb/models/search/SavedSearch.dart';
 import 'package:anti_fb/repository/search/search_repo.dart';
 import 'package:anti_fb/ui/homepage/search/history_search_tab.dart';
@@ -65,18 +63,12 @@ List<SavedSearchWidget> savedSearchWidgetList = [];
         children: [
           Text(
             'Uh no ... nothing here!',
-            // style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
           SizedBox(
             height: 16,
           ),
           Text(
             'Try selecting a different catogory',
-            // style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //       color: Theme.of(context).colorScheme.onBackground,
-            // ),
           ),
         ],
       ),
@@ -119,7 +111,7 @@ List<SavedSearchWidget> savedSearchWidgetList = [];
                         // vertical: 10.0,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: GREY[300],
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       child: TextField(
@@ -139,7 +131,7 @@ List<SavedSearchWidget> savedSearchWidgetList = [];
                   children: [
                     const Text('Recent',
                         style: TextStyle(
-                            fontSize: 25.0, fontWeight: FontWeight.bold)),
+                            fontSize: 25.0, fontWeight: FONTBOLD)),
                     ButtonWidget(
                       buttonText: 'See all',
                       textColor: BLACK,

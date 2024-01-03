@@ -44,7 +44,7 @@ class NotificationWidget extends StatelessWidget {
         }
       },
       child: Container(
-        color: (notification.read == 0) ? NOTREADNOTI : Colors.white,
+        color: (notification.read == 0) ? NOTREADNOTI : WHITE,
         width: MediaQuery.of(context).size.width,
         height: 100.0,
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -79,7 +79,7 @@ class NotificationWidget extends StatelessWidget {
                     Text(
                         calculateTimeDifference(notification.created),
                         style:
-                        const TextStyle(fontSize: 10.0, color: Colors.grey)),
+                        const TextStyle(fontSize: 10.0, color: GREY)),
                   ],
                 ),
               ),
@@ -142,11 +142,11 @@ class NotificationWidget extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: TextButton.icon(
                           style: TextButton.styleFrom(
-                              iconColor: Colors.black,
+                              iconColor: BLACK,
                               textStyle: const TextStyle(
                                   fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black
+                                  fontWeight: FONTBOLD,
+                                  color: BLACK
                               ),
                               maximumSize: Size(MediaQuery.of(context).size.width, 50.0),
                               minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
@@ -161,8 +161,8 @@ class NotificationWidget extends StatelessWidget {
                             "Remove this notification",
                             style: TextStyle(
                                 fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black
+                                fontWeight: FONTBOLD,
+                                color: BLACK
                             ),
                           ),
                         ),
@@ -193,16 +193,16 @@ class Described extends StatelessWidget {
       text: TextSpan(
           text: (notification.user?.username == null)? "" : notification.user!.username,
           style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
+              color: BLACK,
+              fontWeight: FONTBOLD,
               fontSize: 16.0),
           children: [
             TextSpan(
               text:showContent(type),
               style: const TextStyle(
-                  color: Colors.black,
+                  color: BLACK,
                   fontSize: 16.0,
-              fontWeight: FontWeight.normal),
+              fontWeight: FONTNORMAL),
             )
           ]),
     );

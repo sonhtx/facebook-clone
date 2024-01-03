@@ -1,7 +1,8 @@
-
 import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:anti_fb/ui/homepage/homepage/PostWidget.dart';
+import 'package:anti_fb/ui/profile/edit_profile.dart';
 import 'package:anti_fb/widgets1/friends_grid.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../models/post/PostListData.dart';
@@ -39,22 +40,23 @@ class _ProfileState extends State<Profile> {
   static const _pageSize = 8;
   final PostRepository _postRepository = PostRepository();
   final PagingController<int, PostListData> _pagingController =
-  PagingController(firstPageKey: 1);
+      PagingController(firstPageKey: 1);
 
   late RequestListPost_VideoData requestListPostData =
-  RequestListPost_VideoData(widget.userid, "1", "1", "1.0", "1.0", null, "0", "10");
+      RequestListPost_VideoData(
+          widget.userid, "1", "1", "1.0", "1.0", null, "0", "10");
 
   Future<void> _fetchPage(pageKey) async {
     await Future.delayed(const Duration(seconds: 2));
     try {
       List<PostListData>? listPost =
-      await _postRepository.getlistpost(requestListPostData);
+          await _postRepository.getlistpost(requestListPostData);
       setState(() {
-        index+=10;
-        requestListPostData = RequestListPost_VideoData(widget.userid, "1", "1", "1.0", "1.0",
-            null, index.toString(), "10");
+        index += 10;
+        requestListPostData = RequestListPost_VideoData(widget.userid, "1", "1",
+            "1.0", "1.0", null, index.toString(), "10");
       });
-      if(listPost!=null){
+      if (listPost != null) {
         final isLastPage = listPost.length < _pageSize;
         if (isLastPage) {
           _pagingController.appendLastPage(listPost);
@@ -67,7 +69,6 @@ class _ProfileState extends State<Profile> {
       _pagingController.error = error;
     }
   }
-
 
   // Init data use for API calling
   Future<void> fetchData() async {
@@ -84,18 +85,18 @@ class _ProfileState extends State<Profile> {
       Info(
         icon: const Icon(
           Icons.location_on,
-          color: Colors.black,
+          color: BLACK,
         ),
         normalText: 'From ',
         boldText: "${user.address}, ${user.city}, ${user.country}",
       ),
       Info(
-        icon: const Icon(Icons.link, color: Colors.black),
+        icon: const Icon(Icons.link, color: BLACK),
         normalText: user.link,
         boldText: '',
       ),
       Info(
-        icon: const Icon(Icons.more_horiz, color: Colors.black),
+        icon: const Icon(Icons.more_horiz, color: BLACK),
         normalText: 'See your About info',
       ),
     ];
@@ -117,12 +118,10 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
-    // fetchData();
-
-    myFuture =fetchData();
+    myFuture = fetchData();
 
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
@@ -157,18 +156,18 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.all(5),
           child: RichText(
               text: TextSpan(style: const TextStyle(fontSize: 18), children: [
-                TextSpan(
-                    text: infoItem.normalText,
-                    style: const TextStyle(color: Colors.black)),
-                TextSpan(
-                    text: infoItem.boldText,
-                    style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold))
-              ])),
+            TextSpan(
+                text: infoItem.normalText,
+                style: const TextStyle(color: BLACK)),
+            TextSpan(
+                text: infoItem.boldText,
+                style: const TextStyle(color: BLACK, fontWeight: FONTBOLD))
+          ])),
         ),
       ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
     Widget boundary = const Divider(
@@ -176,17 +175,14 @@ class _ProfileState extends State<Profile> {
       height: 10,
       color: Color.fromARGB(255, 183, 176, 176),
     );
-
     Widget bigBoundary = const Divider(
       thickness: 20,
       height: 100,
       color: Color.fromARGB(255, 211, 206, 206),
     );
-
     Widget endline = const SizedBox(
       height: 10,
     );
-
     Widget endline5 = const SizedBox(
       height: 5,
     );
@@ -195,7 +191,9 @@ class _ProfileState extends State<Profile> {
         future: myFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
+            return const Center(
+                child: SizedBox(
+                    width: 30, height: 30, child: CircularProgressIndicator()));
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
@@ -211,21 +209,27 @@ class _ProfileState extends State<Profile> {
                         setState(() {
                           index = 0;
                           requestListPostData = RequestListPost_VideoData(
-                              widget.userid, "1", "1", "1.0", "1.0", null, index.toString(), "10");});
+                              widget.userid,
+                              "1",
+                              "1",
+                              "1.0",
+                              "1.0",
+                              null,
+                              index.toString(),
+                              "10");
+                        });
                         return Future.sync(
-                              () => _pagingController.refresh(),
+                          () => _pagingController.refresh(),
                         );
                       },
                       child: CustomScrollView(
                           controller: scrollController,
                           slivers: <Widget>[
-                            
                             SliverToBoxAdapter(
                               child: Container(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10),
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
                                 color: WHITE,
-                                // constraints: const BoxConstraints.expand(),
                                 child: Column(
                                   children: [
                                     const SizedBox(
@@ -236,16 +240,16 @@ class _ProfileState extends State<Profile> {
                                       alignment: Alignment.topCenter,
                                       children: [
                                         Container(
-                                          width: MediaQuery
-                                              .of(context)
-                                              .size
-                                              .width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 180,
                                           decoration: BoxDecoration(
-                                              borderRadius: const BorderRadius
-                                                  .only(
-                                                  topLeft: Radius.circular(10),
-                                                  topRight: Radius.circular(10)),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(10),
+                                                      topRight:
+                                                          Radius.circular(10)),
                                               image: DecorationImage(
                                                   image: NetworkImage(
                                                     user.coverImage,
@@ -253,10 +257,11 @@ class _ProfileState extends State<Profile> {
                                                   fit: BoxFit.cover)),
                                         ),
                                         Container(
-                                          margin: const EdgeInsets.only(top: 80),
+                                          margin:
+                                              const EdgeInsets.only(top: 80),
                                           child: CircleAvatar(
                                             radius: 74.0,
-                                            backgroundColor: Colors.white,
+                                            backgroundColor: WHITE,
                                             child: CircleAvatar(
                                               radius: 70.0,
                                               backgroundImage: NetworkImage(
@@ -266,10 +271,11 @@ class _ProfileState extends State<Profile> {
                                           ),
                                         ),
                                         Container(
-                                          margin: const EdgeInsets.only(top: 190),
+                                          margin:
+                                              const EdgeInsets.only(top: 190),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               const SizedBox(
                                                 width: 55,
@@ -279,21 +285,21 @@ class _ProfileState extends State<Profile> {
                                               ),
                                               Container(
                                                 decoration: const BoxDecoration(
-                                                    color: Colors.black,
+                                                    color: BLACK,
                                                     borderRadius:
-                                                    BorderRadius.all(
-                                                        Radius.circular(50))),
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                50))),
                                                 child: Center(
                                                   child: Container(
                                                     width: 40.0,
-                                                    // Set the desired width
                                                     height: 40.0,
                                                     alignment: Alignment.center,
                                                     child: IconButton(
                                                       icon: const Icon(
                                                           Icons.camera_alt),
                                                       iconSize: 20.0,
-                                                      color: Colors.white,
+                                                      color: WHITE,
                                                       onPressed: () {
                                                         // Change avatar
                                                         print(
@@ -308,30 +314,36 @@ class _ProfileState extends State<Profile> {
                                         ),
                                         Container(
                                           margin: const EdgeInsets.only(
-                                            left: 250, top: 140,),
+                                            left: 250,
+                                            top: 140,
+                                          ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
-                                              const SizedBox(width: 55,),
-                                              const SizedBox(width: 25,),
+                                              const SizedBox(
+                                                width: 55,
+                                              ),
+                                              const SizedBox(
+                                                width: 25,
+                                              ),
                                               Container(
                                                 decoration: const BoxDecoration(
-                                                    color: Colors.black,
+                                                    color: BLACK,
                                                     borderRadius:
-                                                    BorderRadius.all(
-                                                        Radius.circular(50))),
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                50))),
                                                 child: Center(
                                                   child: Container(
                                                     width: 40.0,
-                                                    // Set the desired width
                                                     height: 40.0,
                                                     alignment: Alignment.center,
                                                     child: IconButton(
                                                       icon: const Icon(
                                                           Icons.camera_alt),
                                                       iconSize: 20.0,
-                                                      color: Colors.white,
+                                                      color: WHITE,
                                                       onPressed: () {
                                                         // Change background image
                                                         print(
@@ -354,14 +366,9 @@ class _ProfileState extends State<Profile> {
                                       user.username,
                                       style: const TextStyle(
                                           fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                          fontWeight: FONTBOLD,
+                                          color: BLACK),
                                     ),
-                                    // const SizedBox(
-                                    //   height: 10,
-                                    // ),
-
-                                    // Description
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -381,27 +388,30 @@ class _ProfileState extends State<Profile> {
                                     // User information
                                     Column(
                                       children: info
-                                          .map<Widget>(
-                                              (infoList) =>
+                                          .map<Widget>((infoList) =>
                                               infoTemplate(infoList, context))
                                           .toList(),
                                     ),
 
                                     // Edit details button
                                     Container(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width,
+                                      width: MediaQuery.of(context).size.width,
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            // To edit profile
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      EditProfilePage(
+                                                          user: user)),
+                                            );
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Color.fromARGB(
-                                                255, 209, 247, 254),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 209, 247, 254),
                                           ),
                                           child: const Text(
                                             'Edit public details',
@@ -410,11 +420,6 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ),
                                     ),
-
-                                    // Friend here
-                                    // Container(
-                                    //   child: MyGridView(),
-                                    // ),
 
                                     endline,
                                     boundary,
@@ -426,7 +431,7 @@ class _ProfileState extends State<Profile> {
                                         'Friends',
                                         style: TextStyle(
                                           fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FONTBOLD,
                                         ),
                                       ),
                                     ),
@@ -438,13 +443,12 @@ class _ProfileState extends State<Profile> {
                                         '$friendsCount friends',
                                         style: const TextStyle(
                                           fontSize: 16.0,
-                                          color: Colors.grey,
+                                          color: GREY,
                                         ),
                                       ),
                                     ),
 
                                     friendsGrid,
-
                                     bigBoundary,
 
                                     const Align(
@@ -453,46 +457,38 @@ class _ProfileState extends State<Profile> {
                                         'Posts',
                                         style: TextStyle(
                                           fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FONTBOLD,
                                         ),
                                       ),
                                     ),
 
                                     // List posts here
-
-
                                   ],
                                 ),
                               ),
                             ),
                             PagedSliverList<int, PostListData>(
                               pagingController: _pagingController,
-                              builderDelegate: PagedChildBuilderDelegate<
-                                  PostListData>(
-                                  animateTransitions: true,
-                                  itemBuilder: (context, item, index) =>
-                                      PostWidget(
-                                          item.id,
-                                          item.name,
-                                          item.image,
-                                          item.described,
-                                          item.created.substring(0, 10),
-                                          item.feel,
-                                          item.comment_mark,
-                                          item.is_felt,
-                                          item.author.name,
-                                          item.author.avatar,
-                                          true
-                                      )
-                              ),
+                              builderDelegate:
+                                  PagedChildBuilderDelegate<PostListData>(
+                                      animateTransitions: true,
+                                      itemBuilder: (context, item, index) =>
+                                          PostWidget(
+                                              item.id,
+                                              item.name,
+                                              item.image,
+                                              item.described,
+                                              item.created.substring(0, 10),
+                                              item.feel,
+                                              item.comment_mark,
+                                              item.is_felt,
+                                              item.author.name,
+                                              item.author.avatar,
+                                              true)),
                             ),
-                          ]
-                      ),
-                    )
-                )
-            );
+                          ]),
+                    )));
           }
-        }
-    );
+        });
   }
 }
