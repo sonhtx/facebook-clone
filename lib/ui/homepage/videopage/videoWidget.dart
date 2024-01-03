@@ -103,7 +103,7 @@ class VideoWidgetState extends State<VideoWidget> {
           const SizedBox(height: 10,),
           //------------------------------------------------
           SizedBox(
-            height: 500,
+            height: 300,
             child: Chewie(controller: _chewieController,) ,
           ),
           //------------------------------------------------

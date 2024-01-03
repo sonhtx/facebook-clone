@@ -87,7 +87,7 @@ class VideoScreenState extends State<VideoScreen> {
       future: getPost(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
           return const Text("Network disconnected");
         } else {
