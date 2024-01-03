@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:anti_fb/models/post/PostListData.dart';
 import 'package:anti_fb/models/request/ReqSetUserinfo.dart';
-import 'package:anti_fb/ui/homepage/homepage/listpost.dart';
 import 'package:anti_fb/ui/profile/profile_screen.dart';
 import 'package:anti_fb/widgets1/friends_grid.dart';
 import 'package:cached_network_image/cached_network_image.dart';
