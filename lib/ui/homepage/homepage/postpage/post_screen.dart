@@ -7,10 +7,9 @@ import '../../../../api/post/comment_api.dart';
 import '../../../../constants.dart';
 import '../../../../models/post/PostData.dart';
 import '../../../../repository/post/post_repo.dart';
-import '../../../../widgets/AlertDialogWidget.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../../../../widgets/custom_react_widget.dart';
-import '../listpost.dart';
+import '../PostWidget.dart';
 import 'MarkInputWidget.dart';
 import 'markUI.dart';
 
@@ -64,15 +63,15 @@ class PostScreenState extends State<PostScreen> {
       future: getPost(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
-        return content;
+        return const Text("Network disconnected");
       } else {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: WHITE,
-          title: PostHeader( imageUrl: post.author!.avatar, email: post.author!.name,
-            timestamp: post.created),
+          title: PostHeader(post_id: widget.id, imageUrl: post.author!.avatar, email: post.author!.name,
+            timestamp: calculateTimeDifference(post.created), canEdit: false,),
           iconTheme: const IconThemeData(
             color: GREY, // Set the color of the back arrow icon to black
           ),
@@ -226,14 +225,7 @@ class _SetMarkButtonWidget extends StatelessWidget{
   }
 
 }
-void showNotification(BuildContext context, String title, String text) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialogWidget(title: title, text: text);
-    },
-  );
-}
+
 
 void showMarkInput(BuildContext context, String id, String rateStatus) {
   showDialog(

@@ -81,11 +81,9 @@ class PostApi {
       body: json.encode(requestBody),
     );
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-
-      return jsonResponse; // get list success
+      return true;
     } else {
-      return null; // get list false
+      return null;
     }
   }
 

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:anti_fb/models/request/ReqSearchUser.dart';
+
 import '../../constants.dart';
 import '../../models/request/ReqSearch.dart';
 import '../../storage.dart';
@@ -32,6 +34,24 @@ class SearchApi {
     final String jsonData = jsonEncode(req.toJson());
     final response = await http.post(
       Uri.parse('$apiUrl/search'),
+      headers: headers,
+      body: jsonData,
+    );
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+
+      return jsonResponse; // get list success
+    } else {
+      return null; // get list false
+    }
+  }
+
+  Future searchUser(ReqSearchUser req) async {
+    await _initializeHeaders();
+
+    final String jsonData = jsonEncode(req.toJson());
+    final response = await http.post(
+      Uri.parse('$apiUrl/search_user'),
       headers: headers,
       body: jsonData,
     );

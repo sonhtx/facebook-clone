@@ -21,7 +21,7 @@ class SignupApi{
       body: jsonData,
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
       return jsonResponse;
     } else {

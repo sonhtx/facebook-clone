@@ -1,10 +1,11 @@
 import 'package:anti_fb/models/post/CreatePostData.dart';
+import 'package:anti_fb/widget_dung/videoImportWidget.dart';
 import 'package:anti_fb/widgets/TextWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../constants.dart';
 import '../../../../api/post/multimediaPost_api.dart';
+import '../../../../constants.dart';
 import 'ImageUpWidget.dart';
 
 class CreatePostScreen extends StatefulWidget {
@@ -46,9 +47,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
     // Open the image picker to select multiple images
     final List<XFile> pickedImages = await picker.pickMultiImage();
-
-    createPostData.images = pickedImages;
-    imagesNotifier.value = pickedImages;
+    if(pickedImages != null){
+      createPostData.images = pickedImages;
+      imagesNotifier.value = pickedImages;
+      createPostData.video = null;
+      videoNotifier.value = XFile('');
+    }
   }
 
   Future<void> pickVideo() async {
@@ -58,7 +62,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     final XFile? pickedVideo =
         await picker.pickVideo(source: ImageSource.gallery);
 
-    createPostData.video = pickedVideo;
+    if(pickedVideo!= null){
+      createPostData.video = pickedVideo;
+      videoNotifier.value = pickedVideo;
+      createPostData.images = null;
+      imagesNotifier.value = [];
+    }
   }
 
   @override
@@ -102,7 +111,14 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   createPostData.status = "Hyped";
                   createPostData.auto_accept = "1";
                   // send create post request, need jwt
+                  showLoaderDialog(context, "Loading");
                   await _addPostApi.addPost(createPostData);
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Success'),
+                  ));
+                  Navigator.pop(context);
+
                 },
               ),
             ],
@@ -113,8 +129,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             Expanded(
               child: Container(
                 child: SingleChildScrollView(
-                      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                                        Container(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    Container(
                         padding: const EdgeInsets.all(10),
                         width: double.infinity,
                         height: 70,
@@ -133,7 +150,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                             },
                           )
                         ])),
-                                        Container(
+                    Container(
                         padding: const EdgeInsets.all(10),
                         width: double.infinity,
                         height: 70,
@@ -152,7 +169,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                             },
                           )
                         ])),
-                                        Container(
+                    Container(
                         padding: const EdgeInsets.only(left: 5),
                         width: double.infinity,
                         child: Column(children: [
@@ -170,8 +187,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                             // obscureText: obscureText,
                           )
                         ])),
-                                        Container(
-                      padding: const EdgeInsets.only(left: 5),
+                    Container(
+                      padding: const EdgeInsets.all(5),
                       child: ValueListenableBuilder<List<XFile>>(
                         valueListenable: imagesNotifier,
                         // Listen to changes in images
@@ -184,23 +201,27 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           // Pass the images to the widget
                         },
                       ),
-                                        ),
-                                        Container(
-                      padding: const EdgeInsets.only(left: 5),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(5),
                       child: ValueListenableBuilder<XFile?>(
                         valueListenable: videoNotifier,
                         builder: (context, videoFile, _) {
+                          if(videoFile!=null){
+                            print(videoFile!.path);
+                          }
                           if (videoFile!.path.isEmpty) {
-                            return const Text('No video selected.');
+                            return Container();
                           } else {
-                            return const Text('1 video selected.');
+                            // return Text('1 video selected.');
+                            return videoImportPlayerWidget(url: videoFile!.path);
                             // return VideoPlayerWidget(videoFile: videoFile);
                           }
                         },
                       ),
-                                        )
-                                      ]),
-                    ),
+                    )
+                  ]),
+                ),
               ),
             ),
           ],

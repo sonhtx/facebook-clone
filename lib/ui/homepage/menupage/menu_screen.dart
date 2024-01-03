@@ -32,11 +32,15 @@ class _MenuPageState extends State<MenuPage>
   String? name = "";
   String? imageUrl = "";
 
+  late String userId;
+
   @override
   void initState() {
     super.initState();
     getUserName().then((value) => setState(() => name = value));
     getAvatarUrl().then((value) => setState(() => imageUrl = value));
+
+    getId().then((value) => setState(() => userId = value!));
   }
 
   @override
@@ -83,15 +87,14 @@ class _MenuPageState extends State<MenuPage>
                           radius: 35.0,
                         )
                       : const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/messi-world-cup.png'),
+                          backgroundImage: AssetImage(defaultAvatar),
                           radius: 35.0,
                         ),
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Profile()));
+                            builder: (context) => Profile(userid: userId,)));
                   },
                 ),
                 const SizedBox(
@@ -197,6 +200,7 @@ class _MenuPageState extends State<MenuPage>
                                         ),
                                         onPressed: () async {
                                           LogoutRepository logoutRepo = LogoutRepository();
+                                          showLoaderDialog(context,"Logging Out");
                                           final logoutStatus = await logoutRepo.logout();
                                           if (context.mounted) {
                                             if (logoutStatus) {

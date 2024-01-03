@@ -1,3 +1,4 @@
+import 'package:anti_fb/widgets/AlertDialogWidget.dart';
 import 'package:flutter/material.dart';
 
 const CYAN = Colors.cyan;
@@ -21,10 +22,7 @@ const TRANSPARENT = Colors.transparent;
 const myPort = 33333;
 const authUrl = "http://localhost:2400/api/auth";
 const apiUrl = "https://it4788.catan.io.vn";
-// const apiUrl = "https://1985-2001-ee0-4a77-2bf0-8593-5c3e-c34f-60ed.ngrok-free.app";
 
-// const apiUrl =
-// "https://08dc-2001-ee0-4a77-2bf0-8593-5c3e-c34f-60ed.ngrok-free.app";
 
 const defaultAvatar = "assets/images/default-avatar.jpg";
 
@@ -53,4 +51,31 @@ String calculateTimeDifference(String dateString) {
   } else {
     return 'Just now';
   }
+}
+
+void showNotification(BuildContext context, String title, String text) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialogWidget(title: title, text: text);
+    },
+  );
+}
+
+showLoaderDialog(BuildContext context, String text){
+  AlertDialog alert=AlertDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    content: new Row(
+      children: [
+        CircularProgressIndicator(),
+        SizedBox(width: 20,),
+        Text(text)
+      ],),
+  );
+  showDialog(barrierDismissible: false,
+    context:context,
+    builder:(BuildContext context){
+      return alert;
+    },
+  );
 }

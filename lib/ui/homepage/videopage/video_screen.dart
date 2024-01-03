@@ -11,7 +11,7 @@ import '../../../../repository/post/post_repo.dart';
 import '../../../../widgets/AlertDialogWidget.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../../../../widgets/custom_react_widget.dart';
-import '../homepage/listpost.dart';
+import '../homepage/PostWidget.dart';
 import '../homepage/postpage/MarkInputWidget.dart';
 import '../homepage/postpage/markUI.dart';
 
@@ -62,6 +62,12 @@ class VideoScreenState extends State<VideoScreen> {
       looping: true, // set to false if you don't want the video to loop
     );
   }
+  void dispose() {
+    _videoController.dispose();
+    _chewieController.dispose();
+    super.dispose();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +87,15 @@ class VideoScreenState extends State<VideoScreen> {
       future: getPost(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: SizedBox(width: 30, height: 30, child: CircularProgressIndicator()));
         } else if (snapshot.hasError) {
-          return content;
+          return const Text("Network disconnected");
         } else {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: WHITE,
-          title: PostHeader( imageUrl: widget.author_avatar, email: widget.author_name,
-            timestamp: widget.created.substring(0,10),),
+          title: PostHeader(post_id: widget.id, imageUrl: widget.author_avatar, email: widget.author_name,
+            timestamp: widget.created.substring(0,10), canEdit: false,),
           iconTheme: const IconThemeData(
             color: GREY, // Set the color of the back arrow icon to black
           ),

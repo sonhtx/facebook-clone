@@ -10,7 +10,7 @@ import '../../../api/post/comment_api.dart';
 import '../../../constants.dart';
 import '../../../widgets/TextWidget.dart';
 import '../../../widgets/custom_react_widget.dart';
-import '../homepage/listpost.dart';
+import '../homepage/PostWidget.dart';
 
 class VideoWidget extends StatefulWidget {
   final String id;
@@ -49,12 +49,19 @@ class VideoWidgetState extends State<VideoWidget> {
     super.initState();
 
     _videoController = VideoPlayerController.networkUrl(Uri.parse(widget.video_url));
+
     _chewieController = ChewieController(
       videoPlayerController: _videoController,
       aspectRatio: 16 / 9, // adjust as needed
       autoInitialize: true,
       looping: true, // set to false if you don't want the video to loop
     );
+  }
+  void dispose() {
+    _videoController.dispose();
+    _chewieController.dispose();
+    super.dispose();
+
   }
 
   @override
@@ -71,9 +78,11 @@ class VideoWidgetState extends State<VideoWidget> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 PostHeader(
+                  post_id: widget.id,
                   imageUrl: widget.author_avatar_url,
                   email: widget.author_name,
                   timestamp: widget.created,
+                  canEdit: false,
                 ),
                 const SizedBox(height: 4.0),
                 // _PostCaption(caption: post.caption,),
@@ -94,7 +103,7 @@ class VideoWidgetState extends State<VideoWidget> {
           const SizedBox(height: 10,),
           //------------------------------------------------
           SizedBox(
-            height: 500,
+            height: 300,
             child: Chewie(controller: _chewieController,) ,
           ),
           //------------------------------------------------
