@@ -57,6 +57,12 @@ class VideoWidgetState extends State<VideoWidget> {
       looping: true, // set to false if you don't want the video to loop
     );
   }
+  void dispose() {
+    _videoController.dispose();
+    _chewieController.dispose();
+    super.dispose();
+
+  }
 
   @override
   Widget build(BuildContext context) {

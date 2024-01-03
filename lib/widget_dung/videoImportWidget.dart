@@ -54,6 +54,6 @@ class _videoImportPlayerWidgetState extends State<videoImportPlayerWidget> {
         controller: _chewieController,
       ),
     ):
-    SizedBox.shrink();
+    const SizedBox.shrink();
   }
 }

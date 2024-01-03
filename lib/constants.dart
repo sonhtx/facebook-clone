@@ -62,12 +62,14 @@ void showNotification(BuildContext context, String title, String text) {
   );
 }
 
-showLoaderDialog(BuildContext context){
+showLoaderDialog(BuildContext context, String text){
   AlertDialog alert=AlertDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
     content: new Row(
       children: [
         CircularProgressIndicator(),
+        SizedBox(width: 20,),
+        Text(text)
       ],),
   );
   showDialog(barrierDismissible: false,
