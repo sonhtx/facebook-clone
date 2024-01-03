@@ -190,7 +190,7 @@ class PostHeader extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '$timestamp  • ',
+                    '${calculateTimeDifference(timestamp)}  • ',
                     style: TextStyle(
                       color: GREY[600],
                       fontSize: 12.0,

@@ -89,6 +89,7 @@ class LoginForm extends StatelessWidget {
                   } else {
                     showNotification(
                         context, 'Error', 'Wrong email or password');
+                    Navigator.pop(context);
                   }
                 }
               }),
