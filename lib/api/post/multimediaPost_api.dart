@@ -70,9 +70,7 @@ class AddPostApi{
     final responseBody = await response.stream.bytesToString();
     Map<String, dynamic> jsonData = json.decode(responseBody);
     String newCoin = jsonData['data']['coins'].toString();
-    print(newCoin);
     await setCoin(newCoin);
-    print(responseBody);
 
   }
 

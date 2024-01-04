@@ -56,6 +56,11 @@ class CommentApi {
       body: jsonData,
     );
     if (response.statusCode == 200) {
+
+      final jsonResponse = json.decode(response.body);
+      String newCoin = jsonResponse['coins'].toString();
+
+      await setCoin(newCoin);
       return true;
     } else {
       return false;
@@ -75,7 +80,9 @@ class CommentApi {
     );
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
+      String newCoin = jsonResponse['coins'].toString();
 
+      await setCoin(newCoin);
       return jsonResponse; // get list success
     } else {
       return null; // get list false
