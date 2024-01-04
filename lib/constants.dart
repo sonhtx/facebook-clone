@@ -1,3 +1,4 @@
+import 'package:anti_fb/storage.dart';
 import 'package:anti_fb/widgets/AlertDialogWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,9 @@ const BLACK = Colors.black;
 const TEXT = Color(0xFF757575);
 const BG = Color(0xFFEFF1F5);
 const BTNBG = Color(0xFFE5E4E9);
+
+var user_id = "";
+
 
 const TRANSPARENT = Colors.transparent;
 

@@ -301,6 +301,7 @@ void showMarkInput(BuildContext context, String id, String rateStatus) {
   );
 }
 
+
 String rateStatus(String can_rate) {
   switch (can_rate) {
     case '0':
