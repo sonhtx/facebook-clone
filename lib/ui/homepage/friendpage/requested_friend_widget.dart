@@ -2,6 +2,7 @@ import 'package:anti_fb/api/friend/friend_api.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import '../../profile/friend_profile.dart';
 
 class FriendRequestWidget extends StatelessWidget {
   final String id;
@@ -115,93 +116,105 @@ class FriendRequestWidget extends StatelessWidget {
       );
     }
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          CircleAvatar(
-            backgroundImage: NetworkImage(avatar),
-            radius: 40.0,
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FriendProfile(
+              userId: id,
+            ),
           ),
-          const SizedBox(width: 10.0),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    username,
-                    style:
-                        const TextStyle(fontSize: 16.0, fontWeight: FONTBOLD),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    calculateTimeDifference(created),
-                    style:
-                        const TextStyle(fontSize: 10.0, fontWeight: FONTNORMAL),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 5.0),
-                    decoration: BoxDecoration(
-                        color: BLUE, borderRadius: BorderRadius.circular(5.0)),
-                    child: TextButton(
-                      onPressed: handleAccept,
-                      style: TextButton.styleFrom(
-                        backgroundColor: BLUE,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
+        );
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: <Widget>[
+            CircleAvatar(
+              backgroundImage: NetworkImage(avatar),
+              radius: 40.0,
+            ),
+            const SizedBox(width: 10.0),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      username,
+                      style:
+                          const TextStyle(fontSize: 16.0, fontWeight: FONTBOLD),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      calculateTimeDifference(created),
+                      style:
+                          const TextStyle(fontSize: 10.0, fontWeight: FONTNORMAL),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 5.0),
+                      decoration: BoxDecoration(
+                          color: BLUE, borderRadius: BorderRadius.circular(5.0)),
+                      child: TextButton(
+                        onPressed: handleAccept,
+                        style: TextButton.styleFrom(
+                          backgroundColor: BLUE,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        child: const Text(
+                          'Confirm',
+                          style: TextStyle(color: WHITE, fontSize: 15.0),
                         ),
                       ),
-                      child: const Text(
-                        'Confirm',
-                        style: TextStyle(color: WHITE, fontSize: 15.0),
-                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10.0),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 5.0),
-                    decoration: BoxDecoration(
-                        color: GREY[300],
-                        borderRadius: BorderRadius.circular(5.0)),
-                    child: TextButton(
-                      onPressed: () {
-                        // Handle button press
-                        handleDelRequest(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        backgroundColor: GREY[300],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
+                    const SizedBox(width: 10.0),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 5.0),
+                      decoration: BoxDecoration(
+                          color: GREY[300],
+                          borderRadius: BorderRadius.circular(5.0)),
+                      child: TextButton(
+                        onPressed: () {
+                          // Handle button press
+                          handleDelRequest(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 10.0),
+                          backgroundColor: GREY[300],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        child: const Text(
+                          'Delete',
+                          style: TextStyle(color: BLACK, fontSize: 15.0),
                         ),
                       ),
-                      child: const Text(
-                        'Delete',
-                        style: TextStyle(color: BLACK, fontSize: 15.0),
-                      ),
                     ),
-                  ),
-                ],
-              )
-            ],
-          )
-        ],
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

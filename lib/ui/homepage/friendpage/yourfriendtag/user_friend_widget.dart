@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../constants.dart';
+import '../../../profile/friend_profile.dart';
 
 class UserFriendWidget extends StatelessWidget {
   final String id;
@@ -27,46 +28,61 @@ class UserFriendWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FriendProfile(
+              userId: id,
+            ),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(avatar),
-                radius: 40.0,
-              ),
-              const SizedBox(width: 20.0),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: <Widget>[
-                  Text(
-                    username,
-                    style: const TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FONTBOLD,
-                    ),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(avatar),
+                    radius: 40.0,
                   ),
-                  Text(
-                    '$sameFriends mutual friends',
-                    style:
-                        const TextStyle(fontSize: 14.0, fontWeight: FONTNORMAL),
+                  const SizedBox(width: 20.0),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        username,
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FONTBOLD,
+                        ),
+                      ),
+                      Text(
+                        '$sameFriends mutual friends',
+                        style:
+                            const TextStyle(fontSize: 14.0, fontWeight: FONTNORMAL),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              IconButton(
+                icon: const Icon(Icons.more_horiz),
+                onPressed: () {
+                  // Handle the more_horiz button press
+                  showBottomSheetMenu(context);
+                },
+              ),
             ],
           ),
-          IconButton(
-            icon: const Icon(Icons.more_horiz),
-            onPressed: () {
-              // Handle the more_horiz button press
-              showBottomSheetMenu(context);
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
