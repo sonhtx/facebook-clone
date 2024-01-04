@@ -22,6 +22,7 @@ class VideoScreen extends StatefulWidget {
   final String author_avatar;
   final String created;
   final String described;
+  final String author_id;
 
   const VideoScreen({
     super.key,
@@ -30,7 +31,7 @@ class VideoScreen extends StatefulWidget {
     required this.author_avatar,
     required this.created,
     required this.described,
-    required this.video_url,
+    required this.video_url, required this.author_id,
   });
 
   @override
@@ -113,6 +114,7 @@ class VideoScreenState extends State<VideoScreen> {
                   email: widget.author_name,
                   timestamp: widget.created.substring(0, 10),
                   canEdit: false,
+                  author_id: widget.author_id,
                 ),
                 iconTheme: const IconThemeData(
                   color: GREY, // Set the color of the back arrow icon to black

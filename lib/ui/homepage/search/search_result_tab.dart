@@ -47,6 +47,7 @@ class _SearchResultTabState extends State<SearchResultTab> {
                     current.is_felt,
                     current.author.name,
                     current.author.avatar,
+                    current.author.id,
                     false))
                 .toList() ??
             [];

@@ -647,6 +647,7 @@ class _FriendProfileState extends State<FriendProfile> {
                                             item.is_felt,
                                             item.author.name,
                                             item.author.avatar,
+                                            item.author.id,
                                             true)),
                               ),
                             ]))));

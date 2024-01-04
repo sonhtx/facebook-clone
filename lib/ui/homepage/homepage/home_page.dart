@@ -156,6 +156,7 @@ class _HomePageState extends State<HomePage> {
                         item.is_felt,
                         item.author.name,
                         item.author.avatar,
+                        item.author.id,
                         false)),
               ),
             ]),

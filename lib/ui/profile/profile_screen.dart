@@ -484,6 +484,7 @@ class _ProfileState extends State<Profile> {
                                               item.is_felt,
                                               item.author.name,
                                               item.author.avatar,
+                                              item.author.id,
                                               true)),
                             ),
                           ]),

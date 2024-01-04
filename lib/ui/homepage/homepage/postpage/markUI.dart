@@ -10,6 +10,7 @@ import '../../../../repository/post/comment_repo.dart';
 import '../../../../widgets/IconWidget.dart';
 import '../../../../widgets/TextWidget.dart';
 import '../../../../widgets/profile_avatar.dart';
+import '../../../profile/friend_profile.dart';
 
 class ListMark extends StatefulWidget {
   ListMark({super.key, required this.id});
@@ -131,7 +132,17 @@ class MarkWidgetState extends State<MarkWidget> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfileAvatar(imageUrl: widget.poster.avatar),
+              ProfileAvatar(imageUrl: widget.poster.avatar,
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FriendProfile(
+                          userId: widget.poster.id,
+                        ),
+                      ),
+                    );
+                  }),
               // const SizedBox(width: 8.0),
               Column(
                 children: [
@@ -249,7 +260,19 @@ class CommentWidget extends StatelessWidget {
       Container(
           padding: const EdgeInsets.only(left: 20),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ProfileAvatar(imageUrl: poster.avatar),
+            ProfileAvatar(
+                imageUrl: poster.avatar,
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FriendProfile(
+                      userId: poster.id,
+                    ),
+                  ),
+                );
+              },
+            ),
             const SizedBox(width: 8.0),
             Column(children: [
               TextWidget(

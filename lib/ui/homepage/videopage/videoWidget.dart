@@ -23,6 +23,7 @@ class VideoWidget extends StatefulWidget {
   final String is_felt;
   final String author_name;
   final String author_avatar_url;
+  final String author_id;
 
   const VideoWidget(this.id,
       this.name,
@@ -34,6 +35,7 @@ class VideoWidget extends StatefulWidget {
       this.is_felt,
       this.author_name,
       this.author_avatar_url,
+      this.author_id,
       {super.key});
 
   @override
@@ -83,6 +85,7 @@ class VideoWidgetState extends State<VideoWidget> {
                   email: widget.author_name,
                   timestamp: widget.created,
                   canEdit: false,
+                  author_id: widget.author_id,
                 ),
                 const SizedBox(height: 4.0),
                 // _PostCaption(caption: post.caption,),
@@ -150,7 +153,7 @@ class VideoWidgetState extends State<VideoWidget> {
           ),
           VideoBottom( id: widget.id, is_felt: widget.is_felt, video_url: widget.video_url,
             author_name: widget.author_name, author_avatar: widget.author_avatar_url,
-            created: widget.created, described: widget.described,
+            created: widget.created, described: widget.described,author_id: widget.author_id,
           )
         ],
       ),
@@ -161,7 +164,7 @@ class VideoWidgetState extends State<VideoWidget> {
 
 class VideoBottom extends StatelessWidget {
   const VideoBottom({required this.id,
-        required this.is_felt, required this.video_url, required this.author_name, required this.author_avatar, required this.created, required this.described,});
+        required this.is_felt, required this.video_url, required this.author_name, required this.author_avatar, required this.created, required this.described, required this.author_id,});
 
   final String id;
   final String is_felt;
@@ -170,6 +173,7 @@ class VideoBottom extends StatelessWidget {
   final String author_avatar;
   final String created;
   final String described;
+  final String author_id;
 
   static final CommentApi _commentApi = CommentApi();
 
@@ -205,7 +209,7 @@ class VideoBottom extends StatelessWidget {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (context) =>
                   VideoScreen(id: id, author_name: author_name, author_avatar: author_avatar,
-                    created: created, described: described, video_url: video_url,)));
+                    created: created, described: described, video_url: video_url,author_id: author_id,)));
             },
             child: const Row(
               children: [

@@ -84,8 +84,9 @@ class PostScreenState extends State<PostScreen> {
                   post_id: widget.id,
                   imageUrl: post.author!.avatar,
                   email: post.author!.name,
-                  timestamp: calculateTimeDifference(post.created),
+                  timestamp: post.created,
                   canEdit: false,
+                  author_id: post.author!.id,
                 ),
                 iconTheme: const IconThemeData(
                   color: GREY, // Set the color of the back arrow icon to black
