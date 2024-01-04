@@ -155,6 +155,9 @@ class _CoinManageState extends State<CoinManage> {
                                               });
                                             }
                                           });
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                            content: Text('Success'),
+                                          ));
                                           Navigator.pop(context);
                                           inputCoin.text = "";
                                         },

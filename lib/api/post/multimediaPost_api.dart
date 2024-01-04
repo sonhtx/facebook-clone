@@ -64,9 +64,10 @@ class AddPostApi{
 
     // Send the request
     final response = await request.send();
-
     // Process the response
-    final String responseBody = await response.stream.bytesToString();
+    final responseBody = await response.stream.bytesToString();
+    // String newCoin = responseBody['data']['coins'].toString();
+    // await setCoin(newCoin);
     print(responseBody);
 
   }
