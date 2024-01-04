@@ -305,7 +305,7 @@ void showMarkInput(BuildContext context, String id, String rateStatus) {
 String rateStatus(String can_rate) {
   switch (can_rate) {
     case '0':
-      return 'Already rate, post stop allow mark';
+      return 'Already rate, post stop allow rate';
     case '-1':
       return "Can't rate your own post";
     case '-2':
