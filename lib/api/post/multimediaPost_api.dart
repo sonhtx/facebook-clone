@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
@@ -66,8 +68,10 @@ class AddPostApi{
     final response = await request.send();
     // Process the response
     final responseBody = await response.stream.bytesToString();
-    // String newCoin = responseBody['data']['coins'].toString();
-    // await setCoin(newCoin);
+    Map<String, dynamic> jsonData = json.decode(responseBody);
+    String newCoin = jsonData['data']['coins'].toString();
+    print(newCoin);
+    await setCoin(newCoin);
     print(responseBody);
 
   }
